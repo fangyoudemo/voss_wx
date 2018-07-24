@@ -1,0 +1,27 @@
+<view class="container">
+    <!-- 首页banner -->
+    <swiper class='banner' indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+      <block wx:for="{{bannerImg}}">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <!-- 场景卡片 -->
+    <view class='scene'>
+      <text class='scene_title'>即可表心意</text>
+      <view class='scene_content'>
+         <view class='sceneCard' id="{{item.Card_id}}" wx:for="{{sceneCard}}" bindtap="bindViewCoffeeOnMe">
+             <view class='sceneCard_img'>
+             <image src="{{item.img}}"></image>
+             </view>
+             <text>{{item.title}}</text>
+         </view>
+      </view>
+    </view>
+    <!-- 购买历史 -->
+     <view class="buyhistory">
+      <image class="buyhistory-icon" src="../../images/buyhistory.png"></image>
+      <text class="buyhistory-text" bindtap='buyhistory'> 购买历史</text>
+    </view> 
+</view>

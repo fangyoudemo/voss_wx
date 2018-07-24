@@ -1,0 +1,12 @@
+<!--pages/blessing/blessing.wxml-->
+<view class='main'>
+  <view class='banner'><image src='{{sceneCard.img}}'></image></view>
+  <view class='banner_title'>{{sceneCard.title}}</view>
+  <view class='blessing_content'>
+    <view bindtap='xuanzehy'></view>
+    <view></view>
+    <view></view>
+  </view>
+  <button type="primary" form-type="submit" bindtap='confirm'>确认赠送</button>
+  <view class='tishi_msg'>送给自己，直接放入卡包</view>
+</view>

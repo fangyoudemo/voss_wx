@@ -1,0 +1,264 @@
+.main{
+  width: 660rpx;
+  margin: 0 auto;    
+  margin-bottom: 190rpx;
+}
+.banner{
+  width: 100%;
+  height: 407rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.banner image{
+  width: 100%;
+  height: 100%;
+}
+.choiceGift{
+  margin-top: 50rpx;
+}
+.choiceGift:after{  
+    content:"";  
+    display:block;    
+    clear:both;  
+} 
+.choiceGift_title{
+  display: flex;
+  align-items: center;
+}
+.choiceGift_title image{
+  width: 34rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+}
+.choiceGift_title text{
+  display: inline;
+  font-size: 28rpx;
+}
+.choiceGift_content{
+  margin-top: 38rpx;
+}
+.choiceGift_btn{
+  width: 314rpx;
+  height: 74rpx;
+  box-sizing: border-box;
+  border: 2rpx solid #ececec;
+  text-align: center;
+  line-height: 70rpx;
+  font-size: 20rpx;
+  color: #84888a;
+  margin-bottom: 26rpx;
+  border-radius: 16rpx;
+}
+.choiceGift_btn.active{
+  border: 2rpx solid #000;
+  color: #000;
+}
+.choiceGift_content .choiceGift_btn:nth-child(2n+1){
+  float: left
+}
+.choiceGift_content .choiceGift_btn:nth-child(2n){
+  float: right;
+}
+.wares_main{
+  width: 100%;
+}
+.wares_title{
+  width: 100%;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+}
+.wares_title image{
+   width: 15rpx; 
+   height: 42rpx; 
+   margin-right: 16rpx;
+   margin-left: 10px;
+}
+.wares_content{
+  margin-top: 45rpx;
+}
+.wares{
+  width: 100%;
+  height: 124rpx;
+  box-sizing: border-box;
+  border-radius: 20rpx;
+  border: 2rpx solid #ececec;
+  margin-bottom: 26rpx;
+  display: flex;
+   position: relative; 
+}
+.wares_num{
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  line-height: 40rpx;
+  position: absolute;
+  top: -12rpx;
+  left: -12rpx;
+  z-index: 2;
+}
+.wares.active{
+  border: 2rpx solid #bdbebf;
+}
+.wares_text{
+  width: 540rpx;
+  height: 100%;
+  box-sizing: border-box;
+  padding-left: 40rpx;
+  color: #adafb0;
+}
+.wares_text text{
+  display: block;
+  font-size: 20rpx;
+  width: 100%;
+  margin-top: 20rpx;
+}
+.wares.active .wares_text{
+  color: #000;
+}
+.numCount{
+  width: 117rpx;
+  height: 100%;
+  box-sizing: border-box;
+  border-left: 1rpx solid #f2f2f2;
+}
+.onlyAdd{
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 120rpx;
+  font-size: 50rpx;
+  color: #84888a;
+}
+.addNum,.minusNum{
+  display: block;
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 40rpx;
+  color: #84888a;
+  box-sizing: border-box;
+}
+.minusNum{
+  font-size: 50rpx;
+  border-bottom:1rpx solid #f2f2f2;
+}
+.bottom{
+  width: 100%;
+  height: 132rpx;
+  padding: 0 46rpx;
+  border-top: 1rpx solid #f5f5f5;
+  position: fixed;
+  box-sizing: border-box;
+  bottom: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bottom_buytext{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.bottom_buytext text{
+  font-size: 20rpx;
+  color: #7a7a7a;
+}
+.bottom_buytext view{
+  display: flex;
+  align-items: flex-start;
+}
+.bottom_buytext view view:first-child{
+  font-size: 20rpx;
+  margin-right: 10rpx;
+  color: #7a7a7a;
+}
+.bottom_buytext view view:last-child{
+  line-height: 36rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.bottom_buybtn{
+  width: 224rpx;
+  height: 80rpx;
+  background: #000;
+  font-size: 30rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 80rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid #afb2b3;
+}
+.wares_box{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  background: rgba(0, 0, 0, .5);
+  top: 0;
+}
+.wares_details{
+  width: 100%;
+  height: 880rpx;
+  position: absolute;
+  bottom: 0;
+  background: #fcfcfc;
+  border-radius: 30rpx 30rpx 0 0;
+}
+.wares_details_img{
+  width: 290rpx;
+  height: 290rpx;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 230rpx;
+  top: -145rpx;
+  overflow: hidden;
+}
+.wares_details_img image{
+  width: 290rpx;
+  height: 290rpx;
+}
+.wares_details_title{
+  width: 665rpx;
+  height: 158rpx;
+  margin: 0 auto;
+  margin-top: 145rpx;
+  font-size: 24rpx;
+  color: #000;
+  border-bottom: 1rpx solid #efefef;
+}
+.wares_details_title text{
+  display: block;
+}
+.wares_details scroll-view{
+  width: 665rpx;
+  height: 580rpx;
+  margin: 0 auto;
+  background: #fff;
+}
+.wares_details scroll-view view{
+  width: 100%;
+  float: left;
+}
+.wares_details scroll-view image{
+  display: block;
+  width: 665rpx;
+}
+.shut{
+  position: absolute;
+  left: 40rpx;
+  top: 40rpx;
+}
+.shut image{
+  width: 40rpx;
+  height: 40rpx;
+}

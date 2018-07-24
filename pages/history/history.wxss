@@ -1,0 +1,47 @@
+/* pages/history/history.wxss */
+.main{
+  width: 666rpx;
+  margin: 0 auto;
+  margin-top: 80rpx;
+}
+.main .main_content{
+  width: 100%;
+  height: auto;
+  margin-bottom: 47rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.main_content image{
+  width: 250rpx;
+  height: auto;
+  border-radius: 20rpx;
+}
+.main_content .msg{
+  width: 394rpx;
+  height: 100%;
+}
+.msg view:first-child{
+  font-size: 26rpx;
+}
+.msg view:nth-child(2){
+  font-size: 20rpx;
+}
+.msg view:nth-child(3){
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.wuliu{
+  height: 54rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between
+}
+.wuliu view{
+  font-size: 24rpx;
+}
+button{
+  width: 164rpx;
+  font-size: 18rpx;
+  text-align: center;
+  line-height: 54rpx;
+}

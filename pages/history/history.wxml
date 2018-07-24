@@ -1,0 +1,16 @@
+<!--pages/history/history.wxml-->
+<view class='main'>
+  <view class='main_content'  wx:for="{{datas}}" >
+    <image bindtap='orderDetails' src="http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg"></image>
+    <view class='msg'>
+      <view>{{item.name}}</view>
+      <view>购买时间：{{item.time}}</view>
+      <view>¥ {{item.peric}}</view>
+      <view class='wuliu'>
+        <view wx:if="{{item.get_name!== null}}">{{item.get_name}}已领取</view>
+        <view wx:else>{{item.get_name}}未领取</view>
+        <button bindtap='seeLogistics' type='primary' wx:if="{{item.get_name!== null}}">查看物流</button>
+      </view>
+    </view>
+  </view>
+</view>

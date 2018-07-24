@@ -1,0 +1,20 @@
+{
+  "pages":[
+    
+    "pages/index/index",
+    "pages/detail/detail", 
+    "pages/address/address",  
+    "pages/logs/logs",
+    "pages/blessing/blessing",
+    "pages/yiGive/yiGive",
+    "pages/Orderdetails/Orderdetails",
+    "pages/history/history",
+    "pages/logistics/logistics"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "VOSS.净享纯粹",
+    "navigationBarTextStyle":"black"
+  }
+}

@@ -1,0 +1,96 @@
+/* pages/Reccards/Reccards.wxss */
+.container{
+  width: 100%;
+  background-color: #f9f9f9;
+}
+.banner{
+  width: 100%;
+  height: 627rpx; 
+}
+.banner image{
+  width: 100%;
+  height: 100%;
+}
+.scene{
+  width: 666rpx;
+  margin: 0 auto;
+  margin-top: 52rpx;
+}
+.scene:after{  
+    content:"";  
+    display:block;    
+    clear:both;  
+} 
+.scene_title{
+  font-size: 28rpx;
+}
+.scene_content{
+  width: 100%;
+}
+.sceneCard{
+  width: 310rpx;
+  height: 263rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  margin-bottom: 28rpx;
+}
+.scene_content view:nth-child(2n+1){
+  float: left;
+}
+.scene_content view:nth-child(2n){
+  float: right;
+}
+.sceneCard_img{
+  width: 306rpx;
+  height: 192rpx;
+  margin: 2rpx;
+  border-radius: 30rpx;
+  overflow: hidden;
+}
+.sceneCard_img image{
+  width: 100%;
+  height: 100%;
+}
+.sceneCard text{
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 66rpx;
+}
+ .buyhistory{
+  width: 100%;
+  padding-top: 60rpx;
+  padding-bottom: 70rpx;
+  text-align: center;
+}
+.buyhistory-text{
+  color: #2D4E84;
+  font-size: 28rpx;
+  font-family: "MicrosoftYaHei";
+}
+.buyhistory-icon{
+height: 30rpx;
+width: 30rpx;
+margin-bottom: -4rpx;
+}
+.Mask{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, .5)
+}
+.reccards{
+  width: 662rpx;
+  height: 765rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 0 50rpx;
+  box-sizing: border-box;
+}

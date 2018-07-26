@@ -29,21 +29,6 @@ function getUserInfo(cb) {
     })
   }
 }
-//从服务器获取banner图
-function getData(userId){
-  wx.request({
-    url: 'test.php',
-    data: {
-      userId
-    },
-    header: {
-      'content-type': 'application/json' // 默认值
-    },
-    success: function (res) {
-      console.log(res.data)
-    }
-  })
-}
 //从服务器获取商品列表
 function getWares(){
   wx.request({

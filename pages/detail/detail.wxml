@@ -1,7 +1,7 @@
 <view class='main'>
   <!-- 头部banner -->
   <view class='banner'>
-    <image src='{{sceneCard.img}}'></image>
+    <image src='{{giftcards.Imgurl}}'></image>
   </view>
   <!-- 选择礼品 -->
   <view class='choiceGift'>
@@ -9,7 +9,7 @@
       <image src='../../images/xuanze_icon.png'></image><text>选择礼品</text>
     </view>
     <view class='choiceGift_content'>
-      <view class='choiceGift_btn {{item.gift_id == catalogSelect ? "active":" "}}' id='{{item.gift_id}}' wx:for="{{gift}}" bindtap='selectionGift'>
+      <view class='choiceGift_btn {{item.gift_id == catalogSelect ? "active":" "}}' id='{{item.gift_id}}' wx:for="{{gift}}"  bindtap='selectionGift'>
           {{item.gift_name}} 
       </view>
      </view>
@@ -20,18 +20,18 @@
       <image src='../../images/guige_icon.png'></image><text>选择规格</text>
     </view>
     <view class='wares_content'>
-      <view class='wares {{item.buy_num >0 ? "active":" "}}' wares_num="{{wares_num}}"  wx:for="{{wares}}"  wx:if="{{item.gift_id == wares_contentId}}" id="{{wares_contentId}}">
+      <view class='wares {{item.buy_num >0 ? "active":" "}}' wares_num="{{wares_num}}"  wx:for="{{giftcards.List}}"  wx:if="{{item.Ptype == wares_contentId}}" id="{{wares_contentId}}">
         <view class='wares_num' wx:if="{{item.buy_num>0}}">{{item.buy_num}}</view>
-        <view class='wares_text' data-index="{{item.wares_id}}" bindtap='show'>
-          <text>{{item.wares_name}}{{item.wares_specs}}</text>
-          <text>¥{{item.wares_price}}</text>
+        <view class='wares_text' data-index="{{item.Id}}" bindtap='show'>
+          <text>{{item.Productname}}{{item.Spec}}</text>
+          <text>¥{{item.Unitprice}}</text>
         </view>
         <view class='numCount' wx:if="{{item.buy_num==0}}">
-          <text class='onlyAdd' bindtap='addNum' data-index="{{item.wares_id}}">+</text>
+          <text class='onlyAdd' bindtap='addNum' data-index="{{item.Id}}">+</text>
         </view>
         <view class='numCount' wx:if="{{item.buy_num >0}}">
-          <text class='minusNum' bindtap='minusNum' data-index="{{item.wares_id}}">-</text>
-          <text class='addNum' bindtap='addNum' data-index="{{item.wares_id}}">+</text>
+          <text class='minusNum' bindtap='minusNum' data-index="{{item.Id}}">-</text>
+          <text class='addNum' bindtap='addNum' data-index="{{item.Id}}">+</text>
         </view>
       </view>
     </view>
@@ -46,7 +46,7 @@
     <view>{{totalPrice}}</view>
     </view>
   </view>
-  <view class='bottom_buybtn' bindtap='buy'  bindgetuserinfo="onGotUserInfo">购买</view>
+  <view class='bottom_buybtn' bindtap='buy'  bindgetuserinfo="onGotUserInfo">结算</view>
 </view>
 <!-- 商品详情 -->
 <view class='wares_box' hidden='{{flag}}'>

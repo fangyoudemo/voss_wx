@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -12,8 +12,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
-	"appid": "wx047bab53baca3c6b",
-	"projectname": "voss_wx",
+	"appid": "wx56a5df84de769570",
+	"projectname": "wx_voss",
 	"isGameTourist": false,
 	"condition": {
 		"search": {

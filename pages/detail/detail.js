@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
+var giftcards = app.globalData.giftcards
 Page({
 
   /**
@@ -9,60 +10,44 @@ Page({
    */
   data: {
     gift:[
-      { gift_id: 0,gift_name:"玻璃瓶（含气）"},
-      { gift_id: 1, gift_name: "玻璃瓶（不含气）" },
-      { gift_id: 2, gift_name: "塑料瓶（含气）" }        
+      { gift_id: 1,gift_name:"玻璃瓶（含气）"},
+      { gift_id: 2, gift_name: "玻璃瓶（不含气）" },
+      { gift_id: 3, gift_name: "塑料瓶（含气）" }        
     ],
-    wares:[
-      { wares_id: 0, buy_num: 0, wares_name: "苏打水饮料（含气型）", wares_specs: " 375ml* 6瓶", wares_price: 112.8, gift_id: 0, wares_source:0 },
-      { wares_id: 1, buy_num: 0, wares_name: "苏打水饮料（含气型）", wares_specs: " 375ml* 24瓶", wares_price: 451.2, gift_id: 0, wares_source: 0},
-      { wares_id: 2, buy_num: 0, wares_name: "苏打水饮料（含气型）", wares_specs: " 800ml* 12瓶", wares_price: 441.6, gift_id: 0, wares_source: 0},
-      { wares_id: 3, buy_num: 0, wares_name: "苏打水饮料（深层自流）", wares_specs: " 375ml* 6瓶", wares_price: 112.8, gift_id: 1, wares_source: 0 },
-      { wares_id: 4, buy_num: 0, wares_name: "苏打水饮料（深层自流）", wares_specs: " 375ml* 24瓶", wares_price: 451.2, gift_id: 1, wares_source: 0},
-      { wares_id: 5, buy_num: 0, wares_name: "苏打水饮料（深层自流）", wares_specs: " 800ml* 12瓶", wares_price: 441.6, gift_id: 1, wares_source: 0},
-      { wares_id: 6, buy_num: 0, wares_name: "苏打水饮料（深层自流）", wares_specs: " 800ml* 12瓶", wares_price: 441.6, gift_id: 2, wares_source: 0},
-      { wares_id: 7, buy_num: 0, wares_name: "苏打水饮料（深层自流）", wares_specs: " 800ml* 12瓶", wares_price: 441.6, gift_id: 2, wares_source: 0},
-      { wares_id: 8, buy_num: 0, wares_name: "苏打水饮料（深层自流）", wares_specs: " 800ml* 12瓶", wares_price: 70, gift_id: 2, wares_source: 0}
-      ],
+    wares:[ ],
     detailsImg:"http://i1.bvimg.com/654292/8bd0b01fe7c3ae12.jpg",  //商品详情图片
-    wares_contentId:0,   //规格展示列表控制 
-    catalogSelect:0,  //选择礼品选中效果
+    wares_contentId:1,   //规格展示列表控制 
+    catalogSelect:1,  //选择礼品选中效果
     waresSelect:-1,   //规格选中效果
     totalPrice:0.00,  //总价 
     totalNum:0,  //总数
     flag:true,   //商品详情显示控制
-    buyWares: [],   //购物车列表
   },
   //计算总价
   getTotalPrice() {
-    let wares = this.data.wares;
+    let giftcards = this.data.giftcards;
     let total = 0;
-    for (let i = 0; i < wares.length; i++) {
-      total += wares[i].buy_num * wares[i].wares_price;
+    for (let i = 0; i < giftcards.List.length; i++) {
+      total += giftcards.List[i].buy_num * giftcards.List[i].Unitprice;
     }
-    // if (total<99){
-    //   total+=6
-    // }
-    // if(total==6){
-    //   total=0
-    // }
     this.setData({
-      wares: wares,
+      giftcards: giftcards,
       totalPrice: total.toFixed(2)
     });
   },
   //计算总数量
   getTotalNum() {
-    let wares = this.data.wares;
+    let giftcards = this.data.giftcards;
     let total = 0;
-    for (let i = 0; i < wares.length; i++) {
-      total += wares[i].buy_num
+    for (let i = 0; i < giftcards.List.length; i++) {
+      total += giftcards.List[i].buy_num
     }
     this.setData({
-      wares: wares,
+      giftcards: giftcards,
       totalNum: total
     });
   },
+  //点击选择礼品控制
   selectionGift: function (event) {
     var giftId = event.currentTarget.id
       this.setData({
@@ -73,12 +58,12 @@ Page({
   //添加商品
   addNum:function(e){
     const index = e.currentTarget.dataset.index;
-    let wares = this.data.wares;
-    let num = wares[index].buy_num;
+    let giftcards = this.data.giftcards;  
+    let num = giftcards.List[index - 1].buy_num;
     num = num + 1;
-    wares[index].buy_num = num;
+    giftcards.List[index-1].buy_num = num;
     this.setData({
-      wares: wares
+      giftcards: giftcards
     });
     this.getTotalPrice();
     this.getTotalNum();
@@ -86,12 +71,12 @@ Page({
   //减少商品
   minusNum:function(e){
     const index = e.currentTarget.dataset.index;
-    let wares = this.data.wares;
-    let num = wares[index].buy_num;
+    let giftcards = this.data.giftcards;
+    let num = giftcards.List[index-1].buy_num;
     num = num - 1;
-    wares[index].buy_num = num;
+    giftcards.List[index-1].buy_num = num;
     this.setData({
-      wares: wares
+      giftcards: giftcards
     });  
     this.getTotalPrice();
     this.getTotalNum();
@@ -119,29 +104,33 @@ Page({
   },
   //购买
   buy:function(){
-    let wares = this.data.wares;
-    let buyWares = this.data.buyWares
-    //添加选择的商品到购物车
-    for (let i = 0; i < wares.length; i++) {
-      if (wares[i].buy_num>0){
-        buyWares.push(wares[i])
+    let giftcards = this.data.giftcards;
+    let List = this.data.giftcards.List;
+    let totalNum = this.data.totalNum.totalPrice
+    let buyWares={"sku":[]}
+    userInfo.waresPrice = this.data.totalNum
+    for (let i = 0; i < List.length;i++){
+      if (List[i].buy_num>0){
+        //向服务器发起请求携带data
+        buyWares.sku.push({ "Id": List[i].Skuid, "buy_num": List[i].buy_num })  
+        //向全局数据userInfo添加选购商品信息
+        userInfo.wares.push(List[i])   
+        userInfo.buyWares = buyWares    
       }
     }
-    userInfo.buyWares = buyWares
-    userInfo.totalPrice = this.data.totalPrice
-    userInfo.totalNum = this.data.totalNum
-    if (buyWares.length==0){
-        console.log("您还没选择商品")
+    if (totalNum==0){
+      wx.showToast({
+        icon: 'none',
+        title: "不好意思,您还没选择商品",
+        mask: true
+      })
     }else{
-      for (let i = 0; i < buyWares.length; i++){
-        if (buyWares[i].wares_source==0){
-          console.log("进入京东物流")
-          wx.navigateTo({
-            url: '../address/address'
-          })
-        }else{
-          console.log("进入自营")
-        }
+      if (giftcards.Fromid==1){
+        console.log("进入填写京东物流")
+        //向服务器发起请求计算运费
+              wx.navigateTo({
+                url: '../address/address'
+              })
       }
     } 
   },
@@ -149,19 +138,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var Cardid = options.Cardid
+    for (let i = 0; i < giftcards.length;i++){
+      if (giftcards[i].Cardid == Cardid){
+        this.setData({
+          giftcards: giftcards[i]
+        })
+      }
+    }
+    for (let i = 0; i < this.data.giftcards.List.length;i++){
+      this.data.giftcards.List[i].buy_num=0
+      this.data.giftcards.List[i].Unitprice = this.data.giftcards.List[i].Unitprice/100
+    }
     this.setData({
-      //所选择的展示图片
-      sceneCard: userInfo.sceneCard,
-     })
+      giftcards: this.data.giftcards
+    })
+    //向全局数据userInfo添加选择卡面信息
+    userInfo.selcard = { Imgurl: this.data.giftcards.Imgurl, Cardid: this.data.giftcards.Cardid, Name: this.data.giftcards.Name, Id: this.data.giftcards.Id}
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
     wx.setNavigationBarTitle({
       //顶部标题
-      title: this.data.sceneCard.title
+      title: this.data.giftcards.Name
     })
   },
 

@@ -11,9 +11,9 @@ Page({
     
   },
   confirm:function(){
-    wx.navigateTo({
-      url: '../yiGive/yiGive'
-    })
+    // wx.navigateTo({
+    //   url: '../yiGive/yiGive'
+    // })
   },
   xuanzehy:function(){
     wx.getShareInfo({
@@ -28,9 +28,9 @@ Page({
   onLoad: function (options) {
     this.setData({
       //所选择的展示图片
-      sceneCard: userInfo.sceneCard,
-      buyWares: userInfo.buyWares,
-      conInfo: userInfo.conInfo
+      // sceneCard: userInfo.sceneCard,
+      // buyWares: userInfo.buyWares,
+      // conInfo: userInfo.conInfo
     })
   },
   /**

@@ -9,7 +9,9 @@
     "pages/yiGive/yiGive",
     "pages/Orderdetails/Orderdetails",
     "pages/history/history",
-    "pages/logistics/logistics"
+    "pages/logistics/logistics",
+    "pages/shopdemo/shopdemo",
+    "pages/Reccards/Reccards"
   ],
   "window":{
     "backgroundTextStyle":"light",

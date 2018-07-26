@@ -1,3 +1,4 @@
+<!--pages/Reccards/Reccards.wxml-->
 <view class="container">
     <!-- 首页banner -->
     <swiper class='banner' indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
@@ -24,4 +25,16 @@
       <image class="buyhistory-icon" src="../../images/buyhistory.png"></image>
       <text class="buyhistory-text" bindtap='buyhistory'> 购买历史</text>
     </view> 
+</view>
+<!-- 领取礼品卡 -->
+<view class='Mask'>
+  <view class='reccards'>
+    <view>收货人</view>
+    <view>手机号码</view>
+    <view>地区信息</view>
+    <view>末级地区</view>
+    <view>详细地址</view> 
+    <view></view>
+    <button>确认地址并提交</button>   
+  </view>
 </view>

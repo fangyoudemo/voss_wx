@@ -9,13 +9,13 @@ Page({
     //卡面
     giftcards: [],
     //首页轮播设置
-    indicatorDots:true,
-    indicatorColor:"#fff",
-    indicatorActiveColor:"#000",
+    indicatorDots: true,
+    indicatorColor: "#fff",
+    indicatorActiveColor: "#000",
     autoplay: true,
     interval: 3000,
     duration: 500,
-    circular:true,
+    circular: true,
   },
   //点击卡面
   bindViewCoffeeOnMe: function (event) {
@@ -25,7 +25,7 @@ Page({
     })
   },
   //点击购买历史
-  buyhistory:function(){
+  buyhistory: function () {
     wx.navigateTo({
       url: '../history/history',
     })
@@ -34,7 +34,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this
+    var that = this
     //从服务器获取banner图并设置到页面中
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/banner',

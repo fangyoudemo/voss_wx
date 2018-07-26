@@ -1,0 +1,2 @@
+<!--pages/shopdemo/shopdemo.wxml-->
+<view bindtap='shop'>下单</view>

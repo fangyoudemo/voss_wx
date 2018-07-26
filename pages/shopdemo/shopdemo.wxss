@@ -1,0 +1,9 @@
+/* pages/shopdemo/shopdemo.wxss */
+view{
+  width: 400rpx;
+  height: 100rpx;
+  background: red;
+  color: white;
+  margin: 100rpx auto;
+  text-align: center;
+}

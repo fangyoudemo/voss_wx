@@ -10,15 +10,24 @@ Page({
   data: {
     
   },
-  confirm:function(){
-    // wx.navigateTo({
-    //   url: '../yiGive/yiGive'
-    // })
-  },
   xuanzehy:function(){
     wx.getShareInfo({
       success:function(e){
         console.log(e)
+      }
+    })
+  },
+  addimg:function(){
+    wx.chooseImage({
+      success:function(res){
+        console.log('选择图片返回：',res)
+      }
+    })
+  },
+  addvideo:function(){
+    wx.chooseVideo({
+      success: function (res) {
+        console.log('选择视频返回：', res)
       }
     })
   },
@@ -81,7 +90,15 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-  
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '送你一张恋人卡',
+      path: '/page/user?id=123',
+      imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg'
+    }
   }
 })

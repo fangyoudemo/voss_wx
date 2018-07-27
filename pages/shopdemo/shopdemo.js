@@ -37,26 +37,53 @@ Page({
         let resultCode = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.resultCode
         let resultMsg = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.resultMsg
         if (resultCode==0) {
-          //发起虚拟pin收银台接口
-          wx.request({
-            url:'https://wxappbeta.m.jd.com/kwxp/wx/thirdPay.json',
-            data:{
-              uid: userInfo.uid,
-              code: userInfo.code,
-              iv: userInfo.iv,
-              encryptedData: userInfo.encryptedData,
-              orderId: userInfo.orderId,
-              orderType: 0,
-              orderTypeCode: 0,
-              factPrice: userInfo.totalPrice, 
-              appId: "wx56a5df84de769570",
-              fromType:'wxapp',
-              appkey:'7ffa2e75489a40669cfbe5f49276cc05'
-            },
+          wx.login({
             success:function(res){
-              console.log('虚拟pin收银台返回:',res)
+              console.log(res.code)
+              userInfo.code=res.code
+              console.log(res.code, userInfo.code)
+              //发起虚拟pin收银台接口
+              wx.request({
+                url: 'https://wxappbeta.m.jd.com/kwxp/wx/thirdPay.json',
+                data: {
+                  uid: userInfo.uid,
+                  code: userInfo.code,
+                  iv: userInfo.iv,
+                  encryptedData: userInfo.encryptedData,
+                  orderId: userInfo.orderId,
+                  orderType: 0,
+                  orderTypeCode: 0,
+                  factPrice: userInfo.totalPrice,
+                  appId: "wx56a5df84de769570",
+                  fromType: 'wxapp',
+                  appKey: '7ffa2e75489a40669cfbe5f49276cc05'
+                },
+                success: function (res) {
+                  console.log('虚拟pin收银台返回:', res)
+                  if (res.statusCode=='200'){
+                    wx.requestPayment({
+                      'timeStamp': res.data.timeStamp,
+                      'nonceStr': res.data.nonceStr,
+                      'package': res.data.package,
+                      'signType': 'MD5',
+                      'paySign': res.data.paySign,
+                      'success': function (res) {
+                        if (res.errMsg == 'requestPayment:ok') {
+                          console.log('用户成功支付，进入下一页')
+                          // wx.navigateTo({
+                          //   url: '../blessing/blessing',
+                          // })
+                        }
+                      },
+                      'fail': function (res) { },
+                      'complete': function (res) { }
+                    })
+                  }
+                }
+              })
             }
           })
+
 
           //发起统一下单接口
           // wx.request({
@@ -72,20 +99,23 @@ Page({
           //     if (res.data.errcode =='SUCCESS'){
           //       //拉起支付api
           //       console.log("拉起支付")
-          //       wx.requestPayment({
-          //         'timeStamp': res.data.timeStamp,
-          //         'nonceStr': res.data.nonceStr,
-          //         'package': res.data.package,
-          //         'signType': 'MD5',
-          //         'paySign': res.data.paySign,
-          //         'success': function (res) {
-          //           if (res.errMsg =='requestPayment:ok'){
-          //             console.log('用户成功支付，进入下一页')
-          //           }               
-          //         },
-          //         'fail': function (res) { },
-          //         'complete': function (res) { }
-          //       })
+                // wx.requestPayment({
+                //   'timeStamp': res.data.timeStamp,
+                //   'nonceStr': res.data.nonceStr,
+                //   'package': res.data.package,
+                //   'signType': 'MD5',
+                //   'paySign': res.data.paySign,
+                //   'success': function (res) {
+                //     if (res.errMsg =='requestPayment:ok'){
+                //       console.log('用户成功支付，进入下一页')
+                //       wx.navigateTo({
+                //         url: '../blessing/blessing',
+                //       })
+                //     }               
+                //   },
+                //   'fail': function (res) { },
+                //   'complete': function (res) { }
+                // })
           //     }
           //   }
           // })

@@ -3,10 +3,14 @@
   <view class='banner'><image src='{{sceneCard.img}}'></image></view>
   <view class='banner_title'>{{sceneCard.title}}</view>
   <view class='blessing_content'>
-    <view bindtap='xuanzehy'></view>
-    <view></view>
-    <view></view>
+    <view class='select' bindtap='xuanzehy'>送给好友</view>
+    <view class='select'>送给自己</view>
+    <view class='select blessing'>
+      <textarea placeholder='致特别的TA' maxlength="-1"></textarea>
+      <view class='addimg add' bindtap='addimg'>+   添加图片</view>
+      <view class='addvideo add' bindtap='addvideo'>+   添加视频</view>
+    </view>
   </view>
-  <button type="primary" form-type="submit" bindtap='confirm'>确认赠送</button>
+  <button type="primary" form-type="submit" open-type="share">确认赠送</button>
   <view class='tishi_msg'>送给自己，直接放入卡包</view>
 </view>

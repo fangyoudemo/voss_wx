@@ -7,7 +7,9 @@ Page({
     //轮播img
     bannerImg: [],
     //卡面
-    giftcards: [],
+    giftcards: [
+      
+    ],
     //首页轮播设置
     indicatorDots:true,
     indicatorColor:"#fff",

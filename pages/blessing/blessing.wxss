@@ -26,20 +26,46 @@
   font-size: 24rpx;
   margin: 27rpx 0;
 }
-.blessing_content view{
+.blessing_content .select{
   width: 100%;
   height: 108rpx;
+  box-sizing: border-box;
   border-top: 2rpx solid #f7f7f7;
   border-bottom: 2rpx solid #f7f7f7;
   margin-bottom: 16rpx;
   background: #fff;
+  font-size: 25rpx;
+  color: #000;
+  padding: 40rpx 66rpx;
 }
-.blessing_content view:last-child{
+.blessing_content .blessing{
   height: 363rpx;
+  position: relative;
 }
-
-
-
+.blessing textarea{
+  width: 100%;
+  height: 100%;
+}
+.blessing .add{
+  padding: 0;
+  margin: 0;
+  width: 200rpx;
+  height: 74rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #dcdcdc;
+  position: absolute;
+  bottom: 33rpx;
+  font-size: 24rpx;
+  color: #b6b6b6;
+  text-align: center;
+  line-height: 72rpx;
+}
+.blessing .addimg{
+  left: 33rpx;
+}
+.blessing .addvideo{
+  left: 260rpx;
+}
 button{
   width: 644rpx;
   height: 82rpx;

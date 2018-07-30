@@ -20,90 +20,93 @@ Page({
   },
   //点击提交
   formSubmit: function (e) {
-    let ProvinceIndex = this.data.ProvinceIndex
-    let cityIndex = this.data.cityIndex
-    let countyIndex = this.data.countyIndex
-    let townshipIndex = this.data.townshipIndex
-    let resProvince = this.data.resProvince
-    let rescity = this.data.rescity
-    let rescounty = this.data.rescounty
-    let restownship = this.data.restownship
-    let customerName = e.detail.value.name
-    let customerMobile = e.detail.value.telnum
-    let address = e.detail.value.address
-    let openid = userInfo.openid
-    if (customerName == "") {
-      wx.showToast({
-        icon: 'none',
-        title:"请输入姓名",
-        mask:true
-      })
-      return true
-    }
-    function isPoneAvailable(str) {
-      var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
-      if (!myreg.test(str)) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-    if (!isPoneAvailable(customerMobile)) {
-      wx.showToast({
-        icon: 'none',
-        title: "请输入正确手机号",
-        mask: true
-      })
-      return true
-    }
-    if (ProvinceIndex * cityIndex * countyIndex * townshipIndex==0) {
-      wx.showToast({
-        icon: 'none',
-        title: "请完善地址信息",
-        mask: true
-      })
-      return true
-    }
-    if (address == "") {
-      wx.showToast({
-        icon: 'none',
-        title: "请填写详细地址",
-        mask: true
-      })
-      return true
-    }
-    userInfo.provinceId = resProvince[ProvinceIndex - 1].id
-    userInfo.province = resProvince[ProvinceIndex - 1].name   
-    userInfo.cityId= rescity[cityIndex - 1].id
-    userInfo.city = rescity[cityIndex - 1].name       
-    userInfo.countyId= rescounty[countyIndex - 1].id
-    userInfo.county = rescounty[countyIndex - 1].name       
-    userInfo.townId= restownship[townshipIndex - 1].id
-    userInfo.town = restownship[townshipIndex - 1].name     
-    userInfo.customerName = e.detail.value.name
-    userInfo.customerMobile = e.detail.value.telnum
-    userInfo.address = e.detail.value.address
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/shopping',
-      data: { 
-        buyWares: userInfo.buyWares,
-        provinceId: resProvince[ProvinceIndex - 1].id,
-        cityId: rescity[cityIndex - 1].id,
-        countyId: rescounty[countyIndex - 1].id,
-        townId: restownship[townshipIndex - 1].id,
-        openid: openid
-       },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log('结算完成返回结果',res.data)
-        //运费
-        userInfo.totalFee = res.data.jd_kpl_open_cloudtrade_trade_calfreight_response.data.totalFee
-        //总价
-        userInfo.totalPrice = res.data.jd_kpl_open_cloudtrade_trade_calfreight_response.data.totalPrice
-      }
-    })
+    // let ProvinceIndex = this.data.ProvinceIndex
+    // let cityIndex = this.data.cityIndex
+    // let countyIndex = this.data.countyIndex
+    // let townshipIndex = this.data.townshipIndex
+    // let resProvince = this.data.resProvince
+    // let rescity = this.data.rescity
+    // let rescounty = this.data.rescounty
+    // let restownship = this.data.restownship
+    // let customerName = e.detail.value.name
+    // let customerMobile = e.detail.value.telnum
+    // let address = e.detail.value.address
+    // let openid = userInfo.openid
+
+
+    // //---------------------------提交信息判断---------------------------//
+    // if (customerName == "") {
+    //   wx.showToast({
+    //     icon: 'none',
+    //     title:"请输入姓名",
+    //     mask:true
+    //   })
+    //   return true
+    // }
+    // function isPoneAvailable(str) {
+    //   var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+    //   if (!myreg.test(str)) {
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // }
+    // if (!isPoneAvailable(customerMobile)) {
+    //   wx.showToast({
+    //     icon: 'none',
+    //     title: "请输入正确手机号",
+    //     mask: true
+    //   })
+    //   return true
+    // }
+    // if (ProvinceIndex * cityIndex * countyIndex * townshipIndex==0) {
+    //   wx.showToast({
+    //     icon: 'none',
+    //     title: "请完善地址信息",
+    //     mask: true
+    //   })
+    //   return true
+    // }
+    // if (address == "") {
+    //   wx.showToast({
+    //     icon: 'none',
+    //     title: "请填写详细地址",
+    //     mask: true
+    //   })
+    //   return true
+    // }
+    // userInfo.provinceId = resProvince[ProvinceIndex - 1].id
+    // userInfo.province = resProvince[ProvinceIndex - 1].name   
+    // userInfo.cityId= rescity[cityIndex - 1].id
+    // userInfo.city = rescity[cityIndex - 1].name       
+    // userInfo.countyId= rescounty[countyIndex - 1].id
+    // userInfo.county = rescounty[countyIndex - 1].name       
+    // userInfo.townId= restownship[townshipIndex - 1].id
+    // userInfo.town = restownship[townshipIndex - 1].name     
+    // userInfo.customerName = e.detail.value.name
+    // userInfo.customerMobile = e.detail.value.telnum
+    // userInfo.address = e.detail.value.address
+    // wx.request({
+    //   url: 'https://scrm.cnt-ad.net/voss/service/shopping',
+    //   data: { 
+    //     buyWares: userInfo.buyWares,
+    //     provinceId: resProvince[ProvinceIndex - 1].id,
+    //     cityId: rescity[cityIndex - 1].id,
+    //     countyId: rescounty[countyIndex - 1].id,
+    //     townId: restownship[townshipIndex - 1].id,
+    //     openid: openid
+    //    },
+    //   header: {
+    //     'content-type': 'application/json' // 默认值
+    //   },
+    //   success: function (res) {
+    //     console.log('结算完成返回结果',res.data)
+    //     //运费
+    //     userInfo.totalFee = res.data.jd_kpl_open_cloudtrade_trade_calfreight_response.data.totalFee
+    //     //总价
+    //     userInfo.totalPrice = res.data.jd_kpl_open_cloudtrade_trade_calfreight_response.data.totalPrice
+    //   }
+    // })
     wx.navigateTo({
       url: '../shopdemo/shopdemo'
     })

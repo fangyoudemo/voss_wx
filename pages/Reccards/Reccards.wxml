@@ -1,40 +1,42 @@
 <!--pages/Reccards/Reccards.wxml-->
-<view class="container">
-    <!-- 首页banner -->
-    <swiper class='banner' indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}" indicator-active-color="{{indicatorActiveColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
-      <block wx:for="{{bannerImg}}" wx:key="key">
-        <swiper-item>
-          <image src="https://scrm.cnt-ad.net{{item.Imgurl}}" class="slide-image"/>
-        </swiper-item>
-      </block>
-    </swiper>
-    <!-- 场景卡片 -->
-    <view class='scene'>
-      <text class='scene_title'>即可表心意</text>
-      <view class='scene_content'>
-         <view class='sceneCard' id="{{item.Cardid}}" wx:for="{{giftcards}}" bindtap="bindViewCoffeeOnMe">
-             <view class='sceneCard_img'>
-             <image src="{{item.Imgurl}}"></image>
-             </view>
-             <text>{{item.Name}}</text>
-         </view>
-      </view>
-    </view>
-    <!-- 购买历史 -->
-     <view class="buyhistory">
-      <image class="buyhistory-icon" src="../../images/buyhistory.png"></image>
-      <text class="buyhistory-text" bindtap='buyhistory'> 购买历史</text>
-    </view> 
-</view>
-<!-- 领取礼品卡 -->
-<view class='Mask'>
+<!-- 领取礼品卡弹窗 -->
+<view class='Mask' wx:if='{{subtype==0}}'>
   <view class='reccards'>
-    <view>收货人</view>
-    <view>手机号码</view>
-    <view>地区信息</view>
-    <view>末级地区</view>
-    <view>详细地址</view> 
-    <view></view>
-    <button>确认地址并提交</button>   
+    <view><text class='msgTit'>收货人</text><text class='magText'>{{givemsg.customerName}}</text> </view>
+    <view><text class='msgTit'>手机号码</text><text class='magText'>{{givemsg.mobile}}</text> </view>
+    <view><text class='msgTit'>地区信息</text><text class='magText'>北京市朝阳区城区</text> </view>
+    <view class='mian_inp'>
+    <image src='../../images/address.png' mode="aspectFit"></image>
+    <text class='mian_inp_tit' >末级地区</text>
+    <picker mode="selector" bindchange="bindtownship" range="{{township}}">
+      <view class="picker">{{township[townshipIndex]}}</view>
+    </picker>
+    </view>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class='mian_inp'>
+    <image src='../../images/dizhi.png' mode="aspectFit"></image>
+    <text class='mian_inp_tit' >详细地址</text>
+    <input name="address" type='text' value='{{givemsg.address}}'></input>
+    </view>
+    <view class='tishi_text'>可修改末级地区和详细地址</view>
+    <button class='conSub' dtap='conSub' type="primary" form-type="submit">确认地址并提交</button>   
+    </form>
   </view>
+</view>
+<view>
+<view class='banner'><image src='http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg'></image></view>
+<!-- <view wx:for="{{buyWares}}"> -->
+<view class='sp_name'>挪威原装进口 芙丝（VOSS）苏打水气泡水（含气）</view>
+<view class='sp_spec'>375ml*6瓶（玻璃瓶）礼品卡1张</view>
+<!-- </view> -->
+<view class='sp_price'>¥ {{givemsg.price}}</view>
+<view class='zf_content'>
+  <image class='headImg'></image>
+  <view class='zf_text'>
+    <view class='text'>刘凯宇</view>
+    <view class='text'>祝你快乐</view>
+  </view>
+  <image class='giveImg' bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
+</view>
+<button class='complete'>完成</button>
 </view>

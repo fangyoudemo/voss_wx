@@ -24,3 +24,39 @@
 ├── README.md                             //说明文档
 │
 ├──project.config.json                    //项目配置文件
+
+
+          自营发起统一下单接口
+          wx.request({
+            url: 'https://scrm.cnt-ad.net/voss/service/native',
+            data:{
+              cardid: userInfo.cardid,
+              openid: userInfo.openid,
+              attach:'',
+              orderNumber: userInfo.orderNumber
+            },
+            success:function(res){
+              console.log('统一下单接口返回',res)
+              if (res.data.errcode =='SUCCESS'){
+                //拉起支付api
+                console.log("拉起支付")
+                wx.requestPayment({
+                  'timeStamp': res.data.timeStamp,
+                  'nonceStr': res.data.nonceStr,
+                  'package': res.data.package,
+                  'signType': 'MD5',
+                  'paySign': res.data.paySign,
+                  'success': function (res) {
+                    if (res.errMsg =='requestPayment:ok'){
+                      console.log('用户成功支付，进入下一页')
+                      wx.navigateTo({
+                        url: '../blessing/blessing',
+                      })
+                    }               
+                  },
+                  'fail': function (res) { },
+                  'complete': function (res) { }
+                })
+              }
+            }
+          })

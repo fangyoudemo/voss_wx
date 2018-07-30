@@ -1,16 +1,31 @@
 <!--pages/blessing/blessing.wxml-->
 <view class='main'>
-  <view class='banner'><image src='{{sceneCard.img}}'></image></view>
-  <view class='banner_title'>{{sceneCard.title}}</view>
+  <view class='banner'><image src='{{userInfo.selcard.Imgurl}}'></image></view>
+  <view class='banner_title'>{{userInfo.selcard.Name}}</view>
   <view class='blessing_content'>
-    <view class='select' bindtap='xuanzehy'>送给好友</view>
-    <view class='select'>送给自己</view>
-    <view class='select blessing'>
-      <textarea placeholder='致特别的TA' maxlength="-1"></textarea>
-      <view class='addimg add' bindtap='addimg'>+   添加图片</view>
-      <view class='addvideo add' bindtap='addvideo'>+   添加视频</view>
+    <view class='select' bindtap='givefri'>送给好友
+    <icon type="success" size="16" color="#55ba38" wx:if='{{giveObj==1}}'/>
+    <icon type="success" size="16" color="#ccc" wx:else/>
+    </view>
+    <view class='select' bindtap='givefme'>送给自己
+    <icon type="success" size="16" color="#55ba38" wx:if='{{giveObj==2}}'/>
+    <icon type="success" size="16" color="#ccc" wx:else/>
+    </view>
+    <view class='select blessing' wx:if='{{giveObj==1}}'>
+      <textarea placeholder='致特别的TA' maxlength="-1" bindinput='bindinput'></textarea>
+      <view class='addimg add' bindtap='addimg'  wx:if='{{giveImg==""}}'>+   添加图片</view>
+      <view class='addimg add' bindtap='addimg'  wx:else>更换图片</view>
+      <view class='addvideo add' bindtap='addvideo' wx:if='{{giveVideo==""}}'>+   添加视频</view>
+      <view class='addvideo add' bindtap='addvideo'  wx:else>更换视频</view>
+      <image class='giveImg' bindtap='seeImg' mode='aspectFill' wx:if='{{giveImg!==""}}' src='{{giveImg}}'></image>
+      <video class='giveVideo' direction='0' wx:if='{{giveVideo!==""}}' src='{{giveVideo}}'></video>
     </view>
   </view>
-  <button type="primary" form-type="submit" open-type="share">确认赠送</button>
-  <view class='tishi_msg'>送给自己，直接放入卡包</view>
+  <view wx:if='{{giveObj==1}}'>
+  <button class='givefri' type="primary" form-type="submit" bindtap='giveok' open-type="share">确认赠送</button>
+  </view>
+  <view wx:if='{{giveObj==2}}'>
+  <button class='giveme' type="primary" form-type="submit" open-type="share">确认赠送</button>
+  <view class='tishi_msg'>送给自己，可在历史购买中查看</view>
+  </view>
 </view>

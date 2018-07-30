@@ -21,10 +21,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       //所选择的展示图片
-      sceneCard: userInfo.sceneCard,
-      buyWares: userInfo.buyWares,
-      conInfo: userInfo.conInfo,
-      totalPrice: userInfo.totalPrice
+      sceneCard: userInfo.selcard,
+      buyWares: userInfo.wares,
     })
     console.log(userInfo)
   },

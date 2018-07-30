@@ -106,7 +106,7 @@ Page({
   buy:function(){
     let giftcards = this.data.giftcards;
     let List = this.data.giftcards.List;
-    let totalNum = this.data.totalNum.totalPrice
+    let totalNum = this.data.totalNum
     let buyWares={"sku":[]}
     userInfo.waresPrice = this.data.totalNum
     for (let i = 0; i < List.length;i++){

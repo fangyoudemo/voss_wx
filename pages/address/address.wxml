@@ -5,7 +5,7 @@
     <image src="{{sceneCard.Imgurl}}"></image>
   </view>
   <!-- 头部标题 -->
-  <view class="banner_title"> 恋人</view>
+  <view class="banner_title">{{sceneCard.Name}}</view>
   <!-- 地址填写区 -->
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class='address_main'>

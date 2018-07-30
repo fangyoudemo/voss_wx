@@ -8,27 +8,86 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    giveObj:1,   //送给朋友：1；送给自己：2
+    giveImg:'',
+    giveVideo:'',
+    message:'',
+    uploadimg:'',
+    uploadmedia:''
   },
-  xuanzehy:function(){
-    wx.getShareInfo({
-      success:function(e){
-        console.log(e)
-      }
+  givefri:function(){
+    this.setData({
+      giveObj:1
+    })
+  },
+  givefme: function () {
+    this.setData({
+      giveObj: 2
     })
   },
   addimg:function(){
+    var that=this
     wx.chooseImage({
+      count:1,
       success:function(res){
-        console.log('选择图片返回：',res)
+        that.setData({
+          giveImg:res.tempFilePaths
+        })
+        wx.uploadFile({
+          url: 'https://scrm.cnt-ad.net/voss/service/uploadfile',
+          filePath: that.data.giveImg.toString(),
+          header: {
+            'content-type': 'multipart/form-data',
+            'accept': 'application/json'
+          },
+          formData: {
+            'orderid': 77841529600
+          },
+          name: 'filepath',
+          success: function (res) {
+            that.setData({
+              uploadimg: JSON.parse(res.data).errmsg
+            })
+          }
+        })
       }
     })
   },
+  seeImg:function(){
+    wx.previewImage({
+      urls: this.data.giveImg
+    })
+  },
   addvideo:function(){
+    var that = this
     wx.chooseVideo({
-      success: function (res) {
-        console.log('选择视频返回：', res)
+      success:function(res){
+        that.setData({
+          giveVideo: res.tempFilePath
+        })
+        wx.uploadFile({
+          url: 'https://scrm.cnt-ad.net/voss/service/uploadfile',
+          filePath: that.data.giveVideo.toString(),
+          header: {
+            'content-type': 'multipart/form-data',
+            'accept': 'application/json'
+          },
+          formData: {
+            'orderid': 77841529600
+          },
+          name: 'filepath',
+          success: function (res) {
+            that.setData({
+              uploadmedia: JSON.parse(res.data).errmsg
+            })
+          }
+        })
       }
+    })
+  },
+  bindinput:function(e){
+    this.setData({
+      message: e.detail.value
     })
   },
   /**
@@ -36,10 +95,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      //所选择的展示图片
-      // sceneCard: userInfo.sceneCard,
-      // buyWares: userInfo.buyWares,
-      // conInfo: userInfo.conInfo
+      userInfo: userInfo
     })
   },
   /**
@@ -56,7 +112,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    
   },
 
   /**
@@ -90,15 +146,47 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function (res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target)
-    }
-    return {
-      title: '送你一张恋人卡',
-      path: '/page/user?id=123',
-      imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg'
+  onShareAppMessage: function (e) {
+    var that=this
+    // 来自页面内转发按钮
+    if (e.from == 'button') {
+      return {
+        title: '送你一张恋人卡',
+        path: 'pages/Reccards/Reccards?orderid=77841529600',
+        imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg',
+        success: function (res) {
+          // 转发成功之后的回调
+          if (res.errMsg == 'shareAppMessage:ok') {
+            wx.request({
+              url: 'https://scrm.cnt-ad.net/voss/service/shareorder',
+              data: {
+                orderid: 77841529600,
+                message: that.data.message,
+                uploadimg: that.data.uploadimg,
+                uploadmedia: that.data.uploadmedia
+              },
+              success: function (res) {
+                console.log(res)
+              }
+            })
+            wx.navigateTo({
+              url: '../yiGive/yiGive',
+            })
+          }
+        },
+      　　　　fail: function (res) {
+          // 转发失败之后的回调
+          if (res.errMsg == 'shareAppMessage:fail cancel') {
+            console.log("用户取消转发")
+          } else if (res.errMsg == 'shareAppMessage:fail') {
+            console.log("转发失败")
+            // 转发失败，其中 detail message 为详细失败信息
+          }
+        }
+      }
+      wx.navigateTo({
+        url: '../yiGive/yiGive',
+      })
     }
   }
 })

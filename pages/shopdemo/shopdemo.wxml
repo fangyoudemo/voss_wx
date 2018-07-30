@@ -1,2 +1,11 @@
 <!--pages/shopdemo/shopdemo.wxml-->
-<view bindtap='shop'>下单</view>
+<view class='banner'><image src='{{sceneCard.img}}'></image></view>
+<view wx:for="{{buyWares}}">
+<view class='sp_name'>挪威原装进口 芙丝（VOSS）{{item.wares_name}}</view>
+<view class='sp_spec'>{{item.wares_specs}} {{item.buy_num}}份</view>
+</view>
+<view class='sp_price'>
+<view>{{sceneCard.title}}  礼品卡</view>
+<view><text>x1</text><text>¥  {{totalPrice}}</text></view>
+</view>
+<button bindtap='shop'>购买</button>

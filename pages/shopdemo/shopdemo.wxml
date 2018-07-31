@@ -1,11 +1,57 @@
 <!--pages/shopdemo/shopdemo.wxml-->
-<view class='banner'><image src='{{sceneCard.img}}'></image></view>
-<view wx:for="{{buyWares}}">
-<view class='sp_name'>挪威原装进口 芙丝（VOSS）{{item.wares_name}}</view>
-<view class='sp_spec'>{{item.wares_specs}} {{item.buy_num}}份</view>
+<view class='banner'>
+    <image src="{{selcard.Imgurl}}"></image>
+  </view>
+  <!-- 头部标题 -->
+  <view class="banner_title">{{selcard.Name}}</view>
+<view wx:for="{{wares}}">
+<view class='sp_name'>{{item.Productname}}</view>
+<view class='sp_spec'>{{item.Spec}}瓶    {{item.buy_num}}份</view>
 </view>
-<view class='sp_price'>
-<view>{{sceneCard.title}}  礼品卡</view>
-<view><text>x1</text><text>¥  {{totalPrice}}</text></view>
+<view class='men_inf'>
+  <view class='men_cent'>
+    <view class='men_title'>
+    <image src='../../images/name.png' mode="aspectFit"></image>
+    姓名
+    </view>
+    <view class='men_text'>{{userInfo.customerName}}</view>
+  </view>
+  <view class='men_cent'>
+    <view class='men_title'>
+    <image src='../../images/tel.png' mode="aspectFit"></image>
+    手机号    
+    </view>
+    <view class='men_text'>{{userInfo.customerMobile}}</view>
+  </view>
+  <view class='men_cent'>
+    <view class='men_title'>
+    <image src='../../images/address.png' mode="aspectFit"></image>
+    收货地区
+    </view>
+    <view class='men_text'>{{userInfo.province}}{{userInfo.city}}{{userInfo.county}}{{userInfo.town}}</view>
+  </view>
+  <view class='men_cent'>
+    <view class='men_title'>
+    <image src='../../images/address.png' mode="aspectFit"></image>
+    详细地址
+    </view>
+    <view class='men_text'>{{userInfo.address}}</view>
+  </view>
+</view>
+<view class='wares_money'>
+<view class='men_cent'>
+    <view class='men_title'>
+    <image src='../../images/address.png' mode="aspectFit"></image>
+    运费
+    </view>
+    <view class='totalFee'>+¥ {{userInfo.totalFee}}</view>
+  </view>
+  <view class='men_cent'>
+    <view class='men_title'>
+    <image src='../../images/address.png' mode="aspectFit"></image>
+    订单总价
+    </view>
+    <view class='totalPrice'>¥ {{userInfo.totalPrice}}</view>
+  </view>
 </view>
 <button bindtap='shop'>购买</button>

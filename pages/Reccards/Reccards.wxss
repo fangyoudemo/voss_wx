@@ -111,6 +111,10 @@
   color: #000;
   text-align: center;
 }
+.sp_main{
+  width: 660rpx;
+  margin: 0 auto;
+}
 .sp_name{
   margin-top: 12rpx;
 }
@@ -159,7 +163,6 @@
   z-index: 999;
 }
 .complete{
-  position: static;
   width: 384rpx;
   height: 86rpx;
   background-color: #fff;
@@ -169,4 +172,5 @@
   text-align: center;
   line-height: 86rpx;
   margin-top: 200rpx;
+  margin-bottom:120rpx;
 }

@@ -11,31 +11,35 @@ App({
       success: function (res) {
         console.log("登陆成功返回：",res)
         that.globalData.userInfo.code = res.code
-        if (res.code) {
-          wx.request({
-            url: 'https://scrm.cnt-ad.net/voss/service/login',
-            data: {
-              code: res.code
-            },
-            success: function (res){
-              console.log("服务器登陆成功返回：", res)
-              that.globalData.userInfo.openid = res.data.openid
+        //获取用户信息
+        wx.getUserInfo({
+          success: function (res) {
+            console.log('获取个人信息为：', res)
+            that.globalData.userInfo.encryptedData = res.encryptedData
+            that.globalData.userInfo.iv = res.iv
+            that.globalData.userInfo.nickName = JSON.parse(res.rawData).nickName
+            that.globalData.userInfo.avatarUrl = JSON.parse(res.rawData).avatarUrl
+            if (that.globalData.userInfo.code) {
+              wx.request({
+                url: 'https://scrm.cnt-ad.net/voss/service/login',
+                data: {
+                  code: that.globalData.userInfo.code,
+                  nickname:that.globalData.userInfo.nickName,
+                  avata: that.globalData.userInfo.avatarUrl
+                },
+                success: function (res) {
+                  console.log("服务器登陆成功返回：", res)
+                  that.globalData.userInfo.openid = res.data.openid
+                }
+              })
+              console.log('用户操作信息为:', that.globalData.userInfo)
+            } else {
+              console.log('登录失败！' + res.errMsg)
             }
-          })
-          console.log('用户操作信息为:',that.globalData.userInfo)
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
+          }
+        })
       }
     }) 
-    //获取用户信息
-    wx.getUserInfo({
-      success:function(res){
-        console.log('获取个人信息为：',res)
-        that.globalData.userInfo.encryptedData = res.encryptedData
-        that.globalData.userInfo.iv = res.iv        
-      }
-    })
     //获取商品信息
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/giftcards',

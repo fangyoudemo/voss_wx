@@ -27,9 +27,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      //所选择的展示图片
-      
+    wx.request({
+      url: 'https://scrm.cnt-ad.net/voss/service/orderHistory',
+      data:{
+        page:1,
+        openid:"ocTQ65BelDeOBBPdGRNwOaC0AYes"
+      },
+      success:function(res){
+        console.log('历史记录返回：',res)
+      }
     })
   },
 

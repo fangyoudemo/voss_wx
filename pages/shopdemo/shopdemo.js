@@ -32,7 +32,7 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-        console.log('下单成功返回数据：',res)
+
         userInfo.orderId = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.orderId
         userInfo.totalPrice = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.totalPrice        
         userInfo.uid = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.uid 
@@ -42,9 +42,7 @@ Page({
         if (resultCode==0) {
           wx.login({
             success:function(res){
-              console.log(res.code)
               userInfo.code=res.code
-              console.log(res.code, userInfo.code)
     //---------------------------发起虚拟pin收银台接口---------------------------//
               wx.request({
                 url: 'https://wxapp.m.jd.com/kwxp/wx/thirdPay.json',
@@ -62,7 +60,6 @@ Page({
                   appKey: '7ffa2e75489a40669cfbe5f49276cc05'
                 },
                 success: function (res) {
-                  console.log('虚拟pin收银台返回:', res)
                   if (res.statusCode=='200'){
                     //测试用跳转
                     wx.navigateTo({
@@ -118,7 +115,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    wx.setNavigationBarTitle({
+      //顶部标题
+      title: "确认信息"
+    })
   },
 
   /**

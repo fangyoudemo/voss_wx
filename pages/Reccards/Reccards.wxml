@@ -1,10 +1,10 @@
 <!--pages/Reccards/Reccards.wxml-->
 <!-- 领取礼品卡弹窗 -->
-<view class='Mask' wx:if='{{subtype==0}}'>
+<view class='Mask' wx:if='{{givemsg.status==1}}'>
   <view class='reccards'>
     <view><text class='msgTit'>收货人</text><text class='magText'>{{givemsg.customerName}}</text> </view>
     <view><text class='msgTit'>手机号码</text><text class='magText'>{{givemsg.mobile}}</text> </view>
-    <view><text class='msgTit'>地区信息</text><text class='magText'>北京市朝阳区城区</text> </view>
+    <view><text class='msgTit'>地区信息</text><text class='magText'>{{givemsg.address0}}</text> </view>
     <view class='mian_inp'>
     <image src='../../images/address.png' mode="aspectFit"></image>
     <text class='mian_inp_tit' >末级地区</text>
@@ -16,7 +16,7 @@
     <view class='mian_inp'>
     <image src='../../images/dizhi.png' mode="aspectFit"></image>
     <text class='mian_inp_tit' >详细地址</text>
-    <input name="address" type='text' value='{{givemsg.address}}'></input>
+    <input name="address" type='text' value='{{givemsg.addressdetail}}'></input>
     </view>
     <view class='tishi_text'>可修改末级地区和详细地址</view>
     <button class='conSub' dtap='conSub' type="primary" form-type="submit">确认地址并提交</button>   
@@ -24,19 +24,19 @@
   </view>
 </view>
 <view>
-<view class='banner'><image src='http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg'></image></view>
+<view class='banner'><image src='{{givemsg.cardimg}}'></image></view>
 <view class='sp_main' wx:for="{{givemsg.orderWareInfos}}">
 <view class='sp_name'>{{item.name}}</view>
 <view class='sp_spec'>{{item.num}}份</view>
 </view>
 <view class='sp_price'>¥ {{givemsg.price}}</view>
 <view class='zf_content'>
-  <image class='headImg'></image>
+  <image class='headImg' src='{{givemsg.avata}}'></image>
   <view class='zf_text'>
-    <view class='text'>刘凯宇</view>
-    <view class='text'>祝你快乐</view>
+    <view class='text'>{{givemsg.nickname}}</view>
+    <view class='text'>{{givemsg.message}}</view>
   </view>
-  <image class='giveImg' bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
+  <image class='giveImg' wx:if="{{givemsg.uploadpic!==''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
 </view>
 <button class='complete'>完成</button>
 </view>

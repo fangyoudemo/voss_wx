@@ -11,7 +11,9 @@
     "pages/logistics/logistics",
     "pages/Reccards/Reccards",
     "pages/shopdemo/shopdemo",
-    "pages/blessing/blessing"  
+    "pages/blessing/blessing",
+    "pages/zyblessing/zyblessing",
+    "pages/zyReccards/zyReccards"
   ],
   "window":{
     "backgroundTextStyle":"light",

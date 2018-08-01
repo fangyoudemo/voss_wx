@@ -1,4 +1,4 @@
-// pages/blessing/blessing.js
+// pages/zyblessing/zyblessing.js
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
@@ -8,16 +8,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    giveObj:1,   //送给朋友：1；送给自己：2
-    giveImg:'',
-    giveVideo:'',
-    message:'',
-    uploadimg:'',
-    uploadmedia:''
+    giveObj: 1,   //送给朋友：1；送给自己：2
+    giveImg: '',
+    giveVideo: '',
+    message: '',
+    uploadimg: '',
+    uploadmedia: ''
   },
-  givefri:function(){
+  givefri: function () {
     this.setData({
-      giveObj:1
+      giveObj: 1
     })
   },
   givefme: function () {
@@ -25,13 +25,13 @@ Page({
       giveObj: 2
     })
   },
-  addimg:function(){
-    var that=this
+  addimg: function () {
+    var that = this
     wx.chooseImage({
-      count:1,
-      success:function(res){
+      count: 1,
+      success: function (res) {
         that.setData({
-          giveImg:res.tempFilePaths
+          giveImg: res.tempFilePaths
         })
         wx.uploadFile({
           url: 'https://scrm.cnt-ad.net/voss/service/uploadfile',
@@ -53,15 +53,15 @@ Page({
       }
     })
   },
-  seeImg:function(){
+  seeImg: function () {
     wx.previewImage({
       urls: this.data.giveImg
     })
   },
-  addvideo:function(){
+  addvideo: function () {
     var that = this
     wx.chooseVideo({
-      success:function(res){
+      success: function (res) {
         that.setData({
           giveVideo: res.tempFilePath
         })
@@ -85,12 +85,12 @@ Page({
       }
     })
   },
-  bindinput:function(e){
+  bindinput: function (e) {
     this.setData({
       message: e.detail.value
     })
   },
-  giveme:function(){
+  giveme: function () {
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
       data: {
@@ -130,70 +130,70 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function (e) {
-    var that=this
-    var orderId = userInfo.orderId
+    var that = this
+    var orderid = userInfo.orderid
     // 来自页面内转发按钮
     if (e.from == 'button') {
       return {
-        title: '送你一张恋人卡',
-        path: 'pages/Reccards/Reccards?orderid=' + orderId,
-        imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg',
+        title: userInfo.selcard.Name,
+        path: 'pages/zyReccards/zyReccards?orderid=' + orderid,
+        imageUrl: userInfo.selcard.Imgurl,
         success: function (res) {
           // 转发成功之后的回调
-          if (res.errMsg == 'shareAppMessage:ok') {
-            wx.request({
-              url: 'https://scrm.cnt-ad.net/voss/service/shareorder',
-              data: {
-                orderid: orderId,
-                message: that.data.message,
-                uploadimg: that.data.uploadimg,
-                uploadmedia: that.data.uploadmedia
-              },
-              success: function (res) {
-                
-              }
-            })
+          // if (res.errMsg == 'shareAppMessage:ok') {
+          //   wx.request({
+          //     url: 'https://scrm.cnt-ad.net/voss/service/shareorder',
+          //     data: {
+          //       orderid: orderId,
+          //       message: that.data.message,
+          //       uploadimg: that.data.uploadimg,
+          //       uploadmedia: that.data.uploadmedia
+          //     },
+          //     success: function (res) {
+
+          //     }
+          //   })
             wx.navigateTo({
               url: '../yiGive/yiGive',
             })
-          }
+          // }
         },
-      　　　　fail: function (res) {
+        fail: function (res) {
           // 转发失败之后的回调
           if (res.errMsg == 'shareAppMessage:fail cancel') {
             console.log("用户取消转发")
@@ -203,9 +203,6 @@ Page({
           }
         }
       }
-      wx.navigateTo({
-        url: '../yiGive/yiGive',
-      })
     }
   }
 })

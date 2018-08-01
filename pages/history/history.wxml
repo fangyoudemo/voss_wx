@@ -1,15 +1,32 @@
 <!--pages/history/history.wxml-->
 <view class='main'>
-  <view class='main_content'  wx:for="{{datas}}" >
-    <image bindtap='orderDetails' src="http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg"></image>
+  <view class='main_content'  wx:for="{{orderList}}" >
+    <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
+    <view class='msg'>
+      <view>怦然心动</view>
+      <view>购买时间：{{item.dateSubmit}}</view>
+      <view>¥ {{item.shouldPay}}</view>
+      <view class='wuliu'>
+        <view wx:if="{{item.status== 0}}">未赠送</view>
+        <view wx:if="{{item.status==1}}">未领取</view>
+        <view wx:if="{{item.status>1}}">已领取</view>
+        <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 自营 -->
+  <view class='main_content'  wx:for="{{orderList2}}" >
+    <image bindtap='orderDetails' src="{{item.orderimg}}"></image>
     <view class='msg'>
       <view>{{item.name}}</view>
-      <view>购买时间：{{item.time}}</view>
-      <view>¥ {{item.peric}}</view>
+      <view>购买时间：{{item.dateSubmit}}</view>
+      <view>¥ {{item.shouldPay}}</view>
       <view class='wuliu'>
-        <view wx:if="{{item.get_name!== null}}">{{item.get_name}}已领取</view>
-        <view wx:else>{{item.get_name}}未领取</view>
-        <button bindtap='seeLogistics' type='primary' wx:if="{{item.get_name!== null}}">查看物流</button>
+        <view wx:if="{{item.status== 0}}">未赠送</view>
+        <view wx:if="{{item.status== 1}}">未领取</view>
+        <view wx:if="{{item.status>1}}">已领取</view>
+        <button bindtap='seeLogistics' type='primary' wx:if="{{item.status==2}}">查看物流</button>
       </view>
     </view>
   </view>

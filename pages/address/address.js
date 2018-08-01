@@ -204,6 +204,22 @@ Page({
       //所选择的展示图片
       sceneCard: userInfo.selcard
     })
+    var that = this
+    wx.request({
+      url: 'https://scrm.cnt-ad.net/voss/service/getprovinces',
+      data: {},
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        let resProvince = res.data.jd_kpl_open_cloudtrade_address_getprovinces_response.data
+        that.setData({ resProvince: resProvince });
+        for (let i = 0; i < resProvince.length; i++) {
+          that.data.Province.push(resProvince[i].name)
+        }
+        that.setData({ Province: that.data.Province });
+      }
+    })
   },
 
   /**
@@ -219,25 +235,7 @@ Page({
       content: '送朋友\r\n请填写朋友的收货信息，收到方可更改末级地址\r\n\r\n送自己\r\n请填写自己收货信息，在支付后可更改末级地址',
       showCancel:false,
       success: function (res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-        }
-      }
-    })
-    var that=this
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/getprovinces',
-      data: {},
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        let resProvince = res.data.jd_kpl_open_cloudtrade_address_getprovinces_response.data
-        that.setData({ resProvince: resProvince });
-        for (let i = 0; i < resProvince.length; i++) {
-          that.data.Province.push(resProvince[i].name)
-        }
-        that.setData({ Province: that.data.Province });
+        
       }
     })
   },

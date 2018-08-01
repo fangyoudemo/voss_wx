@@ -12,20 +12,19 @@
     <text>发货</text>
     <text>完成</text>
   </view>
-  <view class='orderNum'>订单编号：GDDZV2018062546433</view>
-  <view class='orderTime'>下单时间：2018-06-25 18:30:37</view>
+  <view class='orderNum'>订单编号：{{orderList.orderId}}</view>
+  <view class='orderTime'>下单时间：{{orderList.dateSubmit}}</view>
 </view>
 <view class='get_content'>
-  <text>芙丝  13666666666</text>
-  <text>北京市 市辖区（北京）朝阳区 朝外大街111号</text>
+  <text>{{orderList.customname}}  {{orderList.mobile}}</text>
+  <text>{{orderList.address}}</text>
 </view>
 <view class='warps_content'>
   <view class='warps_cont'>
-    <image src="http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg"></image>
+    <image src="{{orderList.orderimg}}"></image>
     <view class='warps_msg'>
-    <text>挪威原装进口 芙丝（VOSS）苏打水气泡水（含气）</text>
-    <text>375ml*6瓶（玻璃瓶）礼品卡1张</text>
-    <view><text class='warps_price'>¥ 110.50</text> <text class='warps_num'>x1</text></view>
+    <text wx:for="{{orderList.orderWareInfoVos}}" wx:key="key">{{item.name}}</text>
+    <view><text class='warps_price'>¥ {{orderList.shouldPay}}</text> <text class='warps_num'>x1</text></view>
     </view>
   </view>
 </view>

@@ -1,7 +1,7 @@
 // pages/Orderdetails/Orderdetails.js
 //获取应用实例
 var app = getApp()
-var userInfo = app.globalData.userInfo
+var history = app.globalData.history
 Page({
 
   /**
@@ -15,17 +15,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    for (let i = 0; i < history.orderList.length; i++) {
+      if(history.orderList[i].orderId ==options.orderId){
+        this.setData({
+          detail: history.orderList[i]
+        })
+      }
+    }
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.setData({
-      //所选择的展示图片
-      
-    })
+    
   },
 
   /**

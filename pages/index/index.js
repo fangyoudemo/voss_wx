@@ -4,12 +4,6 @@ var userInfo = app.globalData.userInfo
 var giftcards = app.globalData.giftcards
 Page({
   data: {
-    //轮播img
-    bannerImg: [],
-    //卡面
-    giftcards: [
-      
-    ],
     //首页轮播设置
     indicatorDots:true,
     indicatorColor:"#fff",
@@ -21,6 +15,7 @@ Page({
   },
   //点击卡面
   bindViewCoffeeOnMe: function (event) {
+    //带着
     var Cardid = event.currentTarget.id
     wx.navigateTo({
       url: '../detail/detail?Cardid=' + Cardid
@@ -36,7 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this
+    var _this=this
     //从服务器获取banner图并设置到页面中
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/banner',
@@ -45,17 +40,27 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-        that.setData({
+        _this.setData({
           bannerImg: res.data
         })
       }
     })
-    //将服务器获取商品信息设置到index.js中
-    this.setData({
-      giftcards: giftcards
-    })
+    //获取商品信息
+    wx.request({
+      url: 'https://scrm.cnt-ad.net/voss/service/giftcards',
+      data: {},
+      success: function (res) {
+        console.log('服务器返回商品信息为:', res.data)
+        for (let i = 0; i < res.data.length; i++) {
+          giftcards[i]=res.data[i]
+        }
+        //将服务器获取商品信息设置到index.js中
+        _this.setData({
+          giftcards: giftcards
+        })
+      }
+    }) 
   }
-
 })
 
 

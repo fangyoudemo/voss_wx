@@ -1,7 +1,7 @@
 // pages/history/history.js
 //获取应用实例
 var app = getApp()
-var userInfo = app.globalData.userInfo
+var history = app.globalData.history
 Page({
 
   /**
@@ -13,20 +13,23 @@ Page({
       { name: "恋人", time: "2018.06.07   17:00:23", peric: 175.00, get_name: null }
       ]
   },
-  seeLogistics:function(){
+  seeLogistics:function(e){
+    var orderId = e.target.dataset.orderid
     wx.navigateTo({
-      url: '../logistics/logistics',
+      url: '../logistics/logistics?orderId=' + orderId,
     })
   },
-  orderDetails:function(){
+  orderDetails:function(res){
+    var orderId=res.target.dataset.id
     wx.navigateTo({
-      url: '../Orderdetails/Orderdetails',
+      url: '../Orderdetails/Orderdetails?orderId=' + orderId,
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/orderHistory',
       data:{
@@ -34,7 +37,15 @@ Page({
         openid:"ocTQ65BelDeOBBPdGRNwOaC0AYes"
       },
       success:function(res){
-        console.log('历史记录返回：',res)
+        console.log('历史记录返回：', res)
+        if (res.data.jd_kpl_open_cloudtrade_order_queryorders_response.resultCode==0){
+          history.orderList = res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList
+          history.orderList2 = res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList2
+          that.setData({
+            orderList: history.orderList,
+            orderList2: history.orderList2
+          })
+        }
       }
     })
   },

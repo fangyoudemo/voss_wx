@@ -109,13 +109,17 @@
   height: 100%;
   box-sizing: border-box;
   padding-left: 40rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
   color: #adafb0;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
 }
 .wares_text text{
   display: block;
   font-size: 20rpx;
   width: 100%;
-  margin-top: 20rpx;
 }
 .wares.active .wares_text{
   color: #000;

@@ -48,6 +48,8 @@
   text-align: center;
 }
 .sp_name{
+  width: 80%;
+  margin: 0 auto;
   margin-top: 12rpx;
 }
 .sp_spec{

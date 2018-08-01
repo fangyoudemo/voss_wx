@@ -30,7 +30,7 @@ Page({
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/modifyaddress',
       data:{
-        orderid: 77841529600,
+        orderid: that.data.orderid,
         townId: townId,
         addressDetail: addressDetail
       },
@@ -41,13 +41,14 @@ Page({
           wx.request({
             url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
             data:{
-              orderid: 77841529600
+              orderid: that.data.orderid
             },
             success:function(res){
               console.log('解锁订单返回信息：', res)
               if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode==0){
+                that.data.givemsg.status=2
                 that.setData({
-                  subtype: 1
+                  givemsg: that.data.givemsg
                 })
               }else{
                 console.log("订单确认失败，请联系客服")
@@ -64,19 +65,23 @@ Page({
   onLoad: function (options) {
     var that=this
     var orderid = options.orderid
+    this.setData({
+      orderid: orderid
+    })
     //获取页面信息
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/orderdetail',
-      data: { orderid: 77841529600},
+      data: { orderid: orderid},
       success:function(res){
         console.log('领取页面获取信息返回：', res.data.jd_kpl_open_cloudtrade_order_getdetail_response.data)
         that.setData({
           givemsg: res.data.jd_kpl_open_cloudtrade_order_getdetail_response.data
         })
+        if (that.data.givemsg.status==1){
         //订单是否可修改地址
         wx.request({
           url: 'https://scrm.cnt-ad.net/voss/service/modifyorder',
-          data: { orderid: 77841529600},
+          data: { orderid: orderid},
           success:function(res){
             console.log(res)
             //获取末级地址
@@ -101,6 +106,9 @@ Page({
             })
           }
         })
+        }
+
+
       }
     })
   }

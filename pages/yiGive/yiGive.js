@@ -7,8 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    sp_name: "挪威原装进口 芙丝（VOSS）苏打水气泡水（含气)",
-    sp_guige: "375ml* 6瓶（玻璃瓶）礼品卡1张"
+    
   },
   toIndex:function(){
     wx.reLaunch({
@@ -23,8 +22,9 @@ Page({
       //所选择的展示图片
       sceneCard: userInfo.selcard,
       buyWares: userInfo.wares,
+      wares: userInfo.wares,
+      totalPrice: userInfo.totalPrice
     })
-    console.log(userInfo)
   },
 
   /**

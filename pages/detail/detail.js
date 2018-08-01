@@ -14,7 +14,7 @@ Page({
       { gift_id: 2, gift_name: "玻璃瓶（不含气）" },
       { gift_id: 3, gift_name: "塑料瓶（含气）" }        
     ],
-    wares:[ ],
+    wares:[],
     detailsImg:"http://i1.bvimg.com/654292/8bd0b01fe7c3ae12.jpg",  //商品详情图片
     wares_contentId:1,   //规格展示列表控制 
     catalogSelect:1,  //选择礼品选中效果
@@ -23,12 +23,116 @@ Page({
     totalNum:0,  //总数
     flag:true,   //商品详情显示控制
   },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    var Cardid = options.Cardid
+    console.log(giftcards)
+    for (let i = 0; i < giftcards.length;i++){
+      if (giftcards[i].Id == Cardid){
+        this.setData({
+          List: giftcards[i].List
+        })
+        //向全局数据userInfo添加选择卡面信息
+        userInfo.selcard = { Imgurl: giftcards[i].Imgurl, Cardid: giftcards[i].Cardid, Name: giftcards[i].Name, Id: giftcards[i].Id, Fromid: giftcards[i].Fromid }
+      }
+    }   
+    for (let i = 0; i < this.data.List.length;i++){
+      this.data.List[i].buy_num=0
+      this.data.List[i].Unitprice = this.data.List[i].Unitprice/100
+      this.data.List[i].sid = i
+    }
+    this.setData({
+      List: this.data.List,
+      selcard: userInfo.selcard
+    })
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+    wx.setNavigationBarTitle({
+      //顶部标题
+      title: userInfo.selcard.Name
+    })
+  },
+  //购买
+  buy: function () {
+    let List = this.data.List;
+    let totalNum = this.data.totalNum
+    let buyWares = { "sku": [] }
+    userInfo.waresPrice = this.data.totalNum
+    userInfo.wares=[]
+    for (let i = 0; i < List.length; i++) {
+      if (List[i].buy_num > 0) {
+        //向服务器发起请求携带data
+        buyWares.sku.push({ "Id": List[i].Skuid, "buy_num": List[i].buy_num })
+        //向全局数据userInfo添加选购商品信息
+        userInfo.wares.push(List[i])
+        userInfo.buyWares = buyWares
+      }
+    }
+    if (totalNum == 0) {
+      wx.showToast({
+        icon: 'none',
+        title: "不好意思,您还没选择商品",
+        mask: true
+      })
+    } else {
+      if (userInfo.selcard.Fromid == 1) {
+        console.log("进入填写京东物流")
+        //向服务器发起请求计算运费
+        wx.navigateTo({
+          url: '../address/address'
+        })
+      }else{
+        console.log("自营发起统一下单接口")
+        wx.request({
+          url: 'https://scrm.cnt-ad.net/voss/service/native',
+          data: {
+            cardid: userInfo.cardid,
+            openid: userInfo.openid,
+            attach: '',
+            orderNumber: userInfo.orderNumber
+          },
+          success: function (res) {
+            console.log(res)
+            wx.navigateTo({
+              url: '../zyblessing/zyblessing',
+            })
+            // if (res.data.errcode == 'SUCCESS') {
+            //   //拉起支付api
+            //   console.log("拉起支付")
+            //   wx.requestPayment({
+            //     'timeStamp': res.data.timeStamp,
+            //     'nonceStr': res.data.nonceStr,
+            //     'package': res.data.package,
+            //     'signType': 'MD5',
+            //     'paySign': res.data.paySign,
+            //     'success': function (res) {
+            //       if (res.errMsg == 'requestPayment:ok') {
+            //         console.log('用户成功支付，进入下一页')
+            //         wx.navigateTo({
+            //           url: '../blessing/blessing',
+            //         })
+            //       }
+            //     },
+            //     'fail': function (res) { },
+            //     'complete': function (res) { }
+            //   })
+            // }
+          }
+        })
+      }
+    }
+  },
   //计算总价
   getTotalPrice() {
-    let giftcards = this.data.giftcards;
+    let List = this.data.List;
     let total = 0;
-    for (let i = 0; i < giftcards.List.length; i++) {
-      total += giftcards.List[i].buy_num * giftcards.List[i].Unitprice;
+    for (let i = 0; i < List.length; i++) {
+      total += List[i].buy_num * List[i].Unitprice;
     }
     this.setData({
       giftcards: giftcards,
@@ -37,10 +141,10 @@ Page({
   },
   //计算总数量
   getTotalNum() {
-    let giftcards = this.data.giftcards;
+    let List = this.data.List;
     let total = 0;
-    for (let i = 0; i < giftcards.List.length; i++) {
-      total += giftcards.List[i].buy_num
+    for (let i = 0; i < List.length; i++) {
+      total += List[i].buy_num
     }
     this.setData({
       giftcards: giftcards,
@@ -50,39 +154,48 @@ Page({
   //点击选择礼品控制
   selectionGift: function (event) {
     var giftId = event.currentTarget.id
-      this.setData({
-        wares_contentId: giftId,
-        catalogSelect: giftId
-      })
+    var List = this.data.List
+    if (giftId!=3){
+      for(let i=0;i<List.length;i++){
+        if (List[i].Skuid == 4044753){
+            List[i].Ptype = giftId            
+        }
+      }
+    }
+    this.setData({
+      wares_contentId: giftId,
+      catalogSelect: giftId,
+      List: List
+    })
   },
   //添加商品
-  addNum:function(e){
+  addNum: function (e) {
     const index = e.currentTarget.dataset.index;
-    let giftcards = this.data.giftcards;  
-    let num = giftcards.List[index - 1].buy_num;
+    let List = this.data.List;
+    let num = List[index].buy_num;
     num = num + 1;
-    giftcards.List[index-1].buy_num = num;
+    List[index].buy_num = num;
     this.setData({
-      giftcards: giftcards
+      List: List
     });
     this.getTotalPrice();
     this.getTotalNum();
   },
   //减少商品
-  minusNum:function(e){
+  minusNum: function (e) {
     const index = e.currentTarget.dataset.index;
-    let giftcards = this.data.giftcards;
-    let num = giftcards.List[index-1].buy_num;
+    let List = this.data.List;
+    let num = List[index].buy_num;
     num = num - 1;
-    giftcards.List[index-1].buy_num = num;
+    List[index].buy_num = num;
     this.setData({
-      giftcards: giftcards
-    });  
+      List: List
+    });
     this.getTotalPrice();
     this.getTotalNum();
   },
   //展示商品详情
-  show:function(e){
+  show: function (e) {
     const index = e.currentTarget.dataset.index;
     let wares = this.data.wares;
     this.setData({
@@ -94,7 +207,7 @@ Page({
     })
   },
   //关闭商品详情
-  shut:function(){
+  shut: function () {
     this.setData({
       flag: true,
     });
@@ -102,69 +215,20 @@ Page({
       title: this.data.sceneCard.title
     })
   },
-  //购买
-  buy:function(){
-    let giftcards = this.data.giftcards;
-    let List = this.data.giftcards.List;
-    let totalNum = this.data.totalNum
-    let buyWares={"sku":[]}
-    userInfo.waresPrice = this.data.totalNum
-    for (let i = 0; i < List.length;i++){
-      if (List[i].buy_num>0){
-        //向服务器发起请求携带data
-        buyWares.sku.push({ "Id": List[i].Skuid, "buy_num": List[i].buy_num })  
-        //向全局数据userInfo添加选购商品信息
-        userInfo.wares.push(List[i])   
-        userInfo.buyWares = buyWares    
-      }
-    }
-    if (totalNum==0){
-      wx.showToast({
-        icon: 'none',
-        title: "不好意思,您还没选择商品",
-        mask: true
-      })
-    }else{
-      if (giftcards.Fromid==1){
-        console.log("进入填写京东物流")
-        //向服务器发起请求计算运费
-              wx.navigateTo({
-                url: '../address/address'
-              })
-      }
-    } 
-  },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-    var Cardid = options.Cardid
-    for (let i = 0; i < giftcards.length;i++){
-      if (giftcards[i].Cardid == Cardid){
-        this.setData({
-          giftcards: giftcards[i]
-        })
-      }
-    }
-    for (let i = 0; i < this.data.giftcards.List.length;i++){
-      this.data.giftcards.List[i].buy_num=0
-      this.data.giftcards.List[i].Unitprice = this.data.giftcards.List[i].Unitprice/100
-    }
-    this.setData({
-      giftcards: this.data.giftcards
-    })
-    //向全局数据userInfo添加选择卡面信息
-    userInfo.selcard = { Imgurl: this.data.giftcards.Imgurl, Cardid: this.data.giftcards.Cardid, Name: this.data.giftcards.Name, Id: this.data.giftcards.Id}
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-    wx.setNavigationBarTitle({
-      //顶部标题
-      title: this.data.giftcards.Name
-    })
-  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /**
    * 生命周期函数--监听页面显示
@@ -200,7 +264,6 @@ Page({
   onReachBottom: function() {
 
   },
-
   /**
    * 用户点击右上角分享
    */

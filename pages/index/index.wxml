@@ -11,7 +11,7 @@
     <view class='scene'>
       <text class='scene_title'>即可表心意</text>
       <view class='scene_content'>
-         <view class='sceneCard' id="{{item.Cardid}}" wx:for="{{giftcards}}" bindtap="bindViewCoffeeOnMe">
+         <view class='sceneCard' id="{{item.Id}}" wx:for="{{giftcards}}" wx:key="key" bindtap="bindViewCoffeeOnMe">
              <view class='sceneCard_img'>
              <image src="{{item.Imgurl}}"></image>
              </view>

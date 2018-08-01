@@ -6,7 +6,6 @@
   overflow: hidden;
   margin: 0 auto;
   margin-top: 50rpx;
-  border: 1rpx solid red;
 }
 .banner image{
   width: 100%;

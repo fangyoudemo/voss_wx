@@ -41,7 +41,7 @@ Page({
             'accept': 'application/json'
           },
           formData: {
-            'orderid': 77841529600
+            
           },
           name: 'filepath',
           success: function (res) {
@@ -73,7 +73,7 @@ Page({
             'accept': 'application/json'
           },
           formData: {
-            'orderid': 77841529600
+            
           },
           name: 'filepath',
           success: function (res) {

@@ -1,19 +1,19 @@
 <!--pages/Reccards/Reccards.wxml-->
 <!-- 领取礼品卡弹窗 -->
 <view>
-<view class='banner'><image src='{{givemsg.cardimg}}'></image></view>
-<view class='sp_main' wx:for="{{givemsg.orderWareInfos}}">
-<view class='sp_name'>{{item.name}}</view>
-<view class='sp_spec'>{{item.num}}份</view>
+<view class='banner'><image src='{{givemsg.Order.OrderImg}}'></image></view>
+<view class='sp_main' wx:for="{{givemsg.ProductList}}">
+<view class='sp_name'>{{item.GoodsName}}</view>
+<view class='sp_spec'>{{item.GoodsNumber}}份</view>
 </view>
 <view class='sp_price'>¥ {{givemsg.price}}</view>
 <view class='zf_content'>
-  <image class='headImg' src='{{givemsg.avata}}'></image>
+  <image class='headImg' src='{{givemsg.Userinfo.Avata}}'></image>
   <view class='zf_text'>
-    <view class='text'>{{givemsg.nickname}}</view>
-    <view class='text'>{{givemsg.message}}</view>
+    <view class='text'>{{givemsg.Userinfo.Nickname}}</view>
+    <view class='text'>{{givemsg.Order.Message}}</view>
   </view>
-  <image class='giveImg' wx:if="{{givemsg.uploadpic!==''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
+  <image class='giveImg' wx:if="{{givemsg.Order.Uploadpic!==''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.Order.Uploadpic}}'></image>
 </view>
-<button class='complete'>完成</button>
+<button class='complete' bindtap='use'>立即使用</button>
 </view>

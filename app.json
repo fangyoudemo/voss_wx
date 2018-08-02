@@ -13,7 +13,10 @@
     "pages/shopdemo/shopdemo",
     "pages/blessing/blessing",
     "pages/zyblessing/zyblessing",
-    "pages/zyReccards/zyReccards"
+    "pages/zyReccards/zyReccards",
+    "pages/yfcard/yfcard",
+    "pages/usecard/usecard",
+    "pages/tblessing/tblessing"
   ],
   "window":{
     "backgroundTextStyle":"light",

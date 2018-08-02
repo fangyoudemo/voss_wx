@@ -1,40 +1,25 @@
-// pages/yiGive/yiGive.js
-var app = getApp()
-var userInfo = app.globalData.userInfo
+// pages/yfcard/yfcard.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
+  
   },
-  toIndex:function(){
-    wx.reLaunch({
-      url:'../index/index'
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      //所选择的展示图片
-      sceneCard: userInfo.selcard,
-      buyWares: userInfo.wares,
-      wares: userInfo.wares,
-      totalfee: userInfo.totalfee
-    })
+  
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.setNavigationBarTitle({
-      //顶部标题
-      title: "礼品卡"
-    })
+  
   },
 
   /**

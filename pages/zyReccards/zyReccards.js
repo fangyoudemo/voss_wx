@@ -4,16 +4,17 @@ var userInfo = app.globalData.userInfo
 var giftcards = app.globalData.giftcards
 Page({
   data: {
-    township: ['请选择街道'],
-    townshipIndex: 0,
-    subtype: 0,   //控制弹窗显示
-  },
-  bindtownship: function (e) {
-    this.setData({ townshipIndex: e.detail.value });
   },
   seeImg: function () {
     wx.previewImage({
-      urls: ('https://scrm.cnt-ad.net' + this.data.givemsg.uploadpic).split(',')
+      urls: ('https://scrm.cnt-ad.net' + this.data.givemsg.Order.Uploadpic).split(',')
+    })
+  },
+  use:function(){
+    var orderid = this.data.orderid
+    var selcard = this.data.givemsg.Order.OrderImg
+    wx.navigateTo({
+      url: '../usecard/usecard?orderid=' + orderid + '&selcard=' + selcard,
     })
   },
   /**
@@ -32,6 +33,7 @@ Page({
       data: { orderid: orderid},
       success:function(res){
         console.log(res)
+        that.setData({ givemsg:res.data})
       }
     })
   }

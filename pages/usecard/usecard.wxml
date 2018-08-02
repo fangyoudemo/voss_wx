@@ -1,0 +1,29 @@
+<!--pages/address/address.wxml-->
+<view class='main'>
+  <!-- 头部banner -->
+  <view class='banner'>
+    <image src="{{selcard}}"></image>
+  </view>
+  <!-- 头部标题 -->
+  <!-- 地址填写区 -->
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class='address_main'>
+      <view class='main_inp'>
+        <image src='../../images/name.png' mode="aspectFit"></image>
+        <text>收货人</text>
+        <input name="name" type='text' placeholder='姓名' placeholder-style='font-size: 24rpx;color: #84888a;'></input>
+      </view>
+      <view class='main_inp'>
+        <image src='../../images/tel.png' mode="aspectFit"></image>
+        <text >手机号码</text>  
+        <input name="telnum" type='number' placeholder='请输入11位手机号' placeholder-style='font-size: 24rpx;color: #84888a;'></input>    
+      </view>
+      <view class='main_inp'>
+        <image src='../../images/dizhi.png' mode="aspectFit"></image>
+        <text>详细地址</text>
+        <input name="address" type='text' placeholder='收货地址' placeholder-style='font-size: 24rpx;color: #84888a;'></input>
+      </view>
+    </view>
+    <button type="primary" form-type="submit" bindtap='ok'>确认</button>
+  </form>
+</view>

@@ -1,6 +1,9 @@
+page{
+  background-color: #f9f9f9;  
+}
 .container{
   width: 100%;
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
 }
 .banner{
   width: 100%;

@@ -62,7 +62,7 @@ Page({
     let List = this.data.List;
     let totalNum = this.data.totalNum
     let buyWares = { "sku": [] }
-    userInfo.waresPrice = this.data.totalNum
+    userInfo.waresPrice = this.data.totalPrice
     userInfo.wares=[]
     for (let i = 0; i < List.length; i++) {
       if (List[i].buy_num > 0) {
@@ -91,13 +91,16 @@ Page({
         wx.request({
           url: 'https://scrm.cnt-ad.net/voss/service/native',
           data: {
-            cardid: userInfo.cardid,
+            cardid: userInfo.selcard.Id,
             openid: userInfo.openid,
             attach: '',
-            orderNumber: userInfo.orderNumber
+            buyWares: userInfo.buyWares
           },
           success: function (res) {
             console.log(res)
+            userInfo.orderid = res.data.orderid
+            userInfo.totalfee = res.data.totalfee
+            //测试用跳转
             wx.navigateTo({
               url: '../zyblessing/zyblessing',
             })
@@ -110,16 +113,21 @@ Page({
             //     'package': res.data.package,
             //     'signType': 'MD5',
             //     'paySign': res.data.paySign,
-            //     'success': function (res) {
-            //       if (res.errMsg == 'requestPayment:ok') {
+            //     success: function (res) {
+            //       console.log(res)
+            //       if (res.errMsg == "requestPayment:ok") {
             //         console.log('用户成功支付，进入下一页')
             //         wx.navigateTo({
-            //           url: '../blessing/blessing',
+            //           url: '../zyblessing/zyblessing',
             //         })
             //       }
             //     },
-            //     'fail': function (res) { },
-            //     'complete': function (res) { }
+            //     fail: function (res) { 
+                  
+            //     },
+            //     complete: function (res) {
+                  
+            //      }
             //   })
             // }
           }

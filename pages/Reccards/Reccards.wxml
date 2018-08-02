@@ -38,5 +38,5 @@
   </view>
   <image class='giveImg' wx:if="{{givemsg.uploadpic!==''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
 </view>
-<button class='complete'>完成</button>
+<button class='complete' bindtap='complete'>完成</button>
 </view>

@@ -1,4 +1,4 @@
-// pages/zyblessing/zyblessing.js
+// pages/blessing/blessing.js
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
@@ -13,7 +13,7 @@ Page({
     giveVideo: '',
     message: '',
     uploadimg: '',
-    uploadmedia:''
+    uploadmedia: ''
   },
   givefri: function () {
     this.setData({
@@ -41,7 +41,7 @@ Page({
             'accept': 'application/json'
           },
           formData: {
-            
+            'orderid': 77841529600
           },
           name: 'filepath',
           success: function (res) {
@@ -73,7 +73,7 @@ Page({
             'accept': 'application/json'
           },
           formData: {
-            
+            'orderid': 77841529600
           },
           name: 'filepath',
           success: function (res) {
@@ -91,19 +91,20 @@ Page({
     })
   },
   giveme: function () {
-    var that=this
     wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/selforderdetail',
-      data: { 
-        openid: userInfo.openid,
-        orderid: userInfo.orderid 
-        },
+      url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
+      data: {
+        orderid: this.data.orderId
+      },
       success: function (res) {
-        console.log(res)
-        that.setData({ givemsg: res.data })
-        wx.navigateTo({
-          url: '../history/history',
-        })
+        console.log('解锁订单返回信息：', res)
+        if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode == 0) {
+          wx.navigateTo({
+            url: '../history/history',
+          })
+        } else {
+          console.log("订单确认失败，请联系客服")
+        }
       }
     })
   },
@@ -112,8 +113,10 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userInfo: userInfo
+      orderimg: options.orderimg,
+      orderId: options.orderId
     })
+    userInfo.totalfee = options.shouldPay
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -165,20 +168,20 @@ Page({
    */
   onShareAppMessage: function (e) {
     var that = this
-    var orderid = userInfo.orderid
+    var orderId = this.data.orderId
     // 来自页面内转发按钮
     if (e.from == 'button') {
       return {
-        title: userInfo.selcard.Name,
-        path: 'pages/zyReccards/zyReccards?orderid=' + orderid,
-        imageUrl: userInfo.selcard.Imgurl,
+        title: '送你一张恋人卡',
+        path: 'pages/Reccards/Reccards?orderid=' + orderId,
+        imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg',
         success: function (res) {
           // 转发成功之后的回调
           if (res.errMsg == 'shareAppMessage:ok') {
             wx.request({
-              url: 'https://scrm.cnt-ad.net/voss/service/selfshareorder',
+              url: 'https://scrm.cnt-ad.net/voss/service/shareorder',
               data: {
-                orderid: orderid,
+                orderid: orderId,
                 message: that.data.message,
                 uploadimg: that.data.uploadimg,
                 uploadmedia: that.data.uploadmedia
@@ -188,7 +191,7 @@ Page({
               }
             })
             wx.navigateTo({
-              url: '../yiGive/yiGive',
+              url: '../history/history',
             })
           }
         },
@@ -202,6 +205,9 @@ Page({
           }
         }
       }
+      wx.navigateTo({
+        url: '../yiGive/yiGive',
+      })
     }
   }
 })

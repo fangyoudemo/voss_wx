@@ -11,6 +11,7 @@
         <view wx:if="{{item.status==1}}">未领取</view>
         <view wx:if="{{item.status>1}}">已领取</view>
         <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
       </view>
     </view>
   </view>

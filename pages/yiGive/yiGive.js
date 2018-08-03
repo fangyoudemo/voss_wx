@@ -23,7 +23,7 @@ Page({
       sceneCard: userInfo.selcard,
       buyWares: userInfo.wares,
       wares: userInfo.wares,
-      totalfee: userInfo.totalfee
+      totalPrice: userInfo.totalPrice
     })
   },
 

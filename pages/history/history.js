@@ -34,6 +34,13 @@ Page({
       url: '../tblessing/tblessing?orderId=' + orderId + '&orderimg=' + orderimg + '&shouldPay=' + shouldPay
     })
   },
+  user:function(e){
+    var orderId = e.target.dataset.id
+    var orderimg = e.target.dataset.orderimg
+    wx.navigateTo({
+      url: '../usecard/usecard?orderid=' + orderId + '&selcard=' + orderimg
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -46,14 +53,17 @@ Page({
         openid: userInfo.openid
       },
       success:function(res){
+        console.log('自营订单：', res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.selforderList)        
         console.log('京东订单：', res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList)
-        console.log('自营订单：', res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList2)
+        console.log('我收到的订单：', res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList2)
         if (res.data.jd_kpl_open_cloudtrade_order_queryorders_response.resultCode==0){
           history.orderList = res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList
           history.orderList2 = res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.orderList2
+          history.selforderList = res.data.jd_kpl_open_cloudtrade_order_queryorders_response.data.selforderList
           that.setData({
             orderList: history.orderList,
-            orderList2: history.orderList2
+            orderList2: history.orderList2,
+            selforderList: history.selforderList
           })
         }
         // 转化时间格式
@@ -79,18 +89,26 @@ Page({
         }
         let orderList = that.data.orderList
         let orderList2 = that.data.orderList2
+        let selforderList = that.data.selforderList
         for (let i = 0; i < orderList.length;i++){
           orderList[i].dateSubmit = new Date(orderList[i].dateSubmit).Format("yyyy-MM-dd hh:mm:ss")
         }
         for (let i = 0; i < orderList2.length; i++) {
-          orderList2[i].dateSubmit = new Date(orderList2[i].dateSubmit).Format("yyyy-MM-dd hh:mm:ss")
+          orderList2[i].dateSubmit = new Date(orderList2[i].dateSubmit * 1000).toLocaleString()
+          orderList2[i].shouldPay = orderList2[i].shouldPay*0.01
+        }
+        for (let i = 0; i < selforderList.length; i++) {
+          selforderList[i].dateSubmit = new Date(selforderList[i].dateSubmit * 1000).toLocaleString()
+          selforderList[i].shouldPay = selforderList[i].shouldPay * 0.01
         }
         that.setData({
           orderList: orderList,
-          orderList2: orderList2
+          orderList2: orderList2,
+          selforderList: selforderList
         })
         history.orderList = orderList
         history.orderList2 = orderList2
+        history.selforderList = selforderList
       }
     })
   },

@@ -32,7 +32,9 @@ Page({
       data:{
         orderid: that.data.orderid,
         townId: townId,
-        addressDetail: addressDetail
+        addressDetail: addressDetail,
+        openid: userInfo.openid,
+        nickName: userInfo.nickName
       },
       success:function(res){
         console.log('修改地址返回信息：',res)

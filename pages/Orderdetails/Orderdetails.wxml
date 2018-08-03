@@ -1,6 +1,6 @@
 <!--pages/Orderdetails/Orderdetails.wxml-->
 <view class='header'>
-  <image src="http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg" class='banner'></image>
+  <image src="{{detail.orderimg}}" class='banner'></image>
   <view class='header_content'>
     <view>特享卡</view>
     <view>¥ {{detail.shouldPay}}</view>
@@ -13,7 +13,9 @@
 <view><text>使用详情：</text> 
   <text wx:if="{{detail.status== 0}}">未赠送</text>
   <text wx:if="{{detail.status== 1}}">未领取</text>
-  <text wx:if="{{detail.status== 2}}">已领取</text>
+  <text wx:if="{{detail.status==2}}">已领取</text>
+  <text wx:if="{{detail.status==3}}">未使用</text>
+  <text wx:if="{{detail.status==4}}">已使用</text>
 </view>
 </view>
 <view class='sh_tel'>售后电话：400000000</view>

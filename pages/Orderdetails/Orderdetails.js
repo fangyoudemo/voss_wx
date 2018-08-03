@@ -22,6 +22,20 @@ Page({
         })
       }
     }
+    for (let i = 0; i < history.orderList2.length; i++) {
+      if (history.orderList2[i].orderId == options.orderId) {
+        this.setData({
+          detail: history.orderList2[i]
+        })
+      }
+    }
+    for (let i = 0; i < history.selforderList.length; i++) {
+      if (history.selforderList[i].orderId == options.orderId) {
+        this.setData({
+          orderList: history.selforderList[i]
+        })
+      }
+    }
   },
 
   /**

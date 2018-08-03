@@ -99,37 +99,33 @@ Page({
           success: function (res) {
             console.log(res)
             userInfo.orderid = res.data.orderid
-            userInfo.totalfee = res.data.totalfee
-            //测试用跳转
-            wx.navigateTo({
-              url: '../zyblessing/zyblessing',
-            })
-            // if (res.data.errcode == 'SUCCESS') {
-            //   //拉起支付api
-            //   console.log("拉起支付")
-            //   wx.requestPayment({
-            //     'timeStamp': res.data.timeStamp,
-            //     'nonceStr': res.data.nonceStr,
-            //     'package': res.data.package,
-            //     'signType': 'MD5',
-            //     'paySign': res.data.paySign,
-            //     success: function (res) {
-            //       console.log(res)
-            //       if (res.errMsg == "requestPayment:ok") {
-            //         console.log('用户成功支付，进入下一页')
-            //         wx.navigateTo({
-            //           url: '../zyblessing/zyblessing',
-            //         })
-            //       }
-            //     },
-            //     fail: function (res) { 
+            userInfo.totalPrice = res.data.totalfee
+            if (res.data.errcode == 'SUCCESS') {
+              //拉起支付api
+              console.log("拉起支付")
+              wx.requestPayment({
+                'timeStamp': res.data.timeStamp,
+                'nonceStr': res.data.nonceStr,
+                'package': res.data.package,
+                'signType': 'MD5',
+                'paySign': res.data.paySign,
+                success: function (res) {
+                  console.log(res)
+                  if (res.errMsg == "requestPayment:ok") {
+                    console.log('用户成功支付，进入下一页')
+                    wx.navigateTo({
+                      url: '../zyblessing/zyblessing',
+                    })
+                  }
+                },
+                fail: function (res) { 
                   
-            //     },
-            //     complete: function (res) {
+                },
+                complete: function (res) {
                   
-            //      }
-            //   })
-            // }
+                 }
+              })
+            }
           }
         })
       }

@@ -91,6 +91,18 @@ Page({
     })
   },
   giveme:function(){
+    console.log(userInfo.orderId, userInfo.openid)
+    wx.request({
+      url: 'https://scrm.cnt-ad.net/voss/service/modifyaddress',
+      data: {
+        orderid: userInfo.orderId,
+        townId: userInfo.townId,
+        addressDetail: userInfo.address,
+        openid: userInfo.openid,
+        nickName: userInfo.nickName
+      },
+      success:function(res){
+        if (res.data.jd_kpl_open_cloudtrade_order_modifyaddress_response.resultCode == 0) {
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
       data: {
@@ -105,6 +117,11 @@ Page({
         } else {
           console.log("订单确认失败，请联系客服")
         }
+      }
+    })
+      }else{
+          console.log("订单确认失败，请联系客服")
+      }
       }
     })
   },

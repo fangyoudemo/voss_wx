@@ -7,6 +7,6 @@
 </view>
 <view class='sp_price'>
 <view>{{sceneCard.Name}}  礼品卡</view>
-<view><text>x1</text><text>¥  {{totalfee}}</text></view>
+<view><text>x1</text><text>¥  {{totalPrice}}</text></view>
 </view>
 <button bindtap='toIndex'>完成</button>

@@ -1,0 +1,12 @@
+<!-- 授权窗口开始 -->
+<view class='dialog-container'>
+    <view class='dialog-mask'></view>
+    <view class='dialog-info'>
+        <view class='dialog-title'>授权提示</view>
+        <view class='dialog-content'>为了您更好的体验,请先同意授权</view>
+        <view class='dialog-footer'>
+          <button class='dialog-btn' open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo'>确认</button>
+        </view>
+    </view>
+</view>
+<!-- 授权窗口结束 -->

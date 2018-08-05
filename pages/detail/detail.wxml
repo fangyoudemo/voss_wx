@@ -49,7 +49,7 @@
   <view class='bottom_buybtn' bindtap='buy'  bindgetuserinfo="onGotUserInfo">结算</view>
 </view>
 <!-- 商品详情 -->
-<view class='wares_box' hidden='{{flag}}'>
+<!-- <view class='wares_box' hidden='{{flag}}'>
   <view class='wares_details'>
     <view class='shut' bindtap='shut'><image src='../../images/shut_icon.png'></image></view>
     <view class='wares_details_img'>
@@ -64,4 +64,4 @@
     </view>
     </scroll-view>
   </view>
-</view>
+</view> -->

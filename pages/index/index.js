@@ -2,6 +2,7 @@
 var app = getApp()
 var userInfo = app.globalData.userInfo
 var giftcards = app.globalData.giftcards
+var utils = require('../../utils/util.js')
 Page({
   data: {
     //首页轮播设置
@@ -33,33 +34,26 @@ Page({
   onLoad: function (options) {
     var _this=this
     //从服务器获取banner图并设置到页面中
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/banner',
-      data: {},
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        _this.setData({
-          bannerImg: res.data
-        })
-      }
+    var url = '/voss/service/banner'
+    var data={}
+    utils.request(url, data, function(res){
+      _this.setData({
+        bannerImg: res.data
+      })
     })
     //获取商品信息
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/giftcards',
-      data: {},
-      success: function (res) {
-        console.log('服务器返回商品信息为:', res.data)
-        for (let i = 0; i < res.data.length; i++) {
-          giftcards[i]=res.data[i]
-        }
-        //将服务器获取商品信息设置到index.js中
-        _this.setData({
-          giftcards: giftcards
-        })
+    var url ='/voss/service/giftcards'
+    var data = {}
+    utils.request(url, data, function (res) {
+      console.log('服务器返回商品信息为:', res.data)
+      for (let i = 0; i < res.data.length; i++) {
+        giftcards[i] = res.data[i]
       }
-    }) 
+      //将服务器获取商品信息设置到index.js中
+      _this.setData({
+        giftcards: giftcards
+      })
+    })
   }
 })
 

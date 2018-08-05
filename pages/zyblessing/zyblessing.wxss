@@ -1,4 +1,7 @@
 /* pages/blessing/blessing.wxss */
+page{
+  background: #f9f9f9;  
+}
 .main{
   background: #f9f9f9;
   width: 100%;

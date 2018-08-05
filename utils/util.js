@@ -29,15 +29,28 @@ function getUserInfo(cb) {
     })
   }
 }
-//从服务器获取商品列表
-function getWares(){
+//request请求函数
+function request(url, data, success){
+  var URL = 'https://scrm.cnt-ad.net'
   wx.request({
-    url: '',
-    data:{
-
-    },
-    success:function(){
-      
+    url: URL+url,
+    data:data,
+    success: success
+  })
+}
+//放入卡包
+function addCard(){
+  var timestamp = Date.parse(new Date());
+  timestamp = timestamp / 1000;
+  wx.addCard({
+    cardList: [
+      {
+        cardId: '',
+        cardExt: '{"code": "", "openid": "", "timestamp":timestamp, "signature":签名}'
+      }
+    ],
+    success: function (res) {
+      console.log(res.cardList) // 卡券添加结果
     }
   })
 }
@@ -55,5 +68,7 @@ function getWares(){
 //输出js
 module.exports = {
   formatTime: formatTime,
-  getUserInfo: getUserInfo
+  getUserInfo: getUserInfo,
+  request: request,
+  addCard: addCard
 }

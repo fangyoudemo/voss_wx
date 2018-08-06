@@ -38,6 +38,7 @@ Page({
     for (let i = 0; i < List.length;i++){
       List[i].buy_num=0
       List[i].Unitprice =List[i].Unitprice/100
+      List[i].Imgurl = 'https://scrm.cnt-ad.net' + List[i].Imgurl
       List[i].sid = i
     }
     this.setData({
@@ -212,12 +213,17 @@ Page({
   },
   //展示商品详情
   show: function (e) {
+    var List=this.data.List
     const index = e.currentTarget.dataset.index;
-    let wares = this.data.wares;
-    this.setData({
-      wares_details: wares[index],
-      flag: false,
-    });
+    for (let i in List){
+      if (List[i].Id == index){
+        this.setData({
+          wares_details: List[i],
+          flag: false,
+        });
+      }
+    }
+    console.log(this.data.wares_details)
     wx.setNavigationBarTitle({
       title: "商品详情"
     })
@@ -228,7 +234,7 @@ Page({
       flag: true,
     });
     wx.setNavigationBarTitle({
-      title: this.data.sceneCard.title
+      title: this.data.selCards.Name
     })
   },
 

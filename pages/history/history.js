@@ -96,7 +96,7 @@ Page({
         }
         for (let i = 0; i < selforderList.length; i++) {
           selforderList[i].dateSubmit = new Date(selforderList[i].dateSubmit * 1000).toLocaleString()
-          selforderList[i].shouldPay = selforderList[i].shouldPay * 0.01
+          selforderList[i].shouldPay = selforderList[i].shouldPay
         }
         that.setData({
           orderList: orderList,

@@ -49,19 +49,19 @@
   <button open-type="getUserInfo" class='bottom_buybtn' bindtap='buy'  bindgetuserinfo="onGotUserInfo">结算</button> 
 </view>
 <!-- 商品详情 -->
-<!-- <view class='wares_box' hidden='{{flag}}'>
+<view class='wares_box' hidden='{{flag}}'>
   <view class='wares_details'>
     <view class='shut' bindtap='shut'><image src='../../images/shut_icon.png'></image></view>
     <view class='wares_details_img'>
     <image src='../../images/canping.png'></image></view>
     <view class='wares_details_title'>
-      <text>{{wares_details.wares_name}}{{wares_details.wares_specs}}</text>
-      <text>¥{{wares_details.wares_price}}</text>
+      <text>{{wares_details.Productname}}{{wares_details.Spec}}瓶</text>
+      <text>¥{{wares_details.Unitprice}}</text>
     </view>
     <scroll-view scroll-y="true">
     <view>
-      <image src='{{detailsImg}}' mode="widthFix" lazy-load="true"></image>
+      <image src='{{wares_details.Imgurl}}'  mode="widthFix" lazy-load="true"></image>
     </view>
     </scroll-view>
   </view>
-</view> -->
+</view>

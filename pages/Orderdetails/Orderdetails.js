@@ -32,7 +32,7 @@ Page({
     for (let i = 0; i < history.selforderList.length; i++) {
       if (history.selforderList[i].orderId == options.orderId) {
         this.setData({
-          orderList: history.selforderList[i]
+          detail: history.selforderList[i]
         })
       }
     }

@@ -15,10 +15,10 @@
   <view class='orderNum'>订单编号：{{orderList.orderId}}</view>
   <view class='orderTime'>下单时间：{{orderList.dateSubmit}}</view>
 </view>
-<view class='get_content'>
+<!-- <view class='get_content'>
   <text>{{orderList.customname}}  {{orderList.mobile}}</text>
   <text>{{orderList.address}}</text>
-</view>
+</view> -->
 <view class='warps_content'>
   <view class='warps_cont'>
     <image src="{{orderList.orderimg}}"></image>

@@ -61,28 +61,28 @@ Page({
       this.setData({
         giftcards: giftcards
       })
-      var pages = getCurrentPages()    //获取加载的页面
-      var currentPage = pages[pages.length - 1]
-      // console.log(encodeURIComponent(location.href.split('#')[0]))
-      wx.request({
-        url: 'https://scrm.cnt-ad.net/voss/service/wxconfig',
-        data: {
-          url: ''},
-        success: (res) => {
-          console.log(res)
-          wx.addCard({
-            cardList: [
-              {
-                cardId: "pK4mvwiFeooo_imyZVHE8ADRxw-E",
-                cardExt: '{"timestamp":res.timeStamp, "signature":res.signature}'
-              }
-            ],
-            success: function (res) {
-              console.log(res) // 卡券添加结果
-            }
-          })
-        }
-      })
+      // var pages = getCurrentPages()    //获取加载的页面
+      // var currentPage = pages[pages.length - 1]
+      // // console.log(encodeURIComponent(location.href.split('#')[0]))
+      // wx.request({
+      //   url: 'https://scrm.cnt-ad.net/voss/service/wxconfig',
+      //   data: {
+      //     url: ''},
+      //   success: (res) => {
+      //     console.log(res)
+      //     wx.addCard({
+      //       cardList: [
+      //         {
+      //           cardId: "pK4mvwiFeooo_imyZVHE8ADRxw-E",
+      //           cardExt: '{"timestamp":res.timeStamp, "signature":res.signature}'
+      //         }
+      //       ],
+      //       success: function (res) {
+      //         console.log(res) // 卡券添加结果
+      //       }
+      //     })
+      //   }
+      // })
     })
   },
 })

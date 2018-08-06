@@ -124,7 +124,7 @@ Page({
         for (let i = 0; i < rescity.length; i++) {
           this.data.city.push(rescity[i].name)
         }
-        this.setData({ city: that.data.city });
+        this.setData({ city: this.data.city });
       })
     }
   },
@@ -144,7 +144,7 @@ Page({
         for (let i = 0; i < rescounty.length; i++) {
           this.data.county.push(rescounty[i].name)
         }
-        this.setData({ county: that.data.county });
+        this.setData({ county: this.data.county });
       })
     }
   }, 
@@ -165,7 +165,7 @@ Page({
           for (let i = 0; i < restownship.length; i++) {
             this.data.township.push(restownship[i].name)
           }
-          this.setData({ township: that.data.township });
+          this.setData({ township: this.data.township });
         } else {
           this.setData({ township: ['请选择街道', '无'], townshipIndex: 1, restownship: [{ id: 0, name: '' }] });
         }
@@ -192,7 +192,7 @@ Page({
       for (let i = 0; i < resProvince.length; i++) {
         this.data.Province.push(resProvince[i].name)
       }
-      this.setData({ Province: that.data.Province });
+      this.setData({ Province: this.data.Province });
     })
   },
 

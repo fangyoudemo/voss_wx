@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
+var utils = require('../../utils/util.js')
 Page({
 
   /**
@@ -11,11 +12,11 @@ Page({
   
   },
   shop:function(){
+    var _this=this
     let address0 = userInfo.province + userInfo.city + userInfo.county
     //---------------------------发起下单请求---------------------------//
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/submitorder',
-      data: {
+      var url ='/voss/service/submitorder'
+      var data = {
         openid: userInfo.openid,
         buyWares: userInfo.buyWares,
         provinceId: userInfo.provinceId,
@@ -25,13 +26,10 @@ Page({
         address: userInfo.address,
         customerName: userInfo.customerName,
         customerMobile: userInfo.customerMobile,
-        cardid: userInfo.selcard.Id,
-        address0: address0 
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
+        cardid: _this.data.selCards.Id,
+        address0: address0
+      }
+      utils.request(url,data,(res) =>{
 
         userInfo.orderId = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.orderId
         userInfo.totalPrice = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.totalPrice        
@@ -61,9 +59,10 @@ Page({
                 },
                 success: function (res) {
                   if (res.statusCode=='200'){
+                    var selCards = JSON.stringify(_this.data.selCards)
                     //测试用跳转
                     wx.navigateTo({
-                      url: '../blessing/blessing',
+                      url: '../blessing/blessing?selCards=' + selCards,
                     })
     //---------------------------拉起支付---------------------------//
                     // wx.requestPayment({
@@ -94,10 +93,9 @@ Page({
             title: "不好意思" + resultMsg,
             mask: true
           })
-          console.log(res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.resultCode, res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.resultMsg)
         }    
       }
-    })
+)
   //---------------------------下单请求结束---------------------------//
   },
   /**
@@ -105,7 +103,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      selcard: userInfo.selcard,
+      selCards: JSON.parse(options.selCards),
       wares: userInfo.wares,
       userInfo: userInfo
     })

@@ -1,7 +1,7 @@
 <!--pages/blessing/blessing.wxml-->
 <view class='main'>
-  <view class='banner'><image src='{{userInfo.selcard.Imgurl}}'></image></view>
-  <view class='banner_title'>{{userInfo.selcard.Name}}</view>
+  <view class='banner'><image src='{{selCards.Imgurl}}'></image></view>
+  <view class='banner_title'>{{selCards.Name}}</view>
   <view class='blessing_content'>
     <view class='select' bindtap='givefri'>送给好友
     <icon type="success" size="16" color="#55ba38" wx:if='{{giveObj==1}}'/>

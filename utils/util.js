@@ -1,3 +1,5 @@
+var app = getApp()
+var userInfo = app.globalData.userInfo
 //报错信息js
 function formatTime(date) {
   var year = date.getFullYear()
@@ -30,12 +32,13 @@ function getUserInfo(cb) {
   }
 }
 //request请求函数
-function request(url, data, success){
-  var URL = 'https://scrm.cnt-ad.net'
+function request(url, data, success,fail){
+  var http = 'https://scrm.cnt-ad.net'
   wx.request({
-    url: URL+url,
+    url: http+url,
     data:data,
-    success: success
+    success: success,
+    fail: fail
   })
 }
 //放入卡包
@@ -54,7 +57,53 @@ function addCard(){
     }
   })
 }
-
+//判断是否授权
+function authorize(){
+wx.getSetting({
+  success: function (res) {
+    if (!res.authSetting['scope.userInfo']) {
+      console.log("no")
+      wx.navigateTo({
+        url: '../authorize/authorize',
+      })
+    } 
+  }
+})
+}
+//登陆
+function login(){
+  wx.login({
+    success: function (res) {
+      userInfo.code = res.code
+      wx.getUserInfo({
+        success: function (res) {
+          userInfo.encryptedData = res.encryptedData
+          userInfo.iv = res.iv
+          userInfo.nickName = JSON.parse(res.rawData).nickName
+          userInfo.avatarUrl = JSON.parse(res.rawData).avatarUrl
+          if (userInfo.code) {
+            wx.request({
+              url: 'https://scrm.cnt-ad.net/voss/service/login',
+              data: {
+                code: userInfo.code,
+                nickname: userInfo.nickName,
+                avata: userInfo.avatarUrl
+              },
+              success: function (res) {
+                if (res.data.errcode == 0) {
+                  userInfo.openid = res.data.openid
+                }
+              }
+            })
+            console.log('用户操作信息为:', userInfo)
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
+    }
+  })
+}
 
 
 
@@ -70,5 +119,7 @@ module.exports = {
   formatTime: formatTime,
   getUserInfo: getUserInfo,
   request: request,
-  addCard: addCard
+  addCard: addCard,
+  authorize: authorize,
+  login: login
 }

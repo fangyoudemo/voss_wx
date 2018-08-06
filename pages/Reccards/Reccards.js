@@ -63,7 +63,7 @@ Page({
   },
   complete:function(){
     wx.navigateTo({
-      url: '../pages/index/index',
+      url: '../index/index',
     })
   },
   /**
@@ -73,7 +73,8 @@ Page({
     var that=this
     var orderid = options.orderid
     this.setData({
-      orderid: orderid
+      orderid: orderid,
+      selCards: JSON.parse(options.selCards)
     })
     //获取页面信息
     wx.request({

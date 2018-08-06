@@ -1,9 +1,9 @@
 <!--pages/shopdemo/shopdemo.wxml-->
 <view class='banner'>
-    <image src="{{selcard.Imgurl}}"></image>
+    <image src="{{selCards.Imgurl}}"></image>
   </view>
   <!-- 头部标题 -->
-  <view class="banner_title">{{selcard.Name}}</view>
+  <view class="banner_title">{{selCards.Name}}</view>
 <view wx:for="{{wares}}" wx:key="key">
 <view class='sp_name'>{{item.Productname}}</view>
 <view class='sp_spec'>{{item.Spec}}瓶    {{item.buy_num}}份</view>

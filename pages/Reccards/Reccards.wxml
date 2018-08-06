@@ -24,7 +24,7 @@
   </view>
 </view>
 <view>
-<view class='banner'><image src='{{givemsg.cardimg}}'></image></view>
+<view class='banner'><image src='{{selCards.Imgurl}}'></image></view>
 <view class='sp_main' wx:for="{{givemsg.orderWareInfos}}">
 <view class='sp_name'>{{item.name}}</view>
 <view class='sp_spec'>{{item.num}}份</view>

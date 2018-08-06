@@ -50,7 +50,7 @@
 .sp_name{
   width: 80%;
   margin: 0 auto;
-  margin-top: 12rpx;
+  margin-top: 30rpx;
 }
 .sp_spec{
   width: 80%;

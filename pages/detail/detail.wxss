@@ -200,6 +200,7 @@
   line-height: 80rpx;
   border-radius: 20rpx;
   border: 2rpx solid #afb2b3;
+  margin: 0;
 }
 .wares_box{
   width: 100%;

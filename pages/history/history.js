@@ -9,10 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    datas:[
-      {name:"怦然心动",time:"2018.06.05   13:00:23",peric:75.00,get_name:"tony"},
-      { name: "恋人", time: "2018.06.07   17:00:23", peric: 175.00, get_name: null }
-      ]
+    
   },
   seeLogistics:function(e){
     var orderId = e.target.dataset.orderid

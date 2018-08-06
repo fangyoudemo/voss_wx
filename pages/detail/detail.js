@@ -29,24 +29,20 @@ Page({
    */
   onLoad: function(options) {
     var Cardid = options.Cardid
-    console.log(giftcards)
+    var selCards = JSON.parse(options.selCards)
     for (let i = 0; i < giftcards.length;i++){
       if (giftcards[i].Id == Cardid){
-        this.setData({
-          List: giftcards[i].List
-        })
-        //向全局数据userInfo添加选择卡面信息
-        userInfo.selcard = { Imgurl: giftcards[i].Imgurl, Cardid: giftcards[i].Cardid, Name: giftcards[i].Name, Id: giftcards[i].Id, Fromid: giftcards[i].Fromid }
+         var List=giftcards[i].List
       }
     }   
-    for (let i = 0; i < this.data.List.length;i++){
-      this.data.List[i].buy_num=0
-      this.data.List[i].Unitprice = this.data.List[i].Unitprice/100
-      this.data.List[i].sid = i
+    for (let i = 0; i < List.length;i++){
+      List[i].buy_num=0
+      List[i].Unitprice =List[i].Unitprice/100
+      List[i].sid = i
     }
     this.setData({
-      List: this.data.List,
-      selcard: userInfo.selcard
+      List:List,
+      selCards: selCards
     })
   },
   /**
@@ -55,7 +51,7 @@ Page({
   onReady: function() {
     wx.setNavigationBarTitle({
       //顶部标题
-      title: userInfo.selcard.Name
+      title: this.data.selCards.Name
     })
   },
   //购买
@@ -67,7 +63,6 @@ Page({
     userInfo.wares=[]
     for (let i = 0; i < List.length; i++) {
       if (List[i].buy_num > 0) {
-        //向服务器发起请求携带data
         buyWares.sku.push({ "Id": List[i].Skuid, "buy_num": List[i].buy_num })
         //向全局数据userInfo添加选购商品信息
         userInfo.wares.push(List[i])
@@ -81,93 +76,71 @@ Page({
         mask: true
       })
     } else {
-      if (userInfo.selcard.Fromid == 1) {
-        console.log("进入填写京东物流")
-        //向服务器发起请求计算运费
-        wx.navigateTo({
-          url: '../address/address'
-        })
-      }else{
-        console.log("自营发起统一下单接口")
-        var url = '/voss/service/native'
-        var data = {
-          cardid: userInfo.selcard.Id,
-          openid: userInfo.openid,
-          attach: '',
-          buyWares: userInfo.buyWares}
-        utils.request(url, data,function(res){
-          console.log(res)
-          userInfo.orderid = res.data.orderid
-          userInfo.totalPrice = res.data.totalfee
-          if (res.data.errcode == 'SUCCESS') {
-            //拉起支付api
-            console.log("拉起支付")
-            wx.requestPayment({
-              'timeStamp': res.data.timeStamp,
-              'nonceStr': res.data.nonceStr,
-              'package': res.data.package,
-              'signType': 'MD5',
-              'paySign': res.data.paySign,
-              success: function (res) {
-                console.log(res)
-                if (res.errMsg == "requestPayment:ok") {
-                  console.log('用户成功支付，进入下一页')
-                  wx.navigateTo({
-                    url: '../zyblessing/zyblessing',
-                  })
-                }
-              },
-              fail: function (res) {
-
-              },
-              complete: function (res) {
-
+      wx.login({
+        success: (res)=> {
+          userInfo.code = res.code
+          //获取用户信息
+          wx.getUserInfo({
+            success: (res)=> {
+              userInfo.encryptedData = res.encryptedData
+              userInfo.iv = res.iv
+              userInfo.nickName = JSON.parse(res.rawData).nickName
+              userInfo.avatarUrl = JSON.parse(res.rawData).avatarUrl
+              if (userInfo.code) {
+                var url = '/voss/service/login'
+                var data = {code: userInfo.code,nickname: userInfo.nickName,avata: userInfo.avatarUrl}
+                utils.request(url, data,(res)=>{
+                  if (res.data.errcode == 0) {
+                    userInfo.openid = res.data.openid
+                    if (this.data.selCards.Fromid == 1) {
+                      var selCards = JSON.stringify(this.data.selCards)
+                      console.log("进入填写京东物流")
+                      wx.navigateTo({
+                        url: '../address/address?selCards=' + selCards
+                      })
+                    } else {
+                      console.log("自营发起统一下单接口")
+                      var url = '/voss/service/native'
+                      var data = {
+                        cardid: userInfo.selcard.Id,
+                        openid: userInfo.openid,
+                        attach: '',
+                        buyWares: userInfo.buyWares
+                      }
+                      utils.request(url, data, function (res) {
+                        console.log(res)
+                        userInfo.orderid = res.data.orderid
+                        userInfo.totalPrice = res.data.totalfee
+                        if (res.data.errcode == 'SUCCESS') {
+                          //拉起支付api
+                          wx.requestPayment({
+                            'timeStamp': res.data.timeStamp,
+                            'nonceStr': res.data.nonceStr,
+                            'package': res.data.package,
+                            'signType': 'MD5',
+                            'paySign': res.data.paySign,
+                            success:(res)=> {
+                              console.log(res)
+                              if (res.errMsg == "requestPayment:ok") {
+                                wx.navigateTo({
+                                  url: '../zyblessing/zyblessing',
+                                })
+                              }
+                            }
+                          })
+                        }
+                      })
+                    }
+                  }
+                })
+                console.log('用户操作信息为:', userInfo)
+              } else {
+                console.log('登录失败！' + res.errMsg)
               }
-            })
-          }
-        })
-
-        // wx.request({
-        //   url: 'https://scrm.cnt-ad.net/voss/service/native',
-        //   data: {
-        //     cardid: userInfo.selcard.Id,
-        //     openid: userInfo.openid,
-        //     attach: '',
-        //     buyWares: userInfo.buyWares
-        //   },
-        //   success: function (res) {
-        //     console.log(res)
-        //     userInfo.orderid = res.data.orderid
-        //     userInfo.totalPrice = res.data.totalfee
-        //     if (res.data.errcode == 'SUCCESS') {
-        //       //拉起支付api
-        //       console.log("拉起支付")
-        //       wx.requestPayment({
-        //         'timeStamp': res.data.timeStamp,
-        //         'nonceStr': res.data.nonceStr,
-        //         'package': res.data.package,
-        //         'signType': 'MD5',
-        //         'paySign': res.data.paySign,
-        //         success: function (res) {
-        //           console.log(res)
-        //           if (res.errMsg == "requestPayment:ok") {
-        //             console.log('用户成功支付，进入下一页')
-        //             wx.navigateTo({
-        //               url: '../zyblessing/zyblessing',
-        //             })
-        //           }
-        //         },
-        //         fail: function (res) { 
-                  
-        //         },
-        //         complete: function (res) {
-                  
-        //          }
-        //       })
-        //     }
-        //   }
-        // })
-      }
+            }
+          })
+        }
+      })
     }
   },
   //计算总价

@@ -63,7 +63,7 @@
 .region picker{
   /* width: 30%; */
   height: 100%;
-   margin-right: 2%; 
+   margin-right: 5%; 
   float: left;
   line-height: 1.5rem;
 }

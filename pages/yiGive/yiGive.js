@@ -20,7 +20,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       //所选择的展示图片
-      sceneCard: userInfo.selcard,
+      selCards: JSON.parse(options.selCards),
       buyWares: userInfo.wares,
       wares: userInfo.wares,
       totalPrice: userInfo.totalPrice

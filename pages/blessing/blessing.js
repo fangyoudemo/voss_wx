@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
+var utils = require('../../utils/util.js')
 Page({
 
   /**
@@ -130,6 +131,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
+      selCards: JSON.parse(options.selCards),
       userInfo: userInfo
     })
   },
@@ -184,11 +186,12 @@ Page({
   onShareAppMessage: function (e) {
     var that=this
     var orderId = userInfo.orderId
+    var selCards = JSON.stringify(that.data.selCards)
     // 来自页面内转发按钮
     if (e.from == 'button') {
       return {
         title: '送你一张恋人卡',
-        path: 'pages/Reccards/Reccards?orderid=' + orderId,
+        path: 'pages/Reccards/Reccards?orderid=' + orderId + '&selCards=' + selCards,
         imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg',
         success: function (res) {
           // 转发成功之后的回调
@@ -206,7 +209,7 @@ Page({
               }
             })
             wx.navigateTo({
-              url: '../yiGive/yiGive',
+              url: '../yiGive/yiGive?selCards=' + selCards,
             })
           }
         },

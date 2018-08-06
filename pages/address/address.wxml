@@ -2,10 +2,10 @@
 <view class='main'>
   <!-- 头部banner -->
   <view class='banner'>
-    <image src="{{sceneCard.Imgurl}}"></image>
+    <image src="{{selCards.Imgurl}}"></image>
   </view>
   <!-- 头部标题 -->
-  <view class="banner_title">{{sceneCard.Name}}</view>
+  <view class="banner_title">{{selCards.Name}}</view>
   <!-- 地址填写区 -->
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class='address_main'>

@@ -172,5 +172,10 @@
   text-align: center;
   line-height: 86rpx;
   margin-top: 200rpx;
-  margin-bottom:120rpx;
+  margin-bottom:30rpx;
+}
+.gocards{
+  text-align: center;
+  font-size: 24rpx;
+  color: #ccc
 }

@@ -8,6 +8,7 @@ Page({
   
   },
   bindGetUserInfo:function(e){
+    console.log(e)
     if (e.detail.rawData){
       wx.navigateBack({     //返回上一页面或多级页面
         delta: 1
@@ -18,7 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**

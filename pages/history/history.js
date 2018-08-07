@@ -34,8 +34,9 @@ Page({
   user:function(e){
     var orderId = e.target.dataset.id
     var orderimg = e.target.dataset.orderimg
+    var selCards = JSON.stringify({ Imgurl: orderimg })
     wx.navigateTo({
-      url: '../usecard/usecard?orderid=' + orderId + '&selcard=' + orderimg
+      url: '../usecard/usecard?orderid=' + orderId + '&selCards=' + selCards
     })
   },
   /**

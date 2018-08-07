@@ -53,14 +53,14 @@ Page({
     }
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/selfusecard',
-      data:{
+      data: {
         orderid: this.data.orderid,
         address0: address,
         addressDetail: address,
         customerName: customerName,
         customerMobile: customerMobile
       },
-      success:function(res){
+      success: function (res) {
         console.log(res)
         wx.navigateTo({
           url: '../index/index',

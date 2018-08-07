@@ -205,9 +205,6 @@ Page({
           }
         }
       }
-      wx.navigateTo({
-        url: '../yiGive/yiGive',
-      })
     }
   }
 })

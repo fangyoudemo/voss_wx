@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
+var utils = require('../../utils/util.js')
 Page({
 
   /**
@@ -98,12 +99,17 @@ Page({
         openid: userInfo.openid,
         orderid: userInfo.orderid 
         },
-      success: function (res) {
-        console.log(res)
+      success: (res)=> {
+        var selCards = JSON.stringify(this.data.selCards)
         that.setData({ givemsg: res.data })
-        wx.navigateTo({
-          url: '../history/history',
+        var cardId = this.data.selCards.Cardid
+        utils.addCard(cardId,(res)=>{
+          console.log(res.cardList[0].code)
+          wx.navigateTo({
+            url: '../yiGive/yiGive?selCards=' + selCards,
+          })
         })
+        
       }
     })
   },
@@ -112,7 +118,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userInfo: userInfo
+      userInfo: userInfo,
+      selCards: JSON.parse(options.selCards)
     })
   },
   /**
@@ -166,13 +173,14 @@ Page({
   onShareAppMessage: function (e) {
     var that = this
     var orderid = userInfo.orderid
+    var selCards = JSON.stringify(this.data.selCards)
     // 来自页面内转发按钮
     if (e.from == 'button') {
       return {
-        title: userInfo.selcard.Name,
-        path: 'pages/zyReccards/zyReccards?orderid=' + orderid,
-        imageUrl: userInfo.selcard.Imgurl,
-        success: function (res) {
+        title: this.data.selCards.Name,
+        path: 'pages/zyReccards/zyReccards?orderid=' + orderid + '&selCards=' + selCards,
+        imageUrl: this.data.selCards.Imgurl,
+        success: (res) =>{
           // 转发成功之后的回调
           if (res.errMsg == 'shareAppMessage:ok') {
             wx.request({
@@ -187,8 +195,9 @@ Page({
 
               }
             })
+            var selCards = JSON.stringify(this.data.selCards)
             wx.navigateTo({
-              url: '../yiGive/yiGive',
+              url: '../yiGive/yiGive?selCards=' + selCards,
             })
           }
         },

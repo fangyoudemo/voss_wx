@@ -16,7 +16,8 @@
     "pages/zyReccards/zyReccards",
     "pages/yfcard/yfcard",
     "pages/usecard/usecard",
-    "pages/tblessing/tblessing"
+    "pages/tblessing/tblessing",
+    "pages/carduse/carduse"
   ],
   "window":{
     "backgroundTextStyle":"light",

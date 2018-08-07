@@ -92,7 +92,7 @@ Page({
     })
   },
   giveme:function(){
-    console.log(userInfo.orderId, userInfo.openid)
+    var that=this
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/modifyaddress',
       data: {
@@ -111,9 +111,10 @@ Page({
       },
       success: function (res) {
         console.log('解锁订单返回信息：', res)
+        var selCards = JSON.stringify(that.data.selCards)
         if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode == 0) {
           wx.navigateTo({
-            url: '../yiGive/yiGive',
+            url: '../yiGive/yiGive?selCards=' + selCards,
           })
         } else {
           console.log("订单确认失败，请联系客服")

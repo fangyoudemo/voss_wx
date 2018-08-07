@@ -103,13 +103,12 @@ Page({
                       console.log("自营发起统一下单接口")
                       var url = '/voss/service/native'
                       var data = {
-                        cardid: userInfo.selcard.Id,
+                        cardid: this.data.selCards.Id,
                         openid: userInfo.openid,
                         attach: '',
                         buyWares: userInfo.buyWares
                       }
-                      utils.request(url, data, function (res) {
-                        console.log(res)
+                      utils.request(url, data,  (res) =>{
                         userInfo.orderid = res.data.orderid
                         userInfo.totalPrice = res.data.totalfee
                         if (res.data.errcode == 'SUCCESS') {
@@ -121,10 +120,10 @@ Page({
                             'signType': 'MD5',
                             'paySign': res.data.paySign,
                             success:(res)=> {
-                              console.log(res)
+                              var selCards = JSON.stringify(this.data.selCards)
                               if (res.errMsg == "requestPayment:ok") {
                                 wx.navigateTo({
-                                  url: '../zyblessing/zyblessing',
+                                  url: '../zyblessing/zyblessing?selCards=' + selCards,
                                 })
                               }
                             }

@@ -2,6 +2,7 @@
 var app = getApp()
 var userInfo = app.globalData.userInfo
 var giftcards = app.globalData.giftcards
+var utils = require('../../utils/util.js')
 Page({
   data: {
   },
@@ -11,29 +12,59 @@ Page({
     })
   },
   use:function(){
-    var orderid = this.data.orderid
-    var selcard = this.data.givemsg.Order.OrderImg
-    wx.navigateTo({
-      url: '../usecard/usecard?orderid=' + orderid + '&selcard=' + selcard,
+    wx.login({
+      success: (res) => {
+        userInfo.code = res.code
+        //获取用户信息
+        wx.getUserInfo({
+          success: (res) => {
+            userInfo.encryptedData = res.encryptedData
+            userInfo.iv = res.iv
+            userInfo.nickName = JSON.parse(res.rawData).nickName
+            userInfo.avatarUrl = JSON.parse(res.rawData).avatarUrl
+            if (userInfo.code) {
+              var url = '/voss/service/login'
+              var data = { code: userInfo.code, nickname: userInfo.nickName, avata: userInfo.avatarUrl }
+              utils.request(url, data, (res) => {
+                if (res.data.errcode == 0) {
+                  userInfo.openid = res.data.openid
+                  var orderid = this.data.orderid
+                  var selCards = JSON.stringify(this.data.selCards) 
+                  wx.navigateTo({
+                    url: '../usecard/usecard?orderid=' + orderid + '&selCards=' + selCards,
+                  })
+                }
+              })
+              console.log('用户操作信息为:', userInfo)
+            } else {
+              console.log('登录失败！' + res.errMsg)
+            }
+          }
+        })
+      }
     })
   },
+
+
+
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
     var orderid = options.orderid
-    console.log(options)
     this.setData({
       orderid: orderid,
-      openid: userInfo.openid
+      // openid: userInfo.openid,
+      // selCards: JSON.parse(options.selCards)
     })
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/selforderdetail',
       data: { orderid: orderid},
-      success:function(res){
+      success:(res)=>{
         console.log(res)
-        that.setData({ givemsg:res.data})
+        this.setData({ givemsg:res.data})
       }
     })
   }

@@ -22,7 +22,7 @@
       <view>¥ {{item.shouldPay}}</view>
       <view class='wuliu'>
         <view wx:if="{{item.status==4}}">已使用</view>
-        <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
+        <!-- <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button> -->
       </view>
     </view>
   </view>

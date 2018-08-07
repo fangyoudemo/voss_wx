@@ -104,7 +104,32 @@ function login(){
     }
   })
 }
-
+// 添加卡劵
+function addCard(cardId,success){
+wx.request({
+  url: 'https://scrm.cnt-ad.net/voss/service/wxconfig',
+  data: {
+    card_id: cardId
+  },
+  success: (res) => {
+    var nonceStr = res.data.nonceStr
+    var timeStamp = res.data.timeStamp
+    var signature = res.data.signature
+    wx.addCard({
+      cardList: [
+        {
+          cardId: cardId,
+          cardExt: '{ "timestamp": "' + timeStamp + '", "nonce_str": "' + nonceStr + '", "signature":"' + signature + '"}'
+        }
+      ],
+      success: success,
+      fail: function (res) {
+        
+      }
+    })
+  }
+})
+}
 
 
 
@@ -121,5 +146,6 @@ module.exports = {
   request: request,
   addCard: addCard,
   authorize: authorize,
-  login: login
+  login: login,
+  addCard: addCard
 }

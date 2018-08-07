@@ -65,23 +65,23 @@ Page({
                       url: '../blessing/blessing?selCards=' + selCards,
                     })
     //---------------------------拉起支付---------------------------//
-                    // wx.requestPayment({
-                    //   'timeStamp': res.data.timeStamp,
-                    //   'nonceStr': res.data.nonceStr,
-                    //   'package': res.data.package,
-                    //   'signType': 'MD5',
-                    //   'paySign': res.data.paySign,
-                    //   'success': function (res) {
-                    //     if (res.errMsg == 'requestPayment:ok') {
-                    //       console.log('用户成功支付，进入下一页')
-                    //       wx.navigateTo({
-                    //         url: '../blessing/blessing',
-                    //       })
-                    //     }
-                    //   },
-                    //   'fail': function (res) { },
-                    //   'complete': function (res) { }
-                    // })
+                    wx.requestPayment({
+                      'timeStamp': res.data.timeStamp,
+                      'nonceStr': res.data.nonceStr,
+                      'package': res.data.package,
+                      'signType': 'MD5',
+                      'paySign': res.data.paySign,
+                      'success': function (res) {
+                        if (res.errMsg == 'requestPayment:ok') {
+                          console.log('用户成功支付，进入下一页')
+                          wx.navigateTo({
+                            url: '../blessing/blessing',
+                          })
+                        }
+                      },
+                      'fail': function (res) { },
+                      'complete': function (res) { }
+                    })
                   }
                 }
               })

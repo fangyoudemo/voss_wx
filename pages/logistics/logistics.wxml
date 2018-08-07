@@ -19,6 +19,7 @@
   <text>{{orderList.customname}}  {{orderList.mobile}}</text>
   <text>{{orderList.address}}</text>
 </view> -->
+
 <view class='warps_content'>
   <view class='warps_cont'>
     <image src="{{orderList.orderimg}}"></image>

@@ -3,13 +3,14 @@
 var app = getApp()
 var userInfo = app.globalData.userInfo
 var history = app.globalData.history
+var utils = require('../../utils/util.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    
+    authSetting:true
   },
   seeLogistics:function(e){
     var orderId = e.target.dataset.orderid
@@ -26,9 +27,9 @@ Page({
   blessing: function (e){
     var orderId = e.target.dataset.orderid
     var orderimg = e.target.dataset.orderimg
-    var shouldPay = e.target.dataset.shouldPay
+    var cardname = e.target.dataset.cardname
     wx.navigateTo({
-      url: '../tblessing/tblessing?orderId=' + orderId + '&orderimg=' + orderimg + '&shouldPay=' + shouldPay
+      url: '../tblessing/tblessing?orderId=' + orderId + '&orderimg=' + orderimg + '&cardname=' + cardname
     })
   },
   user:function(e){
@@ -43,6 +44,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.getSetting({
+      success:(res)=> {
+        if (res.authSetting['scope.userInfo']) { 
+          this.setData({
+            authSetting: true
+          })          
     var that=this
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/orderHistory',
@@ -92,11 +99,11 @@ Page({
           orderList[i].dateSubmit = new Date(orderList[i].dateSubmit).Format("yyyy-MM-dd hh:mm:ss")
         }
         for (let i = 0; i < orderList2.length; i++) {
-          orderList2[i].dateSubmit = new Date(orderList2[i].dateSubmit * 1000).toLocaleString()
+          orderList2[i].dateSubmit = utils.formatTime(orderList2[i].dateSubmit, 'Y/M/D h:m:s')          
           orderList2[i].shouldPay = orderList2[i].shouldPay*0.01
         }
         for (let i = 0; i < selforderList.length; i++) {
-          selforderList[i].dateSubmit = new Date(selforderList[i].dateSubmit * 1000).toLocaleString()
+          selforderList[i].dateSubmit = utils.formatTime(selforderList[i].dateSubmit, 'Y/M/D h:m:s')
           selforderList[i].shouldPay = selforderList[i].shouldPay
         }
         that.setData({
@@ -107,6 +114,13 @@ Page({
         history.orderList = orderList
         history.orderList2 = orderList2
         history.selforderList = selforderList
+      }
+    })
+        } else {
+          this.setData({
+            authSetting:false
+          })
+        }
       }
     })
   },

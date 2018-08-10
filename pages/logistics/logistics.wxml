@@ -31,4 +31,4 @@
 </view>
 
 
-<view class='sh_tel'>售后电话：400000000</view>
+<view class='sh_tel'> <button class='kefu' open-type="contact">联系客服</button>|<view bindtap='tel' style='margin-left:20rpx;'>4008187711</view></view>

@@ -6,7 +6,7 @@ var utils = require('../../utils/util.js')
 Page({
   data: {
     //首页轮播设置
-    indicatorDots:true,
+    indicatorDots:false,
     indicatorColor:"#fff",
     indicatorActiveColor:"#000",
     autoplay: true,
@@ -15,8 +15,10 @@ Page({
     circular:true,
   },
   //点击卡面
-  bindViewCoffeeOnMe: function (event) {
+  bindViewCoffeeOnMe: function (event){
     var Cardid = event.currentTarget.id
+    var fromid=event.currentTarget.dataset.fromid
+    var giftcards = this.data.giftcards
     var selCards={}
     for (let i in giftcards){
       if (giftcards[i].Id == Cardid){
@@ -29,7 +31,7 @@ Page({
     }
     var selCards = JSON.stringify(selCards)
     wx.navigateTo({
-      url: '../detail/detail?Cardid=' + Cardid + '&selCards=' + selCards
+      url: '../detail/detail?Cardid=' + Cardid + '&selCards=' + selCards + '&fromid=' + fromid
     })
   },
   //点击购买历史
@@ -42,29 +44,38 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取banner
-    var url = '/voss/service/banner'
-    var data={}
-    utils.request(url, data,(res)=>{
+    //从服务器获取banner
+    utils.request('/voss/service/banner',{},(res)=>{
       this.setData({
         bannerImg: res.data
       })
-    })
-    // 获取商品信息
-    var url ='/voss/service/giftcards'
-    var data = {}
-    utils.request(url, data,(res)=> {
-      console.log(res)
-      for (let i = 0; i < res.data.length; i++) {
-        giftcards[i] = res.data[i]
+      if (this.data.bannerImg.length > 1) {
+        this.setData({
+          indicatorDots: true
+        })
       }
+    })
+    //从服务器获取卡面信息
+    utils.request('/voss/service/cardlist',{},(res)=>{
       this.setData({
-        giftcards: giftcards
+        giftcards: res.data
       })
-
-
     })
   },
+  /**
+ *  当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
+ */
+  onLaunch: function () {
+    wx.showShareMenu({
+      withShareTicket: true //设置为false即可
+    })
+  },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return utils.transmit()
+  }
 })
 
 

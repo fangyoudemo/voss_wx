@@ -2,7 +2,7 @@
 <view class='header'>
   <image src="{{detail.orderimg}}" class='banner'></image>
   <view class='header_content'>
-    <view>特享卡</view>
+    <view>{{detail.cardname}}</view>
     <view>¥ {{detail.shouldPay}}</view>
   </view>
 </view>
@@ -18,4 +18,4 @@
   <text wx:if="{{detail.status==4}}">已使用</text>
 </view>
 </view>
-<view class='sh_tel'>售后电话：400000000</view>
+<view class='sh_tel'> <button class='kefu' open-type="contact">联系客服</button>|<view bindtap='tel' style='margin-left:20rpx;'>4008187711</view></view>

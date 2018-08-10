@@ -11,7 +11,7 @@
     <view class='scene'>
       <text class='scene_title'>即可表心意</text>
       <view class='scene_content'>
-         <view class='sceneCard' id="{{item.Id}}" wx:for="{{giftcards}}" wx:key="key" bindtap="bindViewCoffeeOnMe">
+         <view class='sceneCard' data-Fromid="{{item.Fromid}}" id="{{item.Id}}" wx:for="{{giftcards}}" wx:key="key" bindtap="bindViewCoffeeOnMe">
              <view class='sceneCard_img'>
              <image src="{{item.Imgurl}}"></image>
              </view>
@@ -25,15 +25,3 @@
       <text class="buyhistory-text" bindtap='buyhistory'> 购买历史</text>
     </view> 
 </view>
-<!-- 授权窗口开始 -->
-<!-- <view class='dialog-container'>
-    <view class='dialog-mask'></view>
-    <view class='dialog-info'>
-        <view class='dialog-title'>授权提示</view>
-        <view class='dialog-content'>为了您更好的体验,请先同意授权</view>
-        <view class='dialog-footer'>
-          <button class='dialog-btn' open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo'>确认</button>
-        </view>
-    </view>
-</view> -->
-<!-- 授权窗口结束 -->

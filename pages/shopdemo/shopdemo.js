@@ -12,6 +12,7 @@ Page({
   
   },
   shop:function(){
+    console.log(userInfo.buyWares)
     var _this=this
     let address0 = userInfo.province + userInfo.city + userInfo.county
     //---------------------------发起下单请求---------------------------//
@@ -30,7 +31,7 @@ Page({
         address0: address0
       }
       utils.request(url,data,(res) =>{
-
+        console.log(res)
         userInfo.orderId = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.orderId
         userInfo.totalPrice = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.totalPrice        
         userInfo.uid = res.data.jd_kpl_open_cloudtrade_trade_submitorder_response.uid 
@@ -40,6 +41,7 @@ Page({
         if (resultCode==0) {
           wx.login({
             success:function(res){
+              
               userInfo.code=res.code
     //---------------------------发起虚拟pin收银台接口---------------------------//
               wx.request({
@@ -50,6 +52,7 @@ Page({
                   iv: userInfo.iv,
                   encryptedData: userInfo.encryptedData,
                   orderId: userInfo.orderId,
+                  // orderId:'77188100703',
                   orderType: 0,
                   orderTypeCode: 0,
                   factPrice: userInfo.totalPrice,
@@ -58,12 +61,8 @@ Page({
                   appKey: '7ffa2e75489a40669cfbe5f49276cc05'
                 },
                 success: function (res) {
-                  if (res.statusCode=='200'){
+                  if (res.data.timeStamp){
                     var selCards = JSON.stringify(_this.data.selCards)
-                    //测试用跳转
-                    wx.navigateTo({
-                      url: '../blessing/blessing?selCards=' + selCards,
-                    })
     //---------------------------拉起支付---------------------------//
                     wx.requestPayment({
                       'timeStamp': res.data.timeStamp,
@@ -75,12 +74,21 @@ Page({
                         if (res.errMsg == 'requestPayment:ok') {
                           console.log('用户成功支付，进入下一页')
                           wx.navigateTo({
-                            url: '../blessing/blessing',
+                            url: '../blessing/blessing?selCards=' + selCards,
                           })
                         }
                       },
                       'fail': function (res) { },
                       'complete': function (res) { }
+                    })
+                          //                     wx.navigateTo({
+                          //   url: '../blessing/blessing?selCards=' + selCards,
+                          // })
+                  }else{
+                    wx.showToast({
+                      icon: 'none',
+                      title: "抱歉,系统出问题了。",
+                      mask: true
                     })
                   }
                 }

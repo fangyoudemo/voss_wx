@@ -68,4 +68,5 @@
     <view class='tishi_msg' mode="aspectFit">2小时内可修改末级地区信息和详细地址</view>
     <button type="primary" form-type="submit">确认地址</button>
   </form>
+  <view style='height:80rpx'></view>
 </view>

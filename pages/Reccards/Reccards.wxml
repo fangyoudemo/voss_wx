@@ -36,7 +36,8 @@
     <view class='text'>{{givemsg.nickname}}</view>
     <view class='text'>{{givemsg.message}}</view>
   </view>
-  <image class='giveImg' wx:if="{{givemsg.uploadpic!==''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
+  <image class='giveImg' wx:if="{{givemsg.uploadmedia!=''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
+  <video class='giveVideo' wx:if="{{givemsg.uploadmedia!=''}}" src='https://scrm.cnt-ad.net{{givemsg.uploadmedia}}'></video>
 </view>
 <button class='complete' bindtap='complete'>完成</button>
 </view>

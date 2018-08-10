@@ -17,8 +17,12 @@
       <view class='addimg add' bindtap='addimg'  wx:else>更换图片</view>
       <view class='addvideo add' bindtap='addvideo' wx:if='{{giveVideo==""}}'>+   添加视频</view>
       <view class='addvideo add' bindtap='addvideo'  wx:else>更换视频</view>
-      <image class='giveImg' bindtap='seeImg' mode='aspectFill' wx:if='{{giveImg!==""}}' src='{{giveImg}}'></image>
-      <video class='giveVideo' direction='0' wx:if='{{giveVideo!==""}}' src='{{giveVideo}}'></video>
+      <image class='giveImg' bindtap='seeImg' mode='aspectFill' wx:if='{{giveImg!==""}}' src='{{giveImg}}'>
+          <cover-image class='shut_icon'  bindtap='removeimg' src='../../images/guanbi.png'></cover-image>
+      </image>
+      <video class='giveVideo' direction='0' wx:if='{{giveVideo!==""}}' src='{{giveVideo}}'>
+          <cover-image class='shut_icon' bindtap='removevideo' src='../../images/guanbi.png'></cover-image>
+      </video>
     </view>
   </view>
   <view wx:if='{{giveObj==1}}'>

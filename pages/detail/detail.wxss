@@ -1,7 +1,6 @@
 .main{
   width: 660rpx;
   margin: 0 auto;    
-  margin-bottom: 190rpx;
 }
 .banner{
   width: 100%;
@@ -61,6 +60,7 @@
 }
 .wares_main{
   width: 100%;
+  margin-top: 20rpx;
 }
 .wares_title{
   width: 100%;
@@ -120,6 +120,16 @@
   display: block;
   font-size: 20rpx;
   width: 100%;
+}
+.wares_text .price{
+  display: block;
+  font-size: 20rpx;
+  width: 100%;
+}
+.price view{
+  float: right;
+  /* color: #000; */
+  margin-right: 20rpx
 }
 .wares.active .wares_text{
   color: #000;
@@ -215,7 +225,7 @@
   height: 880rpx;
   position: absolute;
   bottom: 0;
-  background: #fcfcfc;
+  background: #f4f4f4;
   border-radius: 30rpx 30rpx 0 0;
 }
 .wares_details_img{

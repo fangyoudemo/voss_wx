@@ -88,8 +88,7 @@ Page({
     userInfo.customerName = e.detail.value.name
     userInfo.customerMobile = e.detail.value.telnum
     userInfo.address = e.detail.value.address
-    var url ='/voss/service/shopping'
-    var data={
+    var shoppingdata={
       buyWares: userInfo.buyWares,
       provinceId: resProvince[ProvinceIndex - 1].id,
       cityId: rescity[cityIndex - 1].id,
@@ -97,11 +96,10 @@ Page({
       townId: restownship[townshipIndex - 1].id,
       openid: openid
     }
-    utils.request(url,data,(res)=>{
+    //下单接口
+    utils.request('/voss/service/shopping',shoppingdata,(res)=>{
       var selCards = JSON.stringify(_this.data.selCards)
-      //运费
       userInfo.totalFee = res.data.jd_kpl_open_cloudtrade_trade_calfreight_response.data.totalFee
-      //总价
       userInfo.totalPrice = res.data.jd_kpl_open_cloudtrade_trade_calfreight_response.data.totalPrice
       wx.navigateTo({
         url: '../shopdemo/shopdemo?selCards=' + selCards
@@ -116,9 +114,9 @@ Page({
     }
     this.setData({ ProvinceIndex: e.detail.value });
     if (e.detail.value>0){
-      var url ='/voss/service/getcitys'
       var data = { provinceId: e.detail.value }
-      utils.request(url,data,(res)=>{
+      //获取城市
+      utils.request('/voss/service/getcitys',data,(res)=>{
         var rescity = res.data.jd_kpl_open_cloudtrade_address_getcities_response.data
         this.setData({ rescity: rescity });
         for (let i = 0; i < rescity.length; i++) {
@@ -136,9 +134,9 @@ Page({
     }
     this.setData({ cityIndex: e.detail.value });
     if (e.detail.value > 0) {
-      var url = '/voss/service/getcountrys'
       var data = { cityId: this.data.rescity[e.detail.value - 1].id  }
-      utils.request(url, data, (res) => {
+      //获取区/县
+      utils.request('/voss/service/getcountrys', data, (res) => {
         let rescounty = res.data.jd_kpl_open_cloudtrade_address_getcounties_response.data
         this.setData({ rescounty: rescounty });
         for (let i = 0; i < rescounty.length; i++) {
@@ -156,9 +154,9 @@ Page({
     }
     this.setData({ countyIndex: e.detail.value });
     if (e.detail.value > 0) {
-      var url = '/voss/service/gettowns'
       var data = { countyId: this.data.rescounty[e.detail.value - 1].id }
-      utils.request(url, data, (res) => {
+      //获取镇
+      utils.request('/voss/service/gettowns', data, (res) => {
         if (res.data !== null) {
           let restownship = res.data
           this.setData({ restownship: restownship });
@@ -184,9 +182,8 @@ Page({
       //所选择的展示图片
       selCards: selCards
     })
-    var url = '/voss/service/getprovinces'
-    var data = {}
-    utils.request(url, data, (res) => {
+    //获取省
+    utils.request('/voss/service/getprovinces', {}, (res) => {
       let resProvince = res.data.jd_kpl_open_cloudtrade_address_getprovinces_response.data
       this.setData({ resProvince: resProvince });
       for (let i = 0; i < resProvince.length; i++) {
@@ -201,12 +198,11 @@ Page({
    */
   onReady: function () {
     wx.setNavigationBarTitle({
-      //顶部标题
       title: "填写地址"
     })
     wx.showModal({
       title: '友情提示',
-      content: '送朋友\r\n请填写朋友的收货信息，收到方可更改末级地址\r\n\r\n送自己\r\n请填写自己收货信息，在支付后可更改末级地址',
+      content: '送朋友\r\n请填写朋友的收货信息\r\n收到方可更改末级地址\r\n\r\n送自己\r\n请填写自己收货信息\r\n在支付后可更改末级地址',
       showCancel:false,
       success: function (res) {      
       }
@@ -252,17 +248,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    var that = this;
-    return {
-      title: 'VOSS小程序',
-      path: '/pages/index/index',
-      success: function (res) {
-        // 转发成功  
-      },
-      fail: function (res) {
-        // 转发失败
-      }
-    }
-
+    return utils.transmit()  
   }
 })

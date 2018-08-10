@@ -12,8 +12,7 @@ Page({
   data: {
     gift:[
       { gift_id: 1,gift_name:"玻璃瓶（含气）"},
-      { gift_id: 2, gift_name: "玻璃瓶（不含气）" },
-      { gift_id: 3, gift_name: "塑料瓶（含气）" }        
+      { gift_id: 2, gift_name: "玻璃瓶（不含气）" },    
     ],
     wares:[],
     detailsImg:"http://i1.bvimg.com/654292/8bd0b01fe7c3ae12.jpg",  //商品详情图片
@@ -30,20 +29,22 @@ Page({
   onLoad: function(options) {
     var Cardid = options.Cardid
     var selCards = JSON.parse(options.selCards)
-    for (let i = 0; i < giftcards.length;i++){
-      if (giftcards[i].Id == Cardid){
-         var List=giftcards[i].List
+    this.setData({ selCards: selCards})
+    utils.request('/voss/service/productlist', { fromid: options.fromid }, (res) => {
+      this.setData({
+        List: res.data
+      })
+      var List = this.data.List
+      for (let i = 0; i < List.length; i++) {
+        List[i].buy_num = 0
+        List[i].Unitprice = List[i].Unitprice / 100
+        List[i].Imgurl = 'https://scrm.cnt-ad.net' + List[i].Imgurl
+        List[i].Imgicon = 'https://scrm.cnt-ad.net' + List[i].Imgicon
+        List[i].sid = i
       }
-    }   
-    for (let i = 0; i < List.length;i++){
-      List[i].buy_num=0
-      List[i].Unitprice =List[i].Unitprice/100
-      List[i].Imgurl = 'https://scrm.cnt-ad.net' + List[i].Imgurl
-      List[i].sid = i
-    }
-    this.setData({
-      List:List,
-      selCards: selCards
+      this.setData({
+        List: List     
+      })
     })
   },
   /**
@@ -88,9 +89,9 @@ Page({
               userInfo.nickName = JSON.parse(res.rawData).nickName
               userInfo.avatarUrl = JSON.parse(res.rawData).avatarUrl
               if (userInfo.code) {
-                var url = '/voss/service/login'
                 var data = {code: userInfo.code,nickname: userInfo.nickName,avata: userInfo.avatarUrl}
-                utils.request(url, data,(res)=>{
+                //登陆接口
+                utils.request('/voss/service/login', data,(res)=>{
                   if (res.data.errcode == 0) {
                     userInfo.openid = res.data.openid
                     if (this.data.selCards.Fromid == 1) {
@@ -100,15 +101,14 @@ Page({
                         url: '../address/address?selCards=' + selCards
                       })
                     } else {
-                      console.log("自营发起统一下单接口")
-                      var url = '/voss/service/native'
-                      var data = {
+                      var nativedata = {
                         cardid: this.data.selCards.Id,
                         openid: userInfo.openid,
                         attach: '',
                         buyWares: userInfo.buyWares
                       }
-                      utils.request(url, data,  (res) =>{
+                      //自营发起统一下单接口
+                      utils.request('/voss/service/native', nativedata,  (res) =>{
                         userInfo.orderid = res.data.orderid
                         userInfo.totalPrice = res.data.totalfee
                         if (res.data.errcode == 'SUCCESS') {
@@ -121,11 +121,12 @@ Page({
                             'paySign': res.data.paySign,
                             success:(res)=> {
                               var selCards = JSON.stringify(this.data.selCards)
-                              if (res.errMsg == "requestPayment:ok") {
                                 wx.navigateTo({
                                   url: '../zyblessing/zyblessing?selCards=' + selCards,
                                 })
-                              }
+                            },
+                            fail:function(err){
+                                console.log(err)
                             }
                           })
                         }
@@ -148,7 +149,7 @@ Page({
     let List = this.data.List;
     let total = 0;
     for (let i = 0; i < List.length; i++) {
-      total += List[i].buy_num * List[i].Unitprice;
+      total += List[i].buy_num*1 * List[i].Unitprice*1;
     }
     this.setData({
       giftcards: giftcards,
@@ -189,7 +190,7 @@ Page({
     const index = e.currentTarget.dataset.index;
     let List = this.data.List;
     let num = List[index].buy_num;
-    num = num + 1;
+    num = num*1 + 1;
     List[index].buy_num = num;
     this.setData({
       List: List
@@ -202,7 +203,7 @@ Page({
     const index = e.currentTarget.dataset.index;
     let List = this.data.List;
     let num = List[index].buy_num;
-    num = num - 1;
+    num = num*1 - 1;
     List[index].buy_num = num;
     this.setData({
       List: List
@@ -222,7 +223,6 @@ Page({
         });
       }
     }
-    console.log(this.data.wares_details)
     wx.setNavigationBarTitle({
       title: "商品详情"
     })
@@ -236,21 +236,6 @@ Page({
       title: this.data.selCards.Name
     })
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -289,6 +274,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return utils.transmit()
   }
 })

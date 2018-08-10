@@ -112,5 +112,5 @@ button{
   height: 82rpx;
   font-size: 30rpx;
   line-height: 82rpx;
-  margin-bottom: 80rpx;
+  /* margin-bottom: 80rpx; */
 }

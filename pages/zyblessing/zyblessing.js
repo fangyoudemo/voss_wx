@@ -54,6 +54,12 @@ Page({
       }
     })
   },
+  removeimg: function () {
+    this.setData({
+      giveImg: '',
+      uploadimg: ''
+    })
+  },
   seeImg: function () {
     wx.previewImage({
       urls: this.data.giveImg
@@ -86,6 +92,12 @@ Page({
       }
     })
   },
+  removevideo: function () {
+    this.setData({
+      giveVideo: '',
+      uploadmedia: ''
+    })
+  },
   bindinput: function (e) {
     this.setData({
       message: e.detail.value
@@ -93,25 +105,25 @@ Page({
   },
   giveme: function () {
     var that=this
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/selforderdetail',
-      data: { 
-        openid: userInfo.openid,
-        orderid: userInfo.orderid 
-        },
-      success: (res)=> {
         var selCards = JSON.stringify(this.data.selCards)
-        that.setData({ givemsg: res.data })
         var cardId = this.data.selCards.Cardid
         utils.addCard(cardId,(res)=>{
           console.log(res.cardList[0].code)
-          wx.navigateTo({
-            url: '../yiGive/yiGive?selCards=' + selCards,
+          wx.request({
+            url: 'https://scrm.cnt-ad.net/voss/service/receive',
+            data:{
+              code: res.cardList[0].code,
+              openid: userInfo.openid,
+              orderid: userInfo.orderid
+            },
+            success:(res)=>{
+              wx.navigateTo({
+                url: '../yiGive/yiGive?selCards=' + selCards,
+              })
+            }
           })
+          
         })
-        
-      }
-    })
   },
   /**
    * 生命周期函数--监听页面加载

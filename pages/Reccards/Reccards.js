@@ -62,7 +62,7 @@ Page({
     })
   },
   complete:function(){
-    wx.navigateTo({
+    wx.reLaunch({
       url: '../index/index',
     })
   },

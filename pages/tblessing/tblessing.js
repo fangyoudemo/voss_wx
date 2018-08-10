@@ -91,6 +91,7 @@ Page({
     })
   },
   giveme: function () {
+    console.log(this.data.orderId)
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
       data: {
@@ -107,14 +108,17 @@ Page({
         }
       }
     })
+
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       orderimg: options.orderimg,
-      orderId: options.orderId
+      orderId: options.orderId,
+      cardname: options.cardname
     })
     userInfo.totalfee = options.shouldPay
   },
@@ -172,9 +176,9 @@ Page({
     // 来自页面内转发按钮
     if (e.from == 'button') {
       return {
-        title: '送你一张恋人卡',
+        title: this.data.cardname,
         path: 'pages/Reccards/Reccards?orderid=' + orderId,
-        imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg',
+        imageUrl: this.data.orderimg,
         success: function (res) {
           // 转发成功之后的回调
           if (res.errMsg == 'shareAppMessage:ok') {

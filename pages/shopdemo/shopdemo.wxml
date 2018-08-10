@@ -4,7 +4,7 @@
   </view>
   <!-- 头部标题 -->
   <view class="banner_title">{{selCards.Name}}</view>
-<view wx:for="{{wares}}" wx:key="key">
+<view style='width:90%;margin:0 auto;' wx:for="{{wares}}" wx:key="key">
 <view class='sp_name'>{{item.Productname}}</view>
 <view class='sp_spec'>{{item.Spec}}瓶    {{item.buy_num}}份</view>
 </view>
@@ -25,7 +25,7 @@
   </view>
   <view class='men_cent'>
     <view class='men_title'>
-    <image src='../../images/address.png' mode="aspectFit"></image>
+    <image src='../../images/dizhi.png' mode="aspectFit"></image>
     收货地区
     </view>
     <view class='men_text'>{{userInfo.province}}{{userInfo.city}}{{userInfo.county}}{{userInfo.town}}</view>
@@ -41,17 +41,18 @@
 <view class='wares_money'>
 <view class='men_cent'>
     <view class='men_title'>
-    <image src='../../images/address.png' mode="aspectFit"></image>
+    <image src='../../images/car.png' mode="aspectFit"></image>
     运费
     </view>
     <view class='totalFee'>+¥ {{userInfo.totalFee}}</view>
   </view>
   <view class='men_cent'>
     <view class='men_title'>
-    <image src='../../images/address.png' mode="aspectFit"></image>
+    <image src='../../images/shopcar.png' mode="aspectFit"></image>
     订单总价
     </view>
-    <view class='totalPrice'>¥ {{userInfo.totalPrice}}</view>
+    <view class='totalPrice'>¥ {{userInfo.totalPrice+userInfo.totalFee}}</view>
   </view>
 </view>
 <button bindtap='shop'>购买</button>
+<view style='height:80rpx'></view>

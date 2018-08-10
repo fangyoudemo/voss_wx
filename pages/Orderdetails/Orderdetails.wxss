@@ -50,4 +50,21 @@
   bottom: 80rpx;
   color: #63708e;
   font-size: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kefu{
+  background: none;
+  border: none; 
+  display: inline-block;
+  font-size: 20rpx;
+  color: #63708e; 
+  margin: 0; 
+  padding: 0;
+  margin-right: 20rpx;
+  height:47rpx;
+}
+.kefu:after{
+  border: none;
 }

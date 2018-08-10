@@ -24,7 +24,7 @@
         <view class='wares_num' wx:if="{{item.buy_num>0}}">{{item.buy_num}}</view>
         <view class='wares_text' data-index="{{item.Id}}" bindtap='show'>
           <text>{{item.Productname}}{{item.Spec}}</text>
-          <text>¥{{item.Unitprice}}</text>
+          <view class='price'>¥{{item.Unitprice}} <view>查看详情</view> </view>
         </view>
         <view class='numCount' wx:if="{{item.buy_num==0}}">
           <text class='onlyAdd' bindtap='addNum' data-index="{{item.sid}}">+</text>
@@ -37,6 +37,7 @@
     </view>
   </view>
 </view>
+<view style='height:190rpx'></view>
 <!-- 底部按钮区 -->
 <view class='bottom'>
   <view class='bottom_buytext'>
@@ -53,7 +54,7 @@
   <view class='wares_details'>
     <view class='shut' bindtap='shut'><image src='../../images/shut_icon.png'></image></view>
     <view class='wares_details_img'>
-    <image src='../../images/canping.png'></image></view>
+    <image src='{{wares_details.Imgicon}}'></image></view>
     <view class='wares_details_title'>
       <text>{{wares_details.Productname}}{{wares_details.Spec}}瓶</text>
       <text>¥{{wares_details.Unitprice}}</text>

@@ -10,7 +10,11 @@ Page({
   data: {
   
   },
-
+  tel:function(){
+    wx.makePhoneCall({
+      phoneNumber: '4008187711' //售后电话
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

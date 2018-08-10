@@ -1,6 +1,9 @@
 {
-  "pages":[
-    "pages/index/index",
+  "pages":[  
+    "pages/index/index",  
+    "pages/Reccards/Reccards",  
+    "pages/blessing/blessing",
+    "pages/zyReccards/zyReccards",
     "pages/authorize/authorize",    
     "pages/detail/detail", 
     "pages/address/address",  
@@ -9,11 +12,8 @@
     "pages/Orderdetails/Orderdetails",
     "pages/history/history",
     "pages/logistics/logistics",
-    "pages/Reccards/Reccards",
     "pages/shopdemo/shopdemo",
-    "pages/blessing/blessing",
     "pages/zyblessing/zyblessing",
-    "pages/zyReccards/zyReccards",
     "pages/yfcard/yfcard",
     "pages/usecard/usecard",
     "pages/tblessing/tblessing",

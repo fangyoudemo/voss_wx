@@ -62,7 +62,7 @@ Page({
       },
       success:function(res){
         console.log(res)
-        wx.navigateTo({
+        wx.reLaunch({
           url: '../index/index',
         })
       }

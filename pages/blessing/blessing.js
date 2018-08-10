@@ -59,6 +59,12 @@ Page({
       urls: this.data.giveImg
     })
   },
+  removeimg:function(){
+    this.setData({
+      giveImg:'',
+      uploadimg:''
+    })
+  },
   addvideo:function(){
     var that = this
     wx.chooseVideo({
@@ -86,6 +92,13 @@ Page({
       }
     })
   },
+  removevideo: function () {
+    console.log("1")
+    this.setData({
+      giveVideo:'',
+      uploadmedia: ''
+    })
+  },
   bindinput:function(e){
     this.setData({
       message: e.detail.value
@@ -93,37 +106,29 @@ Page({
   },
   giveme:function(){
     var that=this
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/modifyaddress',
-      data: {
-        orderid: userInfo.orderId,
-        townId: userInfo.townId,
-        addressDetail: userInfo.address,
-        openid: userInfo.openid,
-        nickName: userInfo.nickName
-      },
-      success:function(res){
-        if (res.data.jd_kpl_open_cloudtrade_order_modifyaddress_response.resultCode == 0) {
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
-      data: {
-        orderid: userInfo.orderId
-      },
-      success: function (res) {
-        console.log('解锁订单返回信息：', res)
-        var selCards = JSON.stringify(that.data.selCards)
-        if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode == 0) {
-          wx.navigateTo({
-            url: '../yiGive/yiGive?selCards=' + selCards,
-          })
-        } else {
-          console.log("订单确认失败，请联系客服")
-        }
-      }
-    })
-      }else{
-          console.log("订单确认失败，请联系客服")
-      }
+    var data = {
+      orderid: userInfo.orderId,
+      townId: userInfo.townId,
+      addressDetail: userInfo.address,
+      openid: userInfo.openid,
+      nickName: userInfo.nickName
+    }
+    utils.request('/voss/service/modifyaddress',data,(res)=>{
+      if (res.data.jd_kpl_open_cloudtrade_order_modifyaddress_response.resultCode == 0) {
+        var data = { orderid: userInfo.orderId}
+        //解锁订单
+        utils.request('/voss/service/ordertransfer',data,(res)=>{
+          var selCards = JSON.stringify(that.data.selCards)
+          if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode == 0) {
+            wx.navigateTo({
+              url: '../yiGive/yiGive?selCards=' + selCards,
+            })
+          } else {
+            console.log("订单确认失败，请联系客服")
+          }
+        })
+      } else {
+        console.log("订单确认失败，请联系客服")
       }
     })
   },
@@ -141,7 +146,6 @@ Page({
    */
   onReady: function () {
     wx.setNavigationBarTitle({
-      //顶部标题
       title: "留下祝福"
     })
   },
@@ -191,26 +195,22 @@ Page({
     // 来自页面内转发按钮
     if (e.from == 'button') {
       return {
-        title: '送你一张恋人卡',
+        // title: this.data.selCards.Imgurl ,
         path: 'pages/Reccards/Reccards?orderid=' + orderId + '&selCards=' + selCards,
-        imageUrl: 'http://i4.bvimg.com/654292/9c2b24afe98e9f92.jpg',
+        imageUrl: this.data.selCards.Imgurl,
         success: function (res) {
           // 转发成功之后的回调
           if (res.errMsg == 'shareAppMessage:ok') {
-            wx.request({
-              url: 'https://scrm.cnt-ad.net/voss/service/shareorder',
-              data: {
-                orderid: orderId,
-                message: that.data.message,
-                uploadimg: that.data.uploadimg,
-                uploadmedia: that.data.uploadmedia
-              },
-              success: function (res) {
-                
-              }
-            })
-            wx.navigateTo({
-              url: '../yiGive/yiGive?selCards=' + selCards,
+            var data={
+              orderid: orderId,
+              message: that.data.message,
+              uploadimg: that.data.uploadimg,
+              uploadmedia: that.data.uploadmedia
+            }
+            utils.request('/voss/service/shareorder',data,(res)=>{
+              wx.navigateTo({
+                url: '../yiGive/yiGive?selCards=' + selCards,
+              })
             })
           }
         },
@@ -227,6 +227,8 @@ Page({
       wx.navigateTo({
         url: '../yiGive/yiGive',
       })
+    }else{
+      return utils.transmit()
     }
   }
 })

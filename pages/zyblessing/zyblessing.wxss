@@ -93,3 +93,36 @@ button{
   text-align: center;
   margin-top: 62rpx;
 }
+
+.removeBox{
+  margin-top: 20rpx;
+  overflow:hidden;
+  width:100%;
+  float:left;
+}
+.remove{
+  padding: 0;
+  margin: 0;
+  width: 200rpx;
+  height: 74rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #dcdcdc;
+  font-size: 24rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 72rpx;
+  float: left;
+  margin-right: 30rpx;
+  background: red;
+}
+.giveImg,.giveVideo{
+  position: relative
+}
+.shut_icon{
+  position: absolute;
+  z-index: 999;
+  right: 4rpx;
+  top: 4rpx;
+  width: 40rpx;
+  height: 40rpx;
+}

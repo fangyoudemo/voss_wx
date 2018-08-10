@@ -1,8 +1,7 @@
 <!--pages/history/history.wxml-->
-<view class='main'>
-
+<view class='main' wx:if="{{authSetting}}">
   <!-- 收到 -->
-    <view class='main_content'  wx:for="{{orderList2}}" wx:if="{{item.status==3}}">
+    <view class='main_content sd_no'  wx:for="{{orderList2}}" wx:if="{{item.status==3}}">
     <image bindtap='orderDetails'  data-id="{{item.orderId}}" src="{{item.orderimg}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -14,7 +13,7 @@
       </view>
     </view>
     </view>
-  <view class='main_content'  wx:for="{{orderList2}}" wx:if="{{item.status==4}}">
+  <view class='main_content sd_yes'  wx:for="{{orderList2}}" wx:if="{{item.status==4}}">
     <image bindtap='orderDetails'  data-id="{{item.orderId}}" src="{{item.orderimg}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -27,7 +26,7 @@
     </view>
   </view>
 <!-- 自营 -->
-  <view class='main_content'  wx:for="{{selforderList}}" wx:if="{{item.status== 0}}">
+  <!-- <view class='main_content zy_nogive'  wx:for="{{selforderList}}" wx:if="{{item.status== 0}}">
     <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -38,12 +37,12 @@
         <view wx:if="{{item.status==1}}">未领取</view>
         <view wx:if="{{item.status>1}}">已领取</view>
         <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
-        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" data-cardname='{{item.cardname}}' type='primary' wx:if="{{item.status==0}}">立即赠送</button>
       </view>
     </view>
-  </view>
+  </view> -->
 
-    <view class='main_content'  wx:for="{{selforderList}}" wx:if="{{item.status== 1}}">
+    <view class='main_content zy_no'  wx:for="{{selforderList}}" wx:if="{{item.status== 1}}">
     <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -54,11 +53,11 @@
         <view wx:if="{{item.status==1}}">未领取</view>
         <view wx:if="{{item.status>1}}">已领取</view>
         <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
-        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}"  data-cardname='{{item.cardname}}' type='primary' wx:if="{{item.status==0}}">立即赠送</button>
       </view>
     </view>
   </view>
-      <view class='main_content'  wx:for="{{selforderList}}" wx:if="{{item.status> 1}}">
+      <view class='main_content zy_yes'  wx:for="{{selforderList}}" wx:if="{{item.status> 1}}">
     <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -69,12 +68,12 @@
         <view wx:if="{{item.status==1}}">未领取</view>
         <view wx:if="{{item.status>1}}">已领取</view>
         <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
-        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}"  data-cardname='{{item.cardname}}' type='primary' wx:if="{{item.status==0}}">立即赠送</button>
       </view>
     </view>
   </view>
 <!-- 京东 -->
-  <view class='main_content'  wx:for="{{orderList}}" wx:if="{{item.status== 0}}">
+  <!-- <view class='main_content jd_nogive'  wx:for="{{orderList}}" wx:if="{{item.status== 0}}" wx:if="{{item.orderState>3}}">
     <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -85,12 +84,28 @@
         <view wx:if="{{item.status==1}}">未领取</view>
         <view wx:if="{{item.status>1}}">已领取</view>
         <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
-        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}"  data-cardname='{{item.cardname}}' type='primary' wx:if="{{item.status==0}}">立即赠送</button>
+      </view>
+    </view>
+  </view> -->
+
+  <view class='main_content jd_no'  wx:for="{{orderList}}" wx:if="{{item.status== 1}}" wx:if="{{item.orderState>3}}">
+    <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
+    <view class='msg'>
+      <view>{{item.cardname}}</view>
+      <view>购买时间：{{item.dateSubmit}}</view>
+      <view>¥ {{item.shouldPay}}</view>
+      <view class='wuliu'>
+        <view wx:if="{{item.status== 0}}">未赠送</view>
+        <view wx:if="{{item.status==1}}">未领取</view>
+        <view wx:if="{{item.status>1}}">已领取</view>
+        <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}"  data-cardname='{{item.cardname}}' type='primary' wx:if="{{item.status==0}}">立即赠送</button>
       </view>
     </view>
   </view>
 
-  <view class='main_content'  wx:for="{{orderList}}" wx:if="{{item.status== 1}}">
+  <view class='main_content jd_yes'  wx:for="{{orderList}}" wx:if="{{item.status>1}}" wx:if="{{item.orderState>4}}">
     <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
     <view class='msg'>
       <view>{{item.cardname}}</view>
@@ -101,23 +116,7 @@
         <view wx:if="{{item.status==1}}">未领取</view>
         <view wx:if="{{item.status>1}}">已领取</view>
         <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
-        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
-      </view>
-    </view>
-  </view>
-
-  <view class='main_content'  wx:for="{{orderList}}" wx:if="{{item.status>1}}">
-    <image bindtap='orderDetails' src="{{item.orderimg}}" data-id="{{item.orderId}}"></image>
-    <view class='msg'>
-      <view>{{item.cardname}}</view>
-      <view>购买时间：{{item.dateSubmit}}</view>
-      <view>¥ {{item.shouldPay}}</view>
-      <view class='wuliu'>
-        <view wx:if="{{item.status== 0}}">未赠送</view>
-        <view wx:if="{{item.status==1}}">未领取</view>
-        <view wx:if="{{item.status>1}}">已领取</view>
-        <button bindtap='seeLogistics' data-orderId="{{item.orderId}}" type='primary' wx:if="{{item.status>1}}">查看物流</button>
-        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}" type='primary' wx:if="{{item.status==0}}">立即赠送</button>
+        <button bindtap='blessing' data-orderId="{{item.orderId}}" data-orderimg="{{item.orderimg}}" data-shouldPay="{{item.shouldPay}}"  data-cardname='{{item.cardname}}' type='primary' wx:if="{{item.status==0}}">立即赠送</button>
       </view>
     </view>
   </view>

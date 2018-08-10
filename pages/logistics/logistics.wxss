@@ -124,12 +124,27 @@ page{
   color: #a5a5a5;
 }
 .sh_tel{
-  width: 100%; 
-  height: 120rpx;
+  width: 100%;
   text-align: center;
-  position: fixed; 
-  bottom: 0;
+  position: fixed;
+  bottom: 80rpx;
   color: #63708e;
   font-size: 20rpx;
-  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kefu{
+  background: none;
+  border: none; 
+  display: inline-block;
+  font-size: 20rpx;
+  color: #63708e; 
+  margin: 0; 
+  padding: 0;
+  margin-right: 20rpx;
+  height:47rpx;
+}
+.kefu:after{
+  border: none;
 }

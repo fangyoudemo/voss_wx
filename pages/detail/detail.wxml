@@ -47,7 +47,7 @@
     <view>{{totalPrice}}</view>
     </view>
   </view>
-  <button open-type="getUserInfo" class='bottom_buybtn' bindtap='buy'  bindgetuserinfo="onGotUserInfo">结算</button> 
+  <button open-type="getUserInfo" class='bottom_buybtn' bindtap='buy' disabled="{{buttonClicked}}"  bindgetuserinfo="onGotUserInfo">结算</button> 
 </view>
 <!-- 商品详情 -->
 <view class='wares_box' hidden='{{flag}}'>

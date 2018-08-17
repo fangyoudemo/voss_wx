@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
+var utils = require('../../utils/util.js')
 Page({
 
   /**
@@ -60,11 +61,11 @@ Page({
         customerName: customerName,
         customerMobile: customerMobile
       },
-      success:function(res){
-        console.log(res)
-        wx.reLaunch({
-          url: '../index/index',
-        })
+      success:(res)=>{
+        var tips = JSON.stringify({ tips_title: "提交成功", tips_img: this.data.selCards.Imgurl, prompt: "我们会尽快为您发货", d_btn: true, bgimg: true})
+				wx.reLaunch({
+					url: '../tips/tips?tips='+tips
+				})
       }
     })
   },
@@ -77,7 +78,13 @@ Page({
       selCards: JSON.parse(options.selCards),
       orderid: options.orderid
     })
-    var that = this
+		wx.request({
+      url: 'https://scrm.cnt-ad.net/voss/service/selforderdetail',
+      data: { orderid: options.orderid},
+      success:(res)=>{
+        this.setData({ wares:res.data})
+      }
+    })
   },
 
   /**
@@ -94,7 +101,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    				
   },
 
   /**

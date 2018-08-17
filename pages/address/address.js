@@ -202,7 +202,7 @@ Page({
     })
     wx.showModal({
       title: '友情提示',
-      content: '送朋友\r\n请填写朋友的收货信息\r\n收到方可更改末级地址\r\n\r\n送自己\r\n请填写自己收货信息\r\n在支付后可更改末级地址',
+      content: '送朋友\r\n请填写朋友的收货信息\r\n收到方可更改末级地址\r\n\r\n送自己\r\n请正确填写自己收货信息\r\n一经填写不可修改',
       showCancel:false,
       success: function (res) {      
       }

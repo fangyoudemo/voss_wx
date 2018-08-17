@@ -30,7 +30,7 @@ Page({
     var that=this
     wx.chooseImage({
       count:1,
-      success:function(res){
+      success:(res)=>{
         that.setData({
           giveImg:res.tempFilePaths
         })
@@ -45,7 +45,7 @@ Page({
             
           },
           name: 'filepath',
-          success: function (res) {
+          success:(res)=> {
             that.setData({
               uploadimg: JSON.parse(res.data).errmsg
             })
@@ -63,40 +63,6 @@ Page({
     this.setData({
       giveImg:'',
       uploadimg:''
-    })
-  },
-  addvideo:function(){
-    var that = this
-    wx.chooseVideo({
-      success:function(res){
-        that.setData({
-          giveVideo: res.tempFilePath
-        })
-        wx.uploadFile({
-          url: 'https://scrm.cnt-ad.net/voss/service/uploadfile',
-          filePath: that.data.giveVideo.toString(),
-          header: {
-            'content-type': 'multipart/form-data',
-            'accept': 'application/json'
-          },
-          formData: {
-            
-          },
-          name: 'filepath',
-          success: function (res) {
-            that.setData({
-              uploadmedia: JSON.parse(res.data).errmsg
-            })
-          }
-        })
-      }
-    })
-  },
-  removevideo: function () {
-    console.log("1")
-    this.setData({
-      giveVideo:'',
-      uploadmedia: ''
     })
   },
   bindinput:function(e){
@@ -118,10 +84,14 @@ Page({
         var data = { orderid: userInfo.orderId}
         //解锁订单
         utils.request('/voss/service/ordertransfer',data,(res)=>{
-          var selCards = JSON.stringify(that.data.selCards)
           if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode == 0) {
-            wx.navigateTo({
-              url: '../yiGive/yiGive?selCards=' + selCards,
+            var tipwares = []
+            for (let i in userInfo.wares) {
+            	tipwares[i] = { name: userInfo.wares[i].Productname + userInfo.wares[i].Spec, buy_num: userInfo.wares[i].buy_num }
+            }
+            var tips = JSON.stringify({ tips_title: "已赠送",tips_masg:"送给自己，请在历史购买中查看", tips_img: this.data.selCards.Imgurl, tipwares: tipwares, totalPrice: userInfo.totalPrice, tips_card: this.data.selCards.Name, d_btn: false })
+            wx.reLaunch({
+            	url: '../tips/tips?tips='+tips
             })
           } else {
             console.log("订单确认失败，请联系客服")
@@ -191,15 +161,16 @@ Page({
   onShareAppMessage: function (e) {
     var that=this
     var orderId = userInfo.orderId
-    var selCards = JSON.stringify(that.data.selCards)
+		var selCards=JSON.stringify(this.data.selCards)
     // 来自页面内转发按钮
     if (e.from == 'button') {
+      withShareTicket:true
       return {
-        // title: this.data.selCards.Imgurl ,
         path: 'pages/Reccards/Reccards?orderid=' + orderId + '&selCards=' + selCards,
         imageUrl: this.data.selCards.Imgurl,
-        success: function (res) {
-          // 转发成功之后的回调
+        success: (res)=>{
+          console.log(res)
+          //转发成功之后的回调
           if (res.errMsg == 'shareAppMessage:ok') {
             var data={
               orderid: orderId,
@@ -208,8 +179,13 @@ Page({
               uploadmedia: that.data.uploadmedia
             }
             utils.request('/voss/service/shareorder',data,(res)=>{
-              wx.navigateTo({
-                url: '../yiGive/yiGive?selCards=' + selCards,
+              var tipwares = []
+              for (let i in userInfo.wares) {
+                tipwares[i] = { name: userInfo.wares[i].Productname + userInfo.wares[i].Spec, buy_num: userInfo.wares[i].buy_num }
+              }
+              var tips = JSON.stringify({ tips_title: "已赠送", tips_img: this.data.selCards.Imgurl, tipwares: tipwares, totalPrice: userInfo.totalPrice, tips_card: this.data.selCards.Name, d_btn: false })
+              wx.reLaunch({
+              	url: '../tips/tips?tips='+tips
               })
             })
           }
@@ -220,13 +196,10 @@ Page({
             console.log("用户取消转发")
           } else if (res.errMsg == 'shareAppMessage:fail') {
             console.log("转发失败")
-            // 转发失败，其中 detail message 为详细失败信息
+            
           }
         }
       }
-      wx.navigateTo({
-        url: '../yiGive/yiGive',
-      })
     }else{
       return utils.transmit()
     }

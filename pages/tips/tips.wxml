@@ -1,0 +1,29 @@
+  <view class='tipTitle' wx:if="{{!tips.bgimg}}"><image src='../../images/true_icon.png'></image><text>{{tips.tips_title}}</text></view>
+  <view class='tips_masg' wx:if="{{tips.tips_masg}}">{{tips.tips_masg}}</view>
+  <view class='tipbgbanner' style='margin-top:80rpx;'  wx:if="{{tips.bgimg}}"><image src='{{tips.tips_img}}'></image></view>
+  <view class='tipbanner' wx:else><image src='{{tips.tips_img}}'></image></view>
+  <view wx:for="{{tips.tipwares}}" wx:key="key">
+    <view class='sp_name'>{{item.name}}瓶   x{{item.buy_num}}份</view>
+  </view>
+  <view class='sp_price'>
+  <view wx:if="{{tips.tips_card}}">{{tips.tips_card}}</view>
+  <view wx:if="{{tips.totalPrice}}"><text>x1</text><text>¥{{tips.totalPrice}}</text></view>
+  </view>
+    <view class='tipTitle' style='color:#505050;' wx:if="{{tips.bgimg}}"><image src='../../images/true_icon.png'></image><text>{{tips.tips_title}}</text></view>
+  <view class='prompt' style='margin-top:20rpx;color:#505050;' wx:if="{{tips.prompt&&tips.bgimg}}">{{tips.prompt}}</view>
+  <view class='prompt' wx:if="{{tips.prompt&&!tips.bgimg}}">{{tips.prompt}}</view>
+  <button bindtap='toIndex' wx:if="{{!tips.d_btn}}">完成</button>
+  <view class='givetoo' wx:if="{{tips.d_btn}}"> <text style='margin-right:10rpx;' bindtap='toIndex'>我也要送</text>|<text style='margin-left:10rpx;'  bindtap='guanzhu'>关注公众号</text></view>
+  <!-- 二维码层 -->
+<view class='mask' wx:if="{{mask}}">
+  <view class='erweima'>
+    <image bindtouchstart='timestart' bindtouchend='timeend' bindtap='saveImg' src='../../images/erweima.jpg'></image>
+    <view class='er_tishi'>长按保存二维码关注官方公众号</view>
+  </view>
+  <view class='biaoyu'>
+  <view>感谢品位不凡的你选择VOSS</view>
+  <view>愿VOSS带你回归最真实的当下</view>
+  <view>享受最纯粹的时刻</view>
+  </view>
+  <image bindtap='mask_btn' class='guanbi_btn' src='../../images/gb_btn.png'></image>
+</view>

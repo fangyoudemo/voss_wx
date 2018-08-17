@@ -3,14 +3,14 @@
   <view class='logi_state'>
     <view class='logi_state_icon active'><view></view></view>
     <view class='tiao'></view>
-    <view class='logi_state_icon'><view></view></view>
+    <view class="logi_state_icon {{orderList.status>=5?'active':''}}"><view></view></view>
     <view class='tiao'></view>
-    <view class='logi_state_icon'><view></view></view>
+    <view class="logi_state_icon {{orderList.status==6?'active':''}}"><view></view></view>
   </view>
   <view class='logi_text'>
     <text class='active'>下单</text>
-    <text>发货</text>
-    <text>完成</text>
+    <text class="{{orderList.status>=5?'active':''}}">发货</text>
+    <text class="{{orderList.status==6?'active':''}}">完成</text>
   </view>
   <view class='orderNum'>订单编号：{{orderList.orderId}}</view>
   <view class='orderTime'>下单时间：{{orderList.dateSubmit}}</view>

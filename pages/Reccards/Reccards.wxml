@@ -1,4 +1,5 @@
 <!--pages/Reccards/Reccards.wxml-->
+<!-- <view wx:if="{{!group}}"> -->
 <!-- 领取礼品卡弹窗 -->
 <view class='Mask' wx:if='{{givemsg.status==1}}'>
   <view class='reccards'>
@@ -18,7 +19,7 @@
     <text class='mian_inp_tit' >详细地址</text>
     <input name="address" type='text' value='{{givemsg.addressdetail}}'></input>
     </view>
-    <view class='tishi_text'>可修改末级地区和详细地址</view>
+    <view class='tishi_text'>确认末级地址后提交</view>
     <button class='conSub' dtap='conSub' type="primary" form-type="submit">确认地址并提交</button>   
     </form>
   </view>
@@ -36,8 +37,8 @@
     <view class='text'>{{givemsg.nickname}}</view>
     <view class='text'>{{givemsg.message}}</view>
   </view>
-  <image class='giveImg' wx:if="{{givemsg.uploadmedia!=''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
-  <video class='giveVideo' wx:if="{{givemsg.uploadmedia!=''}}" src='https://scrm.cnt-ad.net{{givemsg.uploadmedia}}'></video>
+  <image class='giveImg' wx:if="{{givemsg.uploadpic!=''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.uploadpic}}'></image>
 </view>
-<button class='complete' bindtap='complete'>完成</button>
+<button class='complete' bindtap='complete' >完成</button>
 </view>
+<!-- </view> -->

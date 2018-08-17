@@ -158,7 +158,7 @@
   border: 1rpx solid #ccc;
   border-radius: 10rpx;
   position: absolute;
-  right:300rpx;
+  right:150rpx;
   bottom: -100rpx;
   z-index: 999;
 }

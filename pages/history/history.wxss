@@ -49,3 +49,9 @@ button{
   text-align: center;
   line-height: 54rpx;
 }
+.noauth{
+  font-size: 28rpx;
+  text-align: center;
+  margin-top: 20rpx;
+  color: #ccc;
+}

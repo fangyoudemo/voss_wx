@@ -2,6 +2,7 @@
 var app = getApp()
 var userInfo = app.globalData.userInfo
 var giftcards = app.globalData.giftcards
+var group = app.globalData.group
 var utils = require('../../utils/util.js')
 Page({
   data: {
@@ -37,18 +38,6 @@ Page({
                   })
                 }
               })
-              // var url = '/voss/service/login'
-              // var data = { code: userInfo.code, nickname: userInfo.nickName, avata: userInfo.avatarUrl }
-              // utils.request(url, data, (res) => {
-              //   if (res.data.errcode == 0) {
-              //     userInfo.openid = res.data.openid
-              //     var orderid = this.data.orderid
-              //     var selCards = JSON.stringify(this.data.selCards) 
-              //     wx.navigateTo({
-              //       url: '../usecard/usecard?orderid=' + orderid + '&selCards=' + selCards,
-              //     })
-              //   }
-              // })
               console.log('用户操作信息为:', userInfo)
             } else {
               console.log('登录失败！' + res.errMsg)
@@ -56,6 +45,16 @@ Page({
           }
         })
       }
+    })
+  },
+  ok:function(){
+    var tipwares = []
+    for (let i in this.data.givemsg.ProductList) {
+      tipwares[i] = { name: this.data.givemsg.ProductList[i].GoodsName, buy_num: this.data.givemsg.ProductList[i].GoodsNumber }
+    }
+    var tips = JSON.stringify({ tips_title: "提交成功", prompt: "我们会尽快为您发货", tips_img: this.data.selCards.Imgurl,/* tipwares: tipwares,*/ d_btn: true,bgimg: true })
+    wx.reLaunch({
+      url: '../tips/tips?tips=' + tips
     })
   },
   gocards:function(){
@@ -83,9 +82,14 @@ Page({
                     orderid: that.data.orderid
                   },
                   success: (res) => {
-                    wx.reLaunch({
-                      url: '../index/index',
-                    })
+										var tipwares = []
+										for (let i in this.data.givemsg.ProductList) {
+											tipwares[i] = { name: this.data.givemsg.ProductList[i].GoodsName, buy_num: this.data.givemsg.ProductList[i].GoodsNumber }
+										}
+										var tips = JSON.stringify({ tips_title: "领取成功",tips_masg:"领取成功，可在历史购买中查看", tips_img: this.data.selCards.Imgurl, tipwares: tipwares,d_btn: true })
+										wx.reLaunch({
+											url: '../tips/tips?tips='+tips
+										})          
                   }
                 })
 
@@ -108,11 +112,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     var orderid = options.orderid
     this.setData({
       orderid: orderid,
-      // openid: userInfo.openid,
-      selCards: JSON.parse(options.selCards)
+      selCards: JSON.parse(options.selCards),
+      group: group
     })
     wx.request({
       url: 'https://scrm.cnt-ad.net/voss/service/selforderdetail',
@@ -122,6 +127,12 @@ Page({
         this.setData({ givemsg:res.data})
       }
     })
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    
   }
 
 })

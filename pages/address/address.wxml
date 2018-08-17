@@ -57,15 +57,7 @@
         <input name="address" type='text' placeholder='街道门牌信息' placeholder-style='font-size: 24rpx;color: #84888a;'></input>
       </view>
     </view>
-    <!-- <view class='zhongjia feiyun'>
-      <view> <image src='../../images/name.png' mode="aspectFit"></image> 商品金额</view>
-      <view>¥79.00</view>
-    </view>
-    <view class='yunfei feiyun'>
-      <view> <image src='../../images/name.png' mode="aspectFit"></image> 运费</view>
-      <view>+¥00.00</view>
-    </view> -->
-    <view class='tishi_msg' mode="aspectFit">2小时内可修改末级地区信息和详细地址</view>
+    <view class='tishi_msg' mode="aspectFit">订单支付后2小时内收到方可更改末及地区信息和详细地址</view>
     <button type="primary" form-type="submit">确认地址</button>
   </form>
   <view style='height:80rpx'></view>

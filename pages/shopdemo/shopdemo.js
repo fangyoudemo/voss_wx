@@ -52,7 +52,6 @@ Page({
                   iv: userInfo.iv,
                   encryptedData: userInfo.encryptedData,
                   orderId: userInfo.orderId,
-                  // orderId:'77188100703',
                   orderType: 0,
                   orderTypeCode: 0,
                   factPrice: userInfo.totalPrice,
@@ -60,7 +59,12 @@ Page({
                   fromType: 'wxapp',
                   appKey: '7ffa2e75489a40669cfbe5f49276cc05'
                 },
-                success: function (res) {
+                success:  (res)=> {
+                  // var selCards = JSON.stringify(_this.data.selCards)
+                  // wx.navigateTo({
+                  //   url: '../blessing/blessing?selCards=' + selCards,
+                  // })
+                  console.log(res)
                   if (res.data.timeStamp){
                     var selCards = JSON.stringify(_this.data.selCards)
     //---------------------------拉起支付---------------------------//
@@ -81,9 +85,6 @@ Page({
                       'fail': function (res) { },
                       'complete': function (res) { }
                     })
-                          //                     wx.navigateTo({
-                          //   url: '../blessing/blessing?selCards=' + selCards,
-                          // })
                   }else{
                     wx.showToast({
                       icon: 'none',
@@ -91,6 +92,8 @@ Page({
                       mask: true
                     })
                   }
+
+
                 }
               })
             }

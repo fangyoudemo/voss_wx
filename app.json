@@ -1,6 +1,7 @@
 {
   "pages":[  
-    "pages/index/index",  
+		"pages/index/index", 
+    "pages/tips/tips",
     "pages/Reccards/Reccards",  
     "pages/blessing/blessing",
     "pages/zyReccards/zyReccards",
@@ -8,7 +9,6 @@
     "pages/detail/detail", 
     "pages/address/address",  
     "pages/logs/logs",
-    "pages/yiGive/yiGive",
     "pages/Orderdetails/Orderdetails",
     "pages/history/history",
     "pages/logistics/logistics",
@@ -22,7 +22,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "VOSS.净享纯粹",
+    "navigationBarTitleText": "VOSS · 芙丝",
     "navigationBarTextStyle":"black"
   }
 }

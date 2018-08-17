@@ -55,22 +55,6 @@ function request(url, data, success,fail){
     fail: fail
   })
 }
-//放入卡包
-function addCard(){
-  var timestamp = Date.parse(new Date());
-  timestamp = timestamp / 1000;
-  wx.addCard({
-    cardList: [
-      {
-        cardId: '',
-        cardExt: '{"code": "", "openid": "", "timestamp":timestamp, "signature":签名}'
-      }
-    ],
-    success: function (res) {
-      console.log(res.cardList) // 卡券添加结果
-    }
-  })
-}
 //判断是否授权
 function authorize(){
 wx.getSetting({
@@ -178,28 +162,26 @@ function formatTime(number, format) {
 
 
 }
-//post请求设置
-function json2Form(json) {
-  var str = [];
-  for (var p in json) {
-    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(json[p]));
-  }
-  return str.join("&");
+//点击时间
+function buttonClicked(self) {
+  self.setData({
+    buttonClicked: true
+  })
+  setTimeout(function () {
+    self.setData({
+      buttonClicked: false
+    })
+  }, 1000)
 }
-
-
-
-
 //输出js
 module.exports = {
   formatTime: formatTime,
   getUserInfo: getUserInfo,
   request: request,
-  addCard: addCard,
   authorize: authorize,
   login: login,
   addCard: addCard,
   formatTime: formatTime,
   transmit: transmit,
-  json2Form: json2Form
+  buttonClicked: buttonClicked, 
 }

@@ -22,6 +22,7 @@ Page({
     totalPrice:0.00,  //总价 
     totalNum:0,  //总数
     flag:true,   //商品详情显示控制
+    buttonClicked:false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -58,6 +59,8 @@ Page({
   },
   //购买
   buy: function () {
+    utils.buttonClicked(this)
+    console.log("ok")
     let List = this.data.List;
     let totalNum = this.data.totalNum
     let buyWares = { "sku": [] }
@@ -83,15 +86,17 @@ Page({
           userInfo.code = res.code
           //获取用户信息
           wx.getUserInfo({
-            success: (res)=> {
+            success: (res)=> {           
               userInfo.encryptedData = res.encryptedData
               userInfo.iv = res.iv
               userInfo.nickName = JSON.parse(res.rawData).nickName
               userInfo.avatarUrl = JSON.parse(res.rawData).avatarUrl
               if (userInfo.code) {
                 var data = {code: userInfo.code,nickname: userInfo.nickName,avata: userInfo.avatarUrl}
+                console.log(data)
                 //登陆接口
-                utils.request('/voss/service/login', data,(res)=>{
+                utils.request('/voss/service/login', data,(res)=>{   
+                  console.log(res)               
                   if (res.data.errcode == 0) {
                     userInfo.openid = res.data.openid
                     if (this.data.selCards.Fromid == 1) {
@@ -112,7 +117,7 @@ Page({
                         userInfo.orderid = res.data.orderid
                         userInfo.totalPrice = res.data.totalfee
                         if (res.data.errcode == 'SUCCESS') {
-                          //拉起支付api
+                          // 拉起支付api
                           wx.requestPayment({
                             'timeStamp': res.data.timeStamp,
                             'nonceStr': res.data.nonceStr,
@@ -132,6 +137,8 @@ Page({
                         }
                       })
                     }
+                  }else{
+                    console.log('登录接口失败！' + res.errMsg)
                   }
                 })
                 console.log('用户操作信息为:', userInfo)

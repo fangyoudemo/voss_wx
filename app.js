@@ -43,6 +43,15 @@ App({
       }
     })
   },
+  onShow:function(obt){
+    var tips = wx.getStorageSync('tips')
+    if (obt.scene == 1089 && tips =='true'){
+      wx.setStorageSync('tips', 'false')
+      wx.redirectTo({
+        url: '/pages/index/index',
+      })
+    }
+  },
   //共用数据
   globalData: {
     //用户操作信息
@@ -52,6 +61,7 @@ App({
     //商品信息
     giftcards: [],
     //历史订单信息
-    history:[]
+    history:[],
+    group:false,
   }
 })

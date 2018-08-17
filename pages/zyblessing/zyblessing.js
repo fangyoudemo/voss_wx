@@ -105,7 +105,6 @@ Page({
   },
   giveme: function () {
     var that=this
-        var selCards = JSON.stringify(this.data.selCards)
         var cardId = this.data.selCards.Cardid
         utils.addCard(cardId,(res)=>{
           console.log(res.cardList[0].code)
@@ -117,9 +116,14 @@ Page({
               orderid: userInfo.orderid
             },
             success:(res)=>{
-              wx.navigateTo({
-                url: '../yiGive/yiGive?selCards=' + selCards,
-              })
+							var tipwares = []
+							for (let i in userInfo.wares) {
+								tipwares[i] = { name: userInfo.wares[i].Productname + userInfo.wares[i].Spec, buy_num: userInfo.wares[i].buy_num }
+							}
+							var tips = JSON.stringify({ tips_title: "已赠送",tips_masg:"送给自己，请在历史购买中查看", tips_img: this.data.selCards.Imgurl, tipwares: tipwares, totalPrice: userInfo.waresPrice, tips_card: this.data.selCards.Name, d_btn: false })
+							wx.reLaunch({
+								url: '../tips/tips?tips='+tips
+							})
             }
           })
           
@@ -131,7 +135,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       userInfo: userInfo,
-      selCards: JSON.parse(options.selCards)
+      selCards: JSON.parse(options.selCards),
     })
   },
   /**
@@ -148,7 +152,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+		
   },
 
   /**
@@ -188,6 +192,7 @@ Page({
     var selCards = JSON.stringify(this.data.selCards)
     // 来自页面内转发按钮
     if (e.from == 'button') {
+      withShareTicket: true
       return {
         title: this.data.selCards.Name,
         path: 'pages/zyReccards/zyReccards?orderid=' + orderid + '&selCards=' + selCards,
@@ -203,13 +208,16 @@ Page({
                 uploadimg: that.data.uploadimg,
                 uploadmedia: that.data.uploadmedia
               },
-              success: function (res) {
-
+              success:(res)=>{
+								var tipwares = []
+								for (let i in userInfo.wares) {
+									tipwares[i] = { name: userInfo.wares[i].Productname + userInfo.wares[i].Spec, buy_num: userInfo.wares[i].buy_num }
+								}
+								var tips = JSON.stringify({ tips_title: "已赠送", tips_img: this.data.selCards.Imgurl, tipwares: tipwares, totalPrice: userInfo.waresPrice, tips_card: this.data.selCards.Name, d_btn: false })
+								wx.reLaunch({
+									url: '../tips/tips?tips='+tips
+								})
               }
-            })
-            var selCards = JSON.stringify(this.data.selCards)
-            wx.navigateTo({
-              url: '../yiGive/yiGive?selCards=' + selCards,
             })
           }
         },

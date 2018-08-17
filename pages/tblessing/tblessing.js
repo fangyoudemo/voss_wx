@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var userInfo = app.globalData.userInfo
+var utils = require('../../utils/util.js')
 Page({
 
   /**
@@ -58,55 +59,31 @@ Page({
       urls: this.data.giveImg
     })
   },
-  addvideo: function () {
-    var that = this
-    wx.chooseVideo({
-      success: function (res) {
-        that.setData({
-          giveVideo: res.tempFilePath
-        })
-        wx.uploadFile({
-          url: 'https://scrm.cnt-ad.net/voss/service/uploadfile',
-          filePath: that.data.giveVideo.toString(),
-          header: {
-            'content-type': 'multipart/form-data',
-            'accept': 'application/json'
-          },
-          formData: {
-            'orderid': 77841529600
-          },
-          name: 'filepath',
-          success: function (res) {
-            that.setData({
-              uploadmedia: JSON.parse(res.data).errmsg
-            })
-          }
-        })
-      }
-    })
-  },
   bindinput: function (e) {
     this.setData({
       message: e.detail.value
     })
   },
   giveme: function () {
-    console.log(this.data.orderId)
-    wx.request({
-      url: 'https://scrm.cnt-ad.net/voss/service/ordertransfer',
-      data: {
-        orderid: this.data.orderId
-      },
-      success: function (res) {
-        console.log('解锁订单返回信息：', res)
-        if (res.data.jd_kpl_open_cloudtrade_order_transfer_response.data.resultCode == 0) {
-          wx.navigateTo({
-            url: '../history/history',
+    var that = this
+    var cardId = this.data.Cardid
+    utils.addCard(cardId, (res) => {
+      wx.request({
+        url: 'https://scrm.cnt-ad.net/voss/service/receive',
+        data: {
+          code: this.data.Cardid,
+          openid: userInfo.openid,
+          orderid: this.data.orderId
+        },
+        success: (res) => {
+          var tipwares = []
+          var tips = JSON.stringify({ tips_title: "已赠送", tips_masg: "送给自己，请在历史购买中查看", tips_img: this.data.Imgurl, tips_card: this.data.Name, d_btn: false })
+          wx.reLaunch({
+            url: '../tips/tips?tips=' + tips
           })
-        } else {
-          console.log("订单确认失败，请联系客服")
         }
-      }
+      })
+
     })
 
   },
@@ -114,13 +91,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-    this.setData({
-      orderimg: options.orderimg,
-      orderId: options.orderId,
-      cardname: options.cardname
+    //从服务器获取卡面信息
+    utils.request('/voss/service/cardlist', {}, (res) => {
+      console.log(res)
+      for (let i in res.data){
+        if (res.data[i].Id== options.cardid){
+          this.setData({
+            Cardid: res.data[i].Cardid,
+            Imgurl: res.data[i].Imgurl,
+            Name: res.data[i].Name
+          })
+        }
+      }
     })
-    userInfo.totalfee = options.shouldPay
+    this.setData({
+      orderId: options.orderId,
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -172,30 +158,36 @@ Page({
    */
   onShareAppMessage: function (e) {
     var that = this
-    var orderId = this.data.orderId
+    var orderid = this.data.orderid
+    var selCards = JSON.stringify(this.data.selCards)
     // 来自页面内转发按钮
     if (e.from == 'button') {
+      withShareTicket: true
       return {
-        title: this.data.cardname,
-        path: 'pages/Reccards/Reccards?orderid=' + orderId,
-        imageUrl: this.data.orderimg,
-        success: function (res) {
+        title: this.data.selCards.Name,
+        path: 'pages/zyReccards/zyReccards?orderid=' + orderid + '&selCards=' + selCards,
+        imageUrl: this.data.selCards.Imgurl,
+        success: (res) => {
           // 转发成功之后的回调
           if (res.errMsg == 'shareAppMessage:ok') {
             wx.request({
-              url: 'https://scrm.cnt-ad.net/voss/service/shareorder',
+              url: 'https://scrm.cnt-ad.net/voss/service/selfshareorder',
               data: {
-                orderid: orderId,
+                orderid: orderid,
                 message: that.data.message,
                 uploadimg: that.data.uploadimg,
                 uploadmedia: that.data.uploadmedia
               },
-              success: function (res) {
-
+              success: (res) => {
+                var tipwares = []
+                for (let i in userInfo.wares) {
+                  tipwares[i] = { name: userInfo.wares[i].Productname + userInfo.wares[i].Spec, buy_num: userInfo.wares[i].buy_num }
+                }
+                var tips = JSON.stringify({ tips_title: "已赠送", tips_img: this.data.selCards.Imgurl, tipwares: tipwares, totalPrice: userInfo.waresPrice, tips_card: this.data.selCards.Name, d_btn: false })
+                wx.reLaunch({
+                  url: '../tips/tips?tips=' + tips
+                })
               }
-            })
-            wx.navigateTo({
-              url: '../history/history',
             })
           }
         },

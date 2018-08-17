@@ -1,4 +1,5 @@
 <!--pages/Reccards/Reccards.wxml-->
+<!-- <view wx:if="{{!group}}"> -->
 <!-- 领取礼品卡弹窗 -->
 <view>
 <view class='banner'><image src='{{selCards.Imgurl}}'></image></view>
@@ -14,8 +15,9 @@
     <view class='text'>{{givemsg.Order.Message}}</view>
   </view>
   <image class='giveImg' wx:if="{{givemsg.Order.Uploadpic!==''}}" bindtap='seeImg' src='https://scrm.cnt-ad.net{{givemsg.Order.Uploadpic}}'></image>
-  <video class='giveVideo' wx:if="{{givemsg.Order.Uploadmedia!==''}}" src='https://scrm.cnt-ad.net{{givemsg.Order.uploadmedia}}'></video>
 </view>
 <button  wx:if='{{givemsg.Order.status==1}}' open-type="getUserInfo" class='complete' bindtap='use'>立即使用</button>
+<button  wx:else  class='complete' bindtap='ok'>完成</button>
 <view  wx:if='{{givemsg.Order.status==1}}' class='gocards' bindtap='gocards'>暂不使用，放入卡包</view>
 </view>
+<!-- </view> -->

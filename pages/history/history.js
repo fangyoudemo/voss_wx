@@ -27,9 +27,9 @@ Page({
   blessing: function (e){
     var orderId = e.target.dataset.orderid
     var orderimg = e.target.dataset.orderimg
-    var cardname = e.target.dataset.cardname
+    var cardid = e.target.dataset.cardid
     wx.navigateTo({
-      url: '../tblessing/tblessing?orderId=' + orderId + '&orderimg=' + orderimg + '&cardname=' + cardname
+      url: '../tblessing/tblessing?orderId=' + orderId + '&orderimg=' + orderimg + '&cardid=' + cardid
     })
   },
   user:function(e){
@@ -48,7 +48,8 @@ Page({
       success:(res)=> {
         if (res.authSetting['scope.userInfo']) { 
           this.setData({
-            authSetting: true
+            authSetting: true,
+            userInfo: userInfo
           })          
     var that=this
     wx.request({
@@ -96,7 +97,13 @@ Page({
         let orderList2 = that.data.orderList2
         let selforderList = that.data.selforderList
         for (let i = 0; i < orderList.length;i++){
-          orderList[i].dateSubmit = new Date(orderList[i].dateSubmit).Format("yyyy-MM-dd hh:mm:ss")
+          orderList[i].dateSubmit = orderList[i].dateSubmit.split(".")[0].replace("T"," ")
+          if (orderList[i].orderState>=9){
+              orderList[i].status=5
+          }
+          if (orderList[i].orderState >= 18){
+              orderList[i].status= 6
+          }
         }
         for (let i = 0; i < orderList2.length; i++) {
           orderList2[i].dateSubmit = utils.formatTime(orderList2[i].dateSubmit, 'Y/M/D h:m:s')          

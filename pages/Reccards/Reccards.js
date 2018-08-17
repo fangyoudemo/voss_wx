@@ -1,5 +1,6 @@
 //获取应用实例
 var app = getApp()
+var group = app.globalData.group
 var userInfo = app.globalData.userInfo
 var giftcards = app.globalData.giftcards
 Page({
@@ -62,19 +63,26 @@ Page({
     })
   },
   complete:function(){
+    var tipwares = []
+    for (let i in this.data.givemsg.orderWareInfos) {
+      tipwares[i] = { name: this.data.givemsg.orderWareInfos[i].name, buy_num: this.data.givemsg.orderWareInfos[i].num }
+    }
+    var tips = JSON.stringify({ tips_title: "提交成功",/* totalPrice: this.data.givemsg.price, tipwares: tipwares,*/ tips_img: this.data.selCards.Imgurl, prompt: "我们会尽快为您发货", d_btn: true, bgimg: true})
     wx.reLaunch({
-      url: '../index/index',
+    	url: '../tips/tips?tips='+tips
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     var that=this
     var orderid = options.orderid
     this.setData({
       orderid: orderid,
-      selCards: JSON.parse(options.selCards)
+      selCards: JSON.parse(options.selCards),
+      group: group
     })
     //获取页面信息
     wx.request({
@@ -119,8 +127,13 @@ Page({
 
       }
     })
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    
   }
-
 })
 
 

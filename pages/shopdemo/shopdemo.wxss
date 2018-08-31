@@ -71,7 +71,9 @@
 }
 .men_text{
   font-size: 22rpx;
-  color: 7a7a7a;  
+  color: 7a7a7a;
+  width: 65%;
+  text-align: right;  
 }
 .wares_money{
   width: 660rpx;

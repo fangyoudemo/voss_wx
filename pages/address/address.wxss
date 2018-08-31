@@ -50,6 +50,7 @@
   font-size: 24rpx;
   color: #000;
   border-left: 2rpx solid #f4f4f4;
+  width: 65%;
 }
 .region{
   width: 68%;

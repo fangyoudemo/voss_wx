@@ -34,7 +34,7 @@ function getUserInfo(cb) {
 //右上角转发
 function transmit(){
   return {
-    title: 'VOSS.净享纯粹',
+    title: '',
     path: '/pages/index/index',
     imageUrl:'https://scrm.cnt-ad.net/static/images/851531812537_.pic.jpg',  
     success: function (res) {

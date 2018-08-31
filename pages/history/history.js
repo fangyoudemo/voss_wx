@@ -102,7 +102,7 @@ Page({
               orderList[i].status=5
           }
           if (orderList[i].orderState >= 18){
-              orderList[i].status= 6
+              orderList[i].status=6
           }
         }
         for (let i = 0; i < orderList2.length; i++) {
@@ -118,6 +118,7 @@ Page({
           orderList2: orderList2,
           selforderList: selforderList
         })
+        // console.log(orderList)
         history.orderList = orderList
         history.orderList2 = orderList2
         history.selforderList = selforderList

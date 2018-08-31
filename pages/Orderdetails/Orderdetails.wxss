@@ -68,3 +68,6 @@
 .kefu:after{
   border: none;
 }
+.sh_tel view{
+  margin-top: 6rpx;
+}

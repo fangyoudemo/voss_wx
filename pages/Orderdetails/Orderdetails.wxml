@@ -11,11 +11,11 @@
 <view><text>订单时间：</text> <text>{{detail.dateSubmit}}</text></view>
 <view><text>已付款：</text> <text>{{detail.shouldPay}}元</text></view>
 <view><text>使用详情：</text> 
-  <text wx:if="{{detail.status== 0}}">未赠送</text>
-  <text wx:if="{{detail.status== 1}}">未领取</text>
+  <text wx:if="{{detail.status==0}}">未赠送</text>
+  <text wx:if="{{detail.status==1}}">未领取</text>
   <text wx:if="{{detail.status==2}}">已领取</text>
   <text wx:if="{{detail.status==3}}">未使用</text>
-  <text wx:if="{{detail.status==4}}">已使用</text>
+  <text wx:if="{{detail.status>4}}">已使用</text>
 </view>
 </view>
 <view class='sh_tel'> <button class='kefu' open-type="contact">联系客服</button>|<view bindtap='tel' style='margin-left:20rpx;'>4008187711</view></view>
